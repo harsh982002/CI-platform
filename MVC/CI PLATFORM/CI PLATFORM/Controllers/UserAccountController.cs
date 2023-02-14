@@ -13,5 +13,10 @@ namespace CI_PLATFORM.Controllers
         {
             return View();
         }
+
+        public IActionResult Resetpassword()
+        {
+            return View();
+        }
     }
 }
