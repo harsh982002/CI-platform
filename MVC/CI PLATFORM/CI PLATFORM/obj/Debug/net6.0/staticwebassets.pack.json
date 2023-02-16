@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\CI PLATFORM.bundle.scp.css"
     },
     {
+      "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\Landingplatform.css",
+      "PackagePath": "staticwebassets\\css\\Landingplatform.css"
+    },
+    {
       "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
     },

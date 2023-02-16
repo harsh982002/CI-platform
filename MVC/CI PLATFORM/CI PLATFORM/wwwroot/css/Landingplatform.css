@@ -1,0 +1,13 @@
+.avatar{
+    object-fit: none;
+}
+
+@media (min-width: 992px) {
+ 
+    .no-border:valid {
+      border-color: #fff;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+    }
+    

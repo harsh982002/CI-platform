@@ -23,5 +23,10 @@ namespace CI_PLATFORM.Controllers
         {
             return View();
         }
+
+        public IActionResult Landingplatform()
+        {
+            return View();
+        }
     }
 }

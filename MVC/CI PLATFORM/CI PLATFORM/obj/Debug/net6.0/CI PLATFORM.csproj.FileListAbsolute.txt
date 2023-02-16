@@ -29,3 +29,14 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\refint\CI PLATFOR
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.genruntimeconfig.cache
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\ref\CI PLATFORM.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.csproj.CopyComplete

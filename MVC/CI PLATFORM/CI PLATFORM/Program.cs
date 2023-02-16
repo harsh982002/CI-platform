@@ -22,7 +22,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=UserAccount}/{action=Login}");
+    pattern: "{controller=UserAccount}/{action=Landingplatform}");
 
 
 
