@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rP430Q4tZUiTQtDTM9ceaa/QXY5r+usCQARSbMyXesY=",
+  "Hash": "Wb6ffP67vhU+FNk6Exn41/TFCz6P5v4MJLn+7i9nB4U=",
   "Source": "CI PLATFORM",
   "BasePath": "_content/CI PLATFORM",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style.css"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\volunteermission.css",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "css/volunteermission.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\volunteermission.css"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\favicon.ico",

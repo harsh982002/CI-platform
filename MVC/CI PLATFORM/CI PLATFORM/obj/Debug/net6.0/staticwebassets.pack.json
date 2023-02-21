@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
+      "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\volunteermission.css",
+      "PackagePath": "staticwebassets\\css\\volunteermission.css"
+    },
+    {
       "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
