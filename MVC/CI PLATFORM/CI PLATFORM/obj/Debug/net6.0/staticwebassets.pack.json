@@ -21,8 +21,8 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\volunteermission.css",
-      "PackagePath": "staticwebassets\\css\\volunteermission.css"
+      "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\volunteering_mission.css",
+      "PackagePath": "staticwebassets\\css\\volunteering_mission.css"
     },
     {
       "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\favicon.ico",
@@ -467,6 +467,10 @@
     {
       "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\volunteering_mission.js",
+      "PackagePath": "staticwebassets\\js\\volunteering_mission.js"
     },
     {
       "Id": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\lib\\bootstrap\\LICENSE",

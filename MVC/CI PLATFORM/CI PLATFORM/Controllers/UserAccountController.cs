@@ -29,7 +29,7 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
 
-        public IActionResult Volunteeringmission()
+        public IActionResult Volunteermission()
         {
             return View();
         }
