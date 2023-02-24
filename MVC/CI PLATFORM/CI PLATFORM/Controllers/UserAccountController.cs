@@ -34,5 +34,10 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
 
+        public IActionResult Storylisting()
+        {
+            return View();
+        }
+
     }
 }

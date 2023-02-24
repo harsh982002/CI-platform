@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7Y7FIcTFIKgcIHbG1I+PG7uzu+NVZOIjAVKEw9MfI7s=",
+  "Hash": "3MVyy1baEYpYUkgiBG+AyYD/6ssjwxZaFXKLstizOOE=",
   "Source": "CI PLATFORM",
   "BasePath": "_content/CI PLATFORM",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\storylisting.css",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "css/storylisting.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\storylisting.css"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\css\\style.css",
