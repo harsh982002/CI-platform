@@ -1,9 +1,11 @@
-﻿@{
+﻿@using CIPlatform.Entitites.Models
+@{
     ViewData["Title"] = "Login Page";
 }
 @{
     Layout = null;
 }
+@model User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,11 +66,13 @@
       </div>
       <div class="login col-md-4 col-sm-5">
         <div class="login-details">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" aria-describedby="emailHelp"/>
-          <label for="password" class="form-label mt-3">Password</label>
-          <input type="password" class="form-control" id="password" />
-          <button type="button" class="btn mt-4">Login</button>
+           <form asp-action="Login" method="post">
+          <label asp-for="Email" class="form-label">Email address</label>
+          <input asp-for="Email" type="email" class="form-control" id="email" aria-describedby="emailHelp"/>
+          <label asp-for="Password" class="form-label mt-3">Password</label>
+          <input asp-for="Password" type="password" class="form-control" id="password" />
+          <button type="submit" class="btn mt-4">Login</button>
+          </form> 
           <div class="toregister text-center mt-3">
             <a class="l-password" asp-action="Forgotpassword">Lost Your Password?</a>
             <p class="mt-2">

@@ -1,9 +1,11 @@
-﻿@{
+﻿@using CIPlatform.Entitites.Models
+@{
     ViewData["Title"] = "Registration page";
 }
 @{
     Layout = null;
 }
+@model User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,22 +65,24 @@
         </div>
         <div class="login col-md-4 col-sm-5">
             <div class="login-details">
-                <label for="f-name" class="form-label mt-2">First Name</label>
-                <input type="text" class="form-control" id="f-name" />
-                <label for="l-name" class="form-label mt-2">Last Name</label>
-                <input type="text" class="form-control" id="l-name" />
-                <label for="phone" class="form-label mt-2">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" />
-                <label for="email" class="form-label mt-2">Email address</label>
-                <input type="email"
+                <form asp-action="Registration" method="post">
+                <label asp-for="FirstName" class="form-label mt-2">First Name</label>
+                <input asp-for="FirstName" type="text" class="form-control" id="f-name" />
+                <label asp-for="LastName" class="form-label mt-2">Last Name</label>
+                <input  asp-for="LastName" type="text" class="form-control" id="l-name" />
+                <label asp-for="PhoneNumber" class="form-label mt-2">Phone Number</label>
+                <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" />
+                <label asp-for="Email" class="form-label mt-2">Email address</label>
+                <input asp-for="Email" type="email"
                        class="form-control"
                        id="email"
                        aria-describedby="emailHelp" />
-                <label for="password" class="form-label mt-2">Password</label>
-                <input type="password" class="form-control" id="password" />
-                <label for="c-password" class="form-label mt-2">Confirm Password</label>
-                <input type="password" class="form-control" id="c-password" />
-                <button type="button" class="btn mt-4">Register</button>
+                <label asp-for="Password" class="form-label mt-2">Password</label>
+                <input  asp-for="Password" type="password" class="form-control" id="password" />
+                <label asp-for="ConfirmPassword" class="form-label mt-2">Confirm Password</label>
+                <input asp-for="ConfirmPassword"  type="password" class="form-control" id="c-password" />
+                <button type="submit" class="btn mt-4">Register</button>
+                </form>
                 <div class="toregister text-center mt-2">
                     <a class="l-password" asp-action="Forgotpassword">Lost Your Password?</a>
                     <p class="mt-2">
