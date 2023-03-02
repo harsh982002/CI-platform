@@ -1,6 +1,6 @@
 ﻿using CIPlatform.Entitites.Data;
 using CIPlatform.Entitites.Models;
-using CIPlatform.Entitites.ViewDataModel;
+
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,17 +10,10 @@ namespace CI_PLATFORM.Controllers
     public class UserAccountController : Controller
     {
 
-        private readonly IAccountRepository _registerInterface;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IConfiguration configuration;
-
-
-        public UserAccountController(ILogger<HomeController> logger, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
-                              IConfiguration _configuration)
+        public readonly IAccountRepository _AccountRepo;
+        public UserAccountController(IAccountRepository userRepository)
         {
-            _registerInterface = accountInterface;
-            _httpContextAccessor = httpContextAccessor;
-            configuration = _configuration;
+            _AccountRepo = userRepository;
         }
         [HttpGet]
         public IActionResult Login()
@@ -28,35 +21,54 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(User obj)
         {
-            try
+            var user = _AccountRepo.Login(obj);
+            if (user == null)
             {
-                User user = _registerInterface.LoginViewModel(model);
-                if (user == null)
-                {
-                    return RedirectToAction("Registration");
-                }
-                else
-                {
-                    return RedirectToAction("Landingplatform");
-                }
+                TempData["success"] = "Invalid Username or Password";
+                return View();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
-            }
+            TempData["success"] = "Login Successfully...";
+            return RedirectToAction("Landingplatform", "UserAccount");
         }
 
-
+        [HttpGet]
         public IActionResult Forgotpassword()
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult ForgotPassword(User obj)
+        {
+            var user = _AccountRepo.Forgot(obj);
+            if (user == null)
+            {
+                TempData["success"] = "Invalid Email";
+                return View();
+            }
+            TempData["success"] = "Check your email to reset password";
+            return RedirectToAction("Resetpassword");
+        }
 
+        [HttpGet]
         public IActionResult Resetpassword()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Resetpassword(User obj, string token)
+        {
+            var validToken = _AccountRepo.Reset(obj, token);
+
+            if (validToken != null)
+            {
+                TempData["success"] = "Your Password is changed";
+                return RedirectToAction("Login");
+            }
+            TempData["success"] = "Token not Found";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -66,20 +78,20 @@ namespace CI_PLATFORM.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Registration(RegistrationViewModel model)
+        public IActionResult Registration(User obj)
         {
-            try
+            var user = _AccountRepo.Register(obj);
+            if (user != null)
             {
-                User registertion = _registerInterface.RegistrationViewModel(model);
-                if (registertion == null)
-                    return StatusCode(HttpStatusCode.BadRequest.GetHashCode(), "Bad request");
-
-                return RedirectToAction("Login");
+                TempData["success"] = "User already exists.";
+                return RedirectToAction("Login", "UserAccount");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
-            }
+            //if (ModelState.IsValid)
+            //{
+            //_UserRepository.Users.Add(obj);
+            //_db.SaveChanges();
+            TempData["success"] = "Registration Successfull";
+            return RedirectToAction("Registration");
         }
 
         public IActionResult Landingplatform()

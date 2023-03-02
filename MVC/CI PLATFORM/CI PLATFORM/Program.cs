@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CiplatformContext>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 var app = builder.Build();
 
@@ -32,7 +32,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=UserAccount}/{action=Volunteermission}");
+    pattern: "{controller=UserAccount}/{action=Login}");
 
 
 

@@ -18,7 +18,7 @@ public partial class User
     public string Password { get; set; } = null!;
 
     [NotMapped]
-    [Compare("Password", ErrorMessage = "Password does not match")]
+    [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
     public string ConfirmPassword { get; set; } = null!;
 
     public int PhoneNumber { get; set; }

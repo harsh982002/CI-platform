@@ -5,7 +5,7 @@
 @{
     Layout = null;
 }
-@model CIPlatform.Entitites.ViewDataModel.RegistrationViewModel
+@model CIPlatform.Entitites.Models.User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,19 +68,25 @@
                 <form asp-action="Registration" method="post">
                 <label asp-for="FirstName" class="form-label mt-2">First Name</label>
                 <input asp-for="FirstName" type="text" class="form-control" id="f-name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
                 <label asp-for="LastName" class="form-label mt-2">Last Name</label>
                 <input  asp-for="LastName" type="text" class="form-control" id="l-name" />
+                 <span asp-validation-for="LastName" class="text-danger"></span>
                 <label asp-for="PhoneNumber" class="form-label mt-2">Phone Number</label>
                 <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" />
+                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 <label asp-for="Email" class="form-label mt-2">Email address</label>
                 <input asp-for="Email" type="email"
                        class="form-control"
                        id="email"
                        aria-describedby="emailHelp" />
+                <span asp-validation-for="Email" class="text-danger"></span>
                 <label asp-for="Password" class="form-label mt-2">Password</label>
                 <input  asp-for="Password" type="password" class="form-control" id="password" />
+                 <span asp-validation-for="Password" class="text-danger"></span>
                 <label asp-for="ConfirmPassword" class="form-label mt-2">Confirm Password</label>
                 <input asp-for="ConfirmPassword"  type="password" class="form-control" id="c-password" />
+                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 <button type="submit" class="btn mt-4">Register</button>
                 </form>
                 <div class="toregister text-center mt-2">

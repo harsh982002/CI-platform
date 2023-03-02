@@ -3,7 +3,6 @@ C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\bin\Debug\net6.0\CIPlatfo
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\bin\Debug\net6.0\CIPlatform.Entitites.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\bin\Debug\net6.0\ref\CIPlatform.Entitites.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\bin\Debug\net6.0\CIPlatform.Entitites.pdb
-C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\obj\Debug\net6.0\CIPlatform.Entitites.csproj.AssemblyReference.cache
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\obj\Debug\net6.0\CIPlatform.Entitites.GeneratedMSBuildEditorConfig.editorconfig
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\obj\Debug\net6.0\CIPlatform.Entitites.AssemblyInfoInputs.cache
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Entitites\obj\Debug\net6.0\CIPlatform.Entitites.AssemblyInfo.cs

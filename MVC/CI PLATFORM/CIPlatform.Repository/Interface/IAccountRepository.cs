@@ -1,5 +1,5 @@
 ﻿using CIPlatform.Entitites.Models;
-using CIPlatform.Entitites.ViewDataModel;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,10 @@ namespace CIPlatform.Repository.Interface
 {
     public interface IAccountRepository
     {
-        public User LoginViewModel(LoginViewModel model);
+        User Login(User obj);
+        User Register(User obj);
 
-        public User RegistrationViewModel(RegistrationViewModel model);
+        User Forgot(User model);
+        PasswordReset Reset(User model, string token);
     }
 }

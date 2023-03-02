@@ -84,3 +84,6 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entiti
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Repository.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entitites.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Repository.pdb
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\MailKit.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\MimeKit.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\BouncyCastle.Crypto.dll
