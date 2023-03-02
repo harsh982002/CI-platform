@@ -5,7 +5,7 @@
 @{
     Layout = null;
 }
-@model User
+@model CIPlatform.Entitites.ViewDataModel.RegistrationViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,5 +95,10 @@
             </div>
         </div>
     </div>
+    @section scripts{
+        @{
+            <partial name="_ValidationScriptsPartial"/>
+        }
+    }
 </body>
 </html>

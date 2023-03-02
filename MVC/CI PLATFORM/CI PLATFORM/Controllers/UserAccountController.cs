@@ -1,37 +1,53 @@
 ﻿using CIPlatform.Entitites.Data;
 using CIPlatform.Entitites.Models;
+using CIPlatform.Entitites.ViewDataModel;
+using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CI_PLATFORM.Controllers
 {
     public class UserAccountController : Controller
     {
 
-        private readonly CiplatformContext _db;
+        private readonly IAccountRepository _registerInterface;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration configuration;
 
-        public UserAccountController(CiplatformContext db)
+
+        public UserAccountController(ILogger<HomeController> logger, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
+                              IConfiguration _configuration)
         {
-            _db = db;
+            _registerInterface = accountInterface;
+            _httpContextAccessor = httpContextAccessor;
+            configuration = _configuration;
         }
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public IActionResult Login(string Email ,string Password)
+        public IActionResult Login(LoginViewModel model)
         {
-            if(Email != null || Password != null)
+            try
             {
-                var findUser = _db.Users.FirstOrDefault(x => x.Email == Email || x.Password == Password);
-                if (findUser != null)
+                User user = _registerInterface.LoginViewModel(model);
+                if (user == null)
+                {
+                    return RedirectToAction("Registration");
+                }
+                else
                 {
                     return RedirectToAction("Landingplatform");
                 }
             }
-            return RedirectToAction("Registration");
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
+            }
         }
+
 
         public IActionResult Forgotpassword()
         {
@@ -43,23 +59,27 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Registration()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Registration(User user)
+        [ValidateAntiForgeryToken]
+        public IActionResult Registration(RegistrationViewModel model)
         {
-            var findUser = _db.Users.FirstOrDefault(x => x.Email == user.Email);
-            if (findUser == null)
-
+            try
             {
-                _db.Users.Add(user);
-                _db.SaveChanges();
+                User registertion = _registerInterface.RegistrationViewModel(model);
+                if (registertion == null)
+                    return StatusCode(HttpStatusCode.BadRequest.GetHashCode(), "Bad request");
+
                 return RedirectToAction("Login");
             }
-
-            return RedirectToAction("Registration");
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
+            }
         }
 
         public IActionResult Landingplatform()

@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CIPlatform.Entitites\CIPlatform.Entitites.csproj" />
+  </ItemGroup>
+
 </Project>

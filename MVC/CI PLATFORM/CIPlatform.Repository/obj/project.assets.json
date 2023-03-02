@@ -947,6 +947,20 @@
             "rid": "win"
           }
         }
+      },
+      "CIPlatform.Entitites/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.3",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/CIPlatform.Entitites.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CIPlatform.Entitites.dll": {}
+        }
       }
     }
   },
@@ -3283,10 +3297,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "CIPlatform.Entitites/1.0.0": {
+      "type": "project",
+      "path": "../CIPlatform.Entitites/CIPlatform.Entitites.csproj",
+      "msbuildProject": "../CIPlatform.Entitites/CIPlatform.Entitites.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "CIPlatform.Entitites >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.3",
@@ -3326,7 +3346,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CIPlatform.Entitites\\CIPlatform.Entitites.csproj": {
+              "projectPath": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CIPlatform.Entitites\\CIPlatform.Entitites.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
