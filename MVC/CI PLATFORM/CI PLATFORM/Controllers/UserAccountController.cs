@@ -1,98 +1,160 @@
-﻿using CIPlatform.Entitites.Data;
+﻿
+using CIPlatform.Entities;
+using CI_PLATFORM.Helpers;
+using CIPlatform.Entities.ViewModel;
 using CIPlatform.Entitites.Models;
-
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+
+
+
 
 namespace CI_PLATFORM.Controllers
 {
     public class UserAccountController : Controller
     {
+        private readonly IAccountRepository _registerInterface;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration configuration;
 
-        public readonly IAccountRepository _AccountRepo;
-        public UserAccountController(IAccountRepository userRepository)
+
+        public UserAccountController(ILogger<HomeController> logger, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
+                              IConfiguration _configuration)
         {
-            _AccountRepo = userRepository;
+            _registerInterface = accountInterface;
+            _httpContextAccessor = httpContextAccessor;
+            configuration = _configuration;
         }
+
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Login(User obj)
+        public IActionResult Login(LoginViewModel model)
         {
-            var user = _AccountRepo.Login(obj);
-            if (user == null)
+            try
             {
-                TempData["success"] = "Invalid Username or Password";
-                return View();
+                if (ModelState.IsValid)
+                {
+                    User user = _registerInterface.LoginViewModel(model);
+                    if (user == null)
+                    {
+                        return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User not found or invalid password ");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Email", user.Email);
+                        HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
+                        HttpContext.Session.SetString("Avtar", user.Avatar);
+                        return RedirectToAction("Landingplatform", "UserAccount");
+                    }
+                }
+                return View(model);
             }
-            TempData["success"] = "Login Successfully...";
-            return RedirectToAction("Landingplatform", "UserAccount");
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
+            }
         }
 
+
         [HttpGet]
-        public IActionResult Forgotpassword()
+        public IActionResult registration()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult ForgotPassword(User obj)
+
+        public IActionResult Registration(RegistrationViewModel model)
         {
-            var user = _AccountRepo.Forgot(obj);
-            if (user == null)
+            try
             {
-                TempData["success"] = "Invalid Email";
-                return View();
+                if (ModelState.IsValid)
+                {
+
+                    if (_registerInterface.IsValidUserEmail(model))
+                    {
+                        User registertion = _registerInterface.RegistrationViewModel(model);
+                        return RedirectToAction("Login", "UserAccount");
+
+                    }
+                    else
+                    {
+                        return StatusCode(HttpStatusCode.BadRequest.GetHashCode(), "This Mail Account Already Register !! Please Check your mail or Login your Account...");
+                    }
+                }
+                return View(model);
             }
-            TempData["success"] = "Check your email to reset password";
-            return RedirectToAction("Resetpassword");
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
+            }
+
         }
+
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+                var user = _registerInterface.ForgotPasswordViewModel(model);
+                if (user == null)
+                {
+                    TempData["success"] = "Invalid Email";
+                    return View();
+                }
+
+
+                TempData["success"] = "Check your email to reset password";
+                return RedirectToAction("Resetpassword");
+            }
+            return View(model);
+        }
+
+
 
         [HttpGet]
         public IActionResult Resetpassword()
         {
+
             return View();
         }
-        [HttpPost]
-        public IActionResult Resetpassword(User obj, string token)
-        {
-            var validToken = _AccountRepo.Reset(obj, token);
 
-            if (validToken != null)
+        [HttpPost]
+        public IActionResult Resetpassword(ResetPasswordViewModel model, string token)
+        {
+            if (ModelState.IsValid)
             {
-                TempData["success"] = "Your Password is changed";
-                return RedirectToAction("Login");
+                var validToken = _registerInterface.ResetPasswordViewModel(model, token);
+
+                if (validToken != null)
+                {
+                    TempData["success"] = "Your Password is changed";
+                    return RedirectToAction("Login");
+                }
+                TempData["success"] = "Token not Found";
+                return RedirectToAction("Index");
             }
-            TempData["success"] = "Token not Found";
-            return RedirectToAction("Index");
+            return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Registration()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Registration(User obj)
-        {
-            var user = _AccountRepo.Register(obj);
-            if (user != null)
-            {
-                TempData["success"] = "User already exists.";
-                return RedirectToAction("Login", "UserAccount");
-            }
-            //if (ModelState.IsValid)
-            //{
-            //_UserRepository.Users.Add(obj);
-            //_db.SaveChanges();
-            TempData["success"] = "Registration Successfull";
-            return RedirectToAction("Registration");
-        }
 
         public IActionResult Landingplatform()
         {

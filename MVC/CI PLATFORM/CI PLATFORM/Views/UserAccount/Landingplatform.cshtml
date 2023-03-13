@@ -4,6 +4,8 @@
 @{
     Layout = null;
 }
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,14 +54,14 @@
                 </nav>
                 <div class="d-flex justify-content-end mt-3 me-1">
                     <a class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <img src="/images/user-img.png" class="rounded-circle" style="object-fit: none;" width="32" height="32">
-                        Evan Donohue
+                        <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="rounded-circle" style="object-fit: none;" width="32" height="32">
+                         @Accesor?.HttpContext?.Session.GetString("Name")
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" asp-action="Login" >Sign out</a></li>
                     </ul>
                 </div>
             </div>
