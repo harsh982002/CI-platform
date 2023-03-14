@@ -337,6 +337,7 @@ public partial class CiplatformContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Deadline).HasColumnType("datetime");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
@@ -346,6 +347,7 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
+            entity.Property(e => e.GoalObject).HasMaxLength(50);
             entity.Property(e => e.MissionType)
                 .HasMaxLength(20)
                 .IsUnicode(false)

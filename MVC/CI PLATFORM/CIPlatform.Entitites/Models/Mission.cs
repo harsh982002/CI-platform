@@ -39,6 +39,16 @@ public partial class Mission
 
     public DateTime? DeletedAt { get; set; }
 
+    public string? GoalObject { get; set; }
+
+    public long? TotalSeats { get; set; }
+
+    public long? AvbSeat { get; set; }
+
+    public long? Achieved { get; set; }
+
+    public DateTime? Deadline { get; set; }
+
     public virtual City City { get; set; } = null!;
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();

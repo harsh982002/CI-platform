@@ -6,9 +6,7 @@ using CIPlatform.Entitites.Models;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-
-
-
+using CIPlatform.Entitites.ViewModel;
 
 namespace CI_PLATFORM.Controllers
 {
@@ -51,7 +49,7 @@ namespace CI_PLATFORM.Controllers
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("Avtar", user.Avatar);
-                        return RedirectToAction("Landingplatform", "UserAccount");
+                        return RedirectToAction("Landingplatform", "Home");
                     }
                 }
                 return View(model);
@@ -156,10 +154,9 @@ namespace CI_PLATFORM.Controllers
         }
 
 
-        public IActionResult Landingplatform()
-        {
-            return View();
-        }
+       
+       
+        
 
         public IActionResult Volunteermission()
         {

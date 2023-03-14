@@ -19,6 +19,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Home/Landingplatform.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMYW5kaW5ncGxhdGZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -33,10 +37,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Forgotpassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY291bnRcRm9yZ290cGFzc3dvcmQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Landingplatform.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY291bnRcTGFuZGluZ3BsYXRmb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Login.cshtml]

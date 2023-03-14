@@ -1,0 +1,542 @@
+﻿@{
+    ViewData["Title"] = "Landing Platform";
+}
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@model List<CIPlatform.Entitites.ViewModel.Mission>
+@{
+    CIPlatform.Entitites.ViewModel.Mission mission = Model.FirstOrDefault();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Platform Landing Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <environment include="Development">
+    <link rel="stylesheet" href="/css/Landingplatform.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </environment>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="demo d-flex flex-row justify-content-between">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link ms-lg-5 text-black" aria-current="page" href="#"> Stories </a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle ms-lg-5 text-black" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        Policy
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Privacy Policy</a></li>
+                                        <li><a class="dropdown-item" href="#">Contact us</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="d-flex justify-content-end mt-3 me-1">
+                    <a class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="rounded-circle" style="object-fit: none;" width="32" height="32">
+                         @Accesor?.HttpContext?.Session.GetString("Name")
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" asp-action="Login" >Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr class="m-0 p-0">
+
+    <div class="offcanvas offcanvas-start text-muted" data-bs-scroll="true" tabindex="-1" id="filters-sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+        <img src="~/images/left.png" data-bs-dismiss="offcanvas" aria-label="Close" alt="notload" />
+  </div>
+  <div class="offcanvas-body">
+        <div id="country" class=" d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#country" role="button" aria-expanded="false" aria-controls="country">
+ <span>Country</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="country">
+            @{
+                     foreach (var item in mission.Country)
+                     {
+                         <span class="dropdown-item">
+                         <input class="form-check-input @item.Name" type="checkbox" value="" onchange="addcountries('@item.Name','mobile')">
+                         <label class="form-check-label" for="flexCheckDefault">
+                         @item.Name
+                            </label>
+                           </span>
+                     }
+                 }
+        </div>
+        @*--2*@
+        <div id="city" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#city" role="button" aria-expanded="false" aria-controls="city">
+            <span>City</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="city">
+            @{
+                        if (mission.Cities is null) {
+                            foreach (var item in mission.Country)
+                            {
+                                foreach (var city in item.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input @city.Name" type="checkbox" onchange="addcities('@city.Name','mobile')" value="" >
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
+                                    </span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var city in mission.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input @city.Name" type="checkbox" onchange="addcities('@city.Name','mobile')" value="">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
+                                    </span>
+                                }
+                        }
+                    }
+        </div>
+        @*--3*@
+        <div id="theme" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#theme" role="button" aria-expanded="false" aria-controls="theme">
+            <span>Themes</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="theme">
+             @{
+                        foreach (var item in mission.themes)
+                        {
+                            <span class="dropdown-item">
+                 <input class="form-check-input @item.Title" type="checkbox" onchange="addthemes('@item.Title','mobile')" value="">
+                 <label class="form-check-label" for="flexCheckDefault">
+                 @item.Title
+                </label>
+                </span>
+                        }
+                }
+        </div>
+        @*---4*@
+        <div id="skill" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#skill" role="button" aria-expanded="false" aria-controls="skill">
+            <span>Skills</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="skill">
+            @{
+                        foreach (var item in mission.skills)
+                        {
+                            <span class="dropdown-item">
+                                <input class="form-check-input @item.SkillName" type="checkbox" onchange="addskills('@item.SkillName','mobile')" value="" >
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @item.SkillName
+                                </label>
+                            </span>
+                        }
+                    }
+        </div>
+  </div>
+</div>
+
+@*    <div class="container">
+        <div class="row  ">
+            <div class="col-lg-6 col-12 my-3">
+                <input type="search" class="form-control no-border"
+                       style="font-family: FontAwesome; font-size: 20px;" placeholder=" &#xf002   Search mission..."
+                       aria-label="Search">
+            </div>
+
+
+
+            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height:54px;">
+                <div class="align-self-center">
+                    <a href="#"
+                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Country
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
+            </div>
+
+
+
+
+            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
+                <div class="align-self-center">
+                    <a href="#"
+                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        City
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
+            </div>
+
+
+            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
+                <div class="align-self-center">
+                    <a href="#"
+                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Theme
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
+            </div>
+
+
+            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
+                <div class="align-self-center">
+                    <a href="#"
+                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Skills
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    </div>
+    <hr class="m-0 p-0">
+    <div class="container all-choices text-muted d-flex mt-3">
+        <div class="border rounded-pill">
+            <span class="p-2">india</span>
+            <img src="/images/cancel.png" class="p-2" alt="not found" />
+        </div>
+        <div class="border text-muted rounded-pill">
+            <span class="p-2">Environment</span>
+            <img src="/images/cancel.png" class="p-2" alt="not found" />
+        </div>
+        <div class="border text-muted rounded-pill">
+            <span class="p-2">Animal</span>
+            <img src="/images/cancel.png" class="p-2" alt="not found" />
+        </div>
+        <div class="border text-muted rounded-pill">
+            <span class="p-2">Gujarat</span>
+            <img src="/images/cancel.png" class="p-2" alt="not found" />
+        </div>
+        <span>Clear All</span>
+
+    </div>*@
+    <div class="home w-100 border-3 border-bottom text-muted">
+    <div class="container d-flex justify-content-between align-items-center">
+    <div class="d-flex search-div align-items-center">
+    <img class="search" src="~/images/search.png" alt="not load" />
+        <div class="form-floating w-75 d-flex">
+            <input type="search" class="form-control search-input no-border" id="floatingSearch" onkeyup='search_missions()' placeholder="Search Misssions...." />
+            <label for="floatingSearch" class="d-flex align-items-center no">Search Missions....</label>
+        </div>
+    </div>
+    <div class="filters  row" style="width: 420px;">
+        <div class="col-lg-3 col-md-3 col-sm-3 border-start border-end dropdown">
+                <div id="country" class=" d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+             <span>Country</span>
+            <img src="/images/drop-down.png" class="filter-dropdown h-25 mt-2" alt="not load"/>
+            </div>
+             <span class="dropdown-menu" aria-labelledby="country">
+                 @{
+                     foreach (var item in mission.Country)
+                     {
+                         <span class="dropdown-item">
+                         <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
+                         <label class="form-check-label" for="flexCheckDefault">
+                         @item.Name
+                            </label>
+                           </span>
+                     }
+                 }
+                 
+            </span>
+        </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown  border-end">
+                <div id="city" class=" d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span>City</span>
+                <img src="/images/drop-down.png" class="filter-dropdown h-25 mt-2" alt="not load" />
+                 </div>
+                 <span class="dropdown-menu city" aria-labelledby="city">
+                    @{
+                        if (mission.Cities is null) {
+                            foreach (var item in mission.Country)
+                            {
+                                foreach (var city in item.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
+                                    </span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var city in mission.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
+                                    </span>
+                                }
+                        }
+                    }
+            </span>
+          
+        </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown  border-end">
+                <div id="theme" class=" d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span>Themes</span>
+                <img src="/images/drop-down.png" class="filter-dropdown h-25 mt-2" alt="not load" />
+                </div>
+                <span class="dropdown-menu" aria-labelledby="theme">
+                    @{
+                        foreach (var item in mission.themes)
+                        {
+                            <span class="dropdown-item">
+                 <input class="form-check-input" type="checkbox" onchange="addthemes('@item.Title')" value="" id="@item.Title">
+                 <label class="form-check-label" for="flexCheckDefault">
+                 @item.Title
+                </label>
+                </span>
+                        }
+                }
+            </span>
+        </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown  border-end">
+            <div id="skill" class=" d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span>Skills</span>
+                <img src="/images/drop-down.png" class="filter-dropdown h-25 mt-2" alt="not load" />
+                </div>
+                <span class="dropdown-menu" aria-labelledby="skill">
+                    @{
+                        foreach (var item in mission.skills)
+                        {
+                            <span class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @item.SkillName
+                                </label>
+                            </span>
+                        }
+                    }
+            </span>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+    <div class="container pt-3">
+
+        <div class="d-flex justify-content-between">
+            <h2>Explore : <b>@Model.Count Missions</b></h2>
+
+            <div>
+                <div class="dropdown">
+                    <select class="bg-white text-black btn btn-secondary dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+                       
+                    <option disabled  selected>Sort By</option>
+                        <option value="Newest">Newest</option>
+                        <option value="Oldest">Oldest</option>
+                        <option value="Lowest available seats">Lowest available seats</option>
+                        <option value="Highest available seats">Highest available seats</option>
+                        <option value="My favourites">My favourites</option>
+                        <option value="Registration deadline">Registration deadline</option>
+                   </select>
+                    <img src="/images/grid.png" class="view" id="grid" onclick="gridview()" alt="not load" style="object-fit:scale-down;" />
+                    <img src="/images/list.png" alt="not load" onclick="listview()" style="object-fit:scale-down;" />
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+
+            @{
+                foreach(var item in Model)
+                {
+                    
+                
+                <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
+                <div class="thumbnail card d-flex">
+                    <div class="img-event">
+                        <img class="group list-group-image w-100 h-100"
+                             src='@item.image?.MediaPath' id='@item.image?.MissionMediaId-@item.image?.MediaPath' onmouseover="view_detail_onmouseover(@item.Missions?.MissionId,'@item.image?.MissionMediaId-@item.image?.MediaPath')" onmouseout="view_detail_onmouseout(@item.Missions?.MissionId,'@item.image?.MissionMediaId-@item.image?.MediaPath')" alt="" />
+                        <div class="location-img">
+                            <img class="text-light" src="/images/pin.png" alt="">
+                            <span class="text-light">@item.Missions?.City.Name</span>
+                        </div>
+                        <button class="like-img border-0">
+                            <img class="text-light" src="/images/heart.png" alt="">
+                        </button>
+                        <button class="stop-img border-0">
+                            <img class="text-light" src="/images/user.png" alt="">
+                        </button>
+                        <button class="mission-theme border-0">
+                            <span class="p-2">@item.Missions?.Theme.Title</span>
+                        </button>
+                    </div>
+                    <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
+                        <h4 class="group card-title inner list-group-item-heading">
+                           @item.Missions?.Title
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                             @item.Missions?.Description
+                        </p>
+                        <div class="d-flex justify-content-between">
+                            <span class="organization"> @item.Missions?.OrganizationName</span>
+                            <div class="rating">
+                                <img src="/images/selected-star.png" alt="">
+                                <img src="/images/selected-star.png" alt="">
+                                <img src="/images/selected-star.png" alt="">
+                                <img src="/images/star.png" alt="">
+                                <img src="/images/star.png" alt="">
+                            </div>
+                        </div>
+                        <div class="duration-seats-info mt-4">
+                            <div class="duration">
+                                <p id="duration-txt" style="margin-bottom: 0;">@{
+                                        if (@item.Missions?.MissionType == "GOAL")
+                                        {
+                                            <p id="duration-txt" style="margin-bottom: 0;">@item.Missions?.GoalObject</p>
+                                        }
+                                        else
+                                        {
+                                            <p id="duration-txt" style="margin-bottom: 0;">From @item.Missions?.StartDate?.ToString().Substring(0,10) To @item.Missions?.EndDate?.ToString().Substring(0,10)</p>
+                                        }
+                                    }</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom mt-3">
+                            <div class="Seats d-flex align-items-center">
+                                <img src="/images/Seats-left.png" alt="">
+                                <span>
+                                    @item.Missions.AvbSeat<p>seats left</p>
+                                </span>
+                            </div>
+                            <div class="deadline d-flex align-items-center">
+                                @{
+                                        if (@item.Missions?.MissionType == "GOAL")
+                                        {
+                                            string? str1 = @item.Missions?.GoalObject;
+                                            string str2 = string.Empty;
+                                            int goal = 0;
+                                            for (int i = 0; i<=str1.Length-1; i++){
+                                                if (Char.IsDigit(str1[i]))
+                                                    str2 += str1[i];
+                                            }
+                                            if (str2.Length > 0)
+                                            {
+                                                goal = int.Parse(str2);
+                                            }
+                                            double? percent = (@item.Missions?.Achieved / (double)goal)*100;
+                                            <img src="images/achieved.png" alt="">
+                                            <div class="w-100">
+                                                <div class="progress" style="width:90%;margin-left:10px;">
+                                                    <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <p class="text-muted">@item.Missions?.Achieved achieved</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <img src="images/deadline.png" alt="">
+                                             <span>@item.Missions?.Deadline?.ToString().Substring(0,10)
+                                             <p>Deadline</p></span>
+                                        }
+                                    }
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <button class="applybutton bg-white">
+                                Apply <img src="/images/right-arrow.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+            }
+             <div class='container d-flex-column mt-5 mb-5 text-muted no-mission-found'>
+            </div>
+        </div>
+    </div>
+        <nav aria-label="Page navigation example" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" tabindex="-1"><img src="~/images/previous.png" alt="not load" /></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" tabindex="-1"><img src="~/images/left.png" alt="not load" /></a>
+                </li>
+            <li class="page-item"><a class="page-link active" style="background-color: orange; border-color: white;" href="#">1</a></li>
+                <li class="page-item"><a class="page-link text-black" href="#">2</a></li>
+                <li class="page-item"><a class="page-link text-black" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><img src="~/images/right-arrow1.png" alt="not load" /></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><img src="~/images/next.png" alt="not load" /></a>
+                </li>
+            </ul>
+        </nav>
+
+
+    <script src="/js/index.js"></script>
+
+</body>
+
+</html>

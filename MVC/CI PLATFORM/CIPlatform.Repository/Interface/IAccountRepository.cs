@@ -3,6 +3,7 @@
 
 using CIPlatform.Entities.ViewModel;
 using CIPlatform.Entitites.Models;
+using CIPlatform.Entitites.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace CIPlatform.Repository.Interface
 
         public PasswordReset ResetPasswordViewModel(ResetPasswordViewModel model, string token);
         public User ForgotPasswordViewModel(ForgotPasswordViewModel model);
+
+
 
     }
 }
