@@ -3,7 +3,7 @@
 using CIPlatform.Entities.ViewModel;
 using CIPlatform.Entitites.Data;
 using CIPlatform.Entitites.Models;
-using CIPlatform.Entitites.ViewModel;
+
 using CIPlatform.Repository.Interface;
 using MailKit.Security;
 using Microsoft.AspNetCore.DataProtection;

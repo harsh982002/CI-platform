@@ -65,7 +65,7 @@ namespace CIPlatform.Repository.Repository
             {
                 city = cities;
             }
-            if (cities.Count > 0)
+            if (Cities.Count > 0)
             {
 
                 mission = (from m in missions
@@ -82,7 +82,7 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
             }
-            else if (countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
+            else if (Countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
             {
                 mission = (from m in missions
                            where Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name) || Themes.Contains(m.Theme.Title)
@@ -110,7 +110,15 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
-            else if (sort_by == "Lowest available seats")
+            else if (sort_by == "Oldest")
+            {
+                Missions = (from m in mission
+                            orderby m.CreatedAt ascending
+                            join i in image on m.MissionId equals i.MissionId into data
+                            from i in data.DefaultIfEmpty().Take(1)
+                            select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
+            }
+            /*else if (sort_by == "Lowest available seats")
             {
                 Missions = (from m in mission
                             orderby m.AvbSeat ascending
@@ -134,7 +142,7 @@ namespace CIPlatform.Repository.Repository
                             join i in image on m.MissionId equals i.MissionId into data
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
-            }
+            }*/
             else
             {
 

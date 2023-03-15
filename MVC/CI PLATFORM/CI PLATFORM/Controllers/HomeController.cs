@@ -23,14 +23,15 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
    
+       
         public IActionResult Landingplatform()
         {
             List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetAllMission();
             return View(missions);
         }
         [HttpPost]
-
-        public JsonResult LandingPlatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
+        
+        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
         {
             if (key is not null)
             {

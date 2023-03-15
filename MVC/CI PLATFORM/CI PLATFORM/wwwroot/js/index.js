@@ -13,7 +13,7 @@ let theme_count = 0;
 let skill_count = 0;
 var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
 let allchoices = []
-const view_detail_onmouseover = (id, img) => {
+/*const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
     let item = document.getElementById(id);
@@ -24,7 +24,7 @@ const view_detail_onmouseout = (id, img) => {
     image.classList.remove("story-image")
     let item = document.getElementById(id);
     item.style.display = "none";
-}
+}*/
 function listview() { 
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
@@ -97,7 +97,7 @@ function addcities(name, type) {
         }
     }
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
@@ -149,7 +149,7 @@ const addcountries = (name, type) => {
         }
     }
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: async function (result) {
@@ -165,6 +165,7 @@ const addcountries = (name, type) => {
 }
 
 //filters by themes
+
 const addthemes = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var theme;
@@ -203,7 +204,7 @@ const addthemes = (name, type) => {
         }
     }
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
@@ -254,7 +255,7 @@ const addskills = (name, type) => {
         }
     }
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: async function (result) {
@@ -287,6 +288,7 @@ const loadcities = (cities) => {
 
 
 //load filtered missions
+
 const loadmissions = (missions) => {
     if (missions.length == 0) {
         $('.missions').empty()
@@ -306,16 +308,16 @@ const loadmissions = (missions) => {
                 + "<div class='img-event'>"
                 + " <img class='group list-group-image w-100 h-100' src='' alt='' />"
                 + "<div class='location-img'>"
-                + "<img class='text-light' src='images/pin.png' alt=''>"
+                + "<img class='text-light' src='/images/pin.png' alt=''>"
                 + "<span class='text-light ms-1'>"
                 + item.mission_city
                 + "</span>"
                 + "</div>"
                 + "<button class='like-img border-0'>"
-                + "<img class='text-light' src='images/heart.png' alt=''>"
+                + "<img class='text-light' src='/images/heart.png' alt=''>"
                 + "</button>"
                 + "<button class='stop-img border-0'>"
-                + "<img class='text-light' src='images/user.png' alt=''>"
+                + "<img class='text-light' src='/images/user.png' alt=''>"
                 + " </button>"
                 + "<button class='mission-theme border-0'>"
                 + "<span class='p-2'>"
@@ -336,11 +338,11 @@ const loadmissions = (missions) => {
                 + " <span class='organization'>" + item.missions.organizationName + "</span>"
                 + "<div class='rating'>"
 
-                + "<img src='images/selected-star.png' alt=''>"
-                + " <img src='images/selected-star.png' alt=''>"
-                + " <img src='images/selected-star.png' alt=''>"
-                + " <img src='images/star.png' alt=''>"
-                + " <img src='images/star.png' alt=''>"
+                + "<img src='/images/selected-star.png' alt=''>"
+                + " <img src='/images/selected-star.png' alt=''>"
+                + " <img src='/images/selected-star.png' alt=''>"
+                + " <img src='/images/star.png' alt=''>"
+                + " <img src='/images/star.png' alt=''>"
                 + " </div>"
                 + "</div>"
                 + "<div class='duration-seats-info mt-4'>"
@@ -349,7 +351,7 @@ const loadmissions = (missions) => {
                 + " </div>"
                 + "<div class='d-flex justify-content-between border-bottom mt-3'>"
                 + " <div class='Seats d-flex align-items-center'>"
-                + "<img src='images/Seats-left.png' alt=''>"
+                + "<img src='/images/Seats-left.png' alt=''>"
                 + " <span>" + item.missions.avbSeat + "<p>" + "seats left" + "</p>"
                 + " </span>"
                 + " </div>"
@@ -357,7 +359,7 @@ const loadmissions = (missions) => {
                 + "</div>"
                 + " </div>"
                 + " <div class='d-flex justify-content-center mt-4'>"
-                + "<button class='applyButton btn'>" + "Apply" + "<img src='images/right-arrow.png' alt=''>"
+                + "<button class='applybutton btn' style=' border: solid 2px #F88634;border-radius: 24px;'>" + "Apply" + "<img src='/images/right-arrow.png' alt=''>"
                 + "</button>"
                 + "</div>"
                 + " </div>"
@@ -373,19 +375,19 @@ const loadmissions = (missions) => {
                 data = $mydata
             }
             $('.missions').append(data)
-            $('.img-event').eq(i).find('img').eq(0).attr('src', `/images/${item.image.mediaPath}`)
+            $('.img-event').eq(i).find('img').eq(0).attr('src', `${item.image.mediaPath}`)
 
             //for view deatils funstion
             $('.img-event').eq(i).find('img').eq(0).attr('id', item.image.missionMediaId + "-" + item.image.mediaPath)
-            $('.img-event').eq(i).find('img').eq(0).attr('onmouseover', `view_detail_onmouseover(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('img').eq(0).attr('onmouseout', `view_detail_onmouseout(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('.view-detail').attr('id', item.missions.missionId)
+            /*$('.img-event').eq(i).find('img').eq(0).attr('onmouseover', `view_detail_onmouseover(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
+            $('.img-event').eq(i).find('img').eq(0).attr('onmouseout', `view_detail_onmouseout(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)*/
+            /*$('.img-event').eq(i).find('.view-detail').attr('id', item.missions.missionId)
             $('.img-event').eq(i).find('.view-detail').attr('onmouseover', `view_detail_onmouseover(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
             $('.img-event').eq(i).find('.view-detail').attr('onmouseout', `view_detail_onmouseout(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('a').attr('href', `/volunteering_mission/${item.missions.missionId}`)
+            $('.img-event').eq(i).find('a').attr('href', `/volunteering_mission/${item.missions.missionId}`)*/
 
             if (item.missions.missionType === "GOAL") {
-                var achieved = "<img src='images/achieved.png' alt=''>"
+                var achieved = "<img src='/images/deadline.png' alt=''>"
                     + "<div class='w-100'>"
                     + "<div class='progress' style='width:90%;margin-left:10px;'>"
                     + "<div class='progress-bar' role='progressbar'' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'>" + "</div>"
@@ -400,7 +402,7 @@ const loadmissions = (missions) => {
                 $('.deadline').eq(i).find('.progress-bar').css("width", percent + "%")
             }
             else {
-                var deadline = "<img src='images/deadline.png' alt=''>"
+                var deadline = "<img src='/images/deadline.png' alt=''>"
                     + "<span>" + item.missions.deadline.slice(0, 10) +
                     "<p>" + "Deadline" + "</p>" + "</span>"
                 var time = "<p id='duration-txt' style='margin-bottom: 0;'>" + "From " + item.missions.startDate.slice(0, 10) + " To " + item.missions.endDate.slice(0, 10) + "</p>"
@@ -417,7 +419,7 @@ const search_missions = () => {
     if (key.length > 3) {
         key = key.toLowerCase();
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { key },
             success: function (result) {
@@ -430,7 +432,7 @@ const search_missions = () => {
     }
     else {
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills },
             success: function (result) {
@@ -449,7 +451,7 @@ const sort_by = () => {
     var selected = $('#sort').find(':selected').text();
     if (selected != "Sort By") {
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
@@ -471,7 +473,7 @@ const clear_all = () => {
     themes = []
     skills = []
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
@@ -515,7 +517,7 @@ const remove_badges = (id, badge_type) => {
         }
     }
     $.ajax({
-        url: '/home',
+        url: '/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {

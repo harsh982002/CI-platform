@@ -6,7 +6,7 @@ using CIPlatform.Entitites.Models;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using CIPlatform.Entitites.ViewModel;
+
 
 namespace CI_PLATFORM.Controllers
 {

@@ -3,8 +3,6 @@ C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatf
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Repository.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\ref\CIPlatform.Repository.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Repository.pdb
-C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Entitites.dll
-C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Entitites.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatform.Repository.csproj.AssemblyReference.cache
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatform.Repository.GeneratedMSBuildEditorConfig.editorconfig
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatform.Repository.AssemblyInfoInputs.cache
@@ -15,3 +13,5 @@ C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatf
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\ref\CIPlatform.Repository.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatform.Repository.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\obj\Debug\net6.0\CIPlatform.Repository.genruntimeconfig.cache
+C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Entitites.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CIPlatform.Repository\bin\Debug\net6.0\CIPlatform.Entitites.pdb
