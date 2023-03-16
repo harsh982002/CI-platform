@@ -306,7 +306,7 @@ const loadmissions = (missions) => {
             var data = "<div class='item col-md-6 col-lg-4 col-sm-6 mt-3'>"
                 + "<div class='thumbnail card d-flex'>"
                 + "<div class='img-event'>"
-                + " <img class='group list-group-image w-100 h-100' src='' alt='' />"
+                + " <img class='group list-group-image w-100 h-100'  src='' alt='' />"
                 + "<div class='location-img'>"
                 + "<img class='text-light' src='/images/pin.png' alt=''>"
                 + "<span class='text-light ms-1'>"
@@ -329,7 +329,7 @@ const loadmissions = (missions) => {
                 "</button>" + "</a>" +
                 "</div>"
                 + "</div>"
-                + " <div class='caption card-body'>"
+                + " <div class='caption card-body' style=' padding-right: 2% !important; padding-left: 2% !important;'>"
                 + "<h4 class='group card-title inner list-group-item-heading'>"
                 + item.missions.title.slice(0, 50) + "..." + "</h4>"
                 + " <p class='group inner list-group-item-text'>"
@@ -528,7 +528,131 @@ const remove_badges = (id, badge_type) => {
         }
     })
 }
+const pagination = (page_index) => {
+    pageindex = page_index - 1;
+    $('.pagination li span').each(function (i, item) {
+        item.classList.remove('page-active')
+    })
+    $(`#page-${page_index}`).addClass('page-active')
+    $.ajax({
+        url: '/home',
+        type: 'POST',
+        data: { page_index: page_index - 1 },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    })
+}
+const prev = () => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== 1) {
+                $('.pagination li span').eq(i - 1).addClass('page-active')
+                item.classList.remove('page-active')
+            }
+        }
+    })
+    if (current_page !== 1) {
+        pageindex = current_page - 2
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: current_page - 2 },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
+const next = (max_page) => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== max_page) {
+                $('.pagination li span').eq(i + 1).addClass('page-active')
+                item.classList.remove('page-active')
+                return false
+            }
+        }
+    })
+    if (current_page !== max_page) {
+        pageindex = current_page
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: current_page },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
 
+const first_page = () => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== 1) {
+                $('.pagination li span').eq(2).addClass('page-active')
+                item.classList.remove('page-active')
+            }
+        }
+    })
+    if (current_page !== 1) {
+        pageindex = 0
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: 0 },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
+const last_page = (max_page) => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== max_page) {
+                $('.pagination li span').eq(max_page + 1).addClass('page-active')
+                item.classList.remove('page-active')
+                return false
+            }
+        }
+    })
+    if (current_page !== max_page) {
+        pageindex = max_page - 1
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: max_page - 1 },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
 
 function setfilters(a) {
     if (document.getElementById(a).checked) {

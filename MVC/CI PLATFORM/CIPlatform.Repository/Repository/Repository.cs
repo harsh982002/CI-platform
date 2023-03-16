@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Data;
+using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,6 +34,8 @@ namespace CIPlatform.Repository.Repository
         {
             return dbset;
         }
+
+       
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {

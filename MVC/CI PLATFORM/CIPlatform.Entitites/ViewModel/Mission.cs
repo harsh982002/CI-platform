@@ -11,6 +11,7 @@ namespace CIPlatform.Entitites.ViewModel
     {
         public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
 
+        
         public MissionMedium? image { get; set; }
         public List<Country>? Country { get; set; }
         public List<City>? Cities { get; set; }
@@ -18,5 +19,6 @@ namespace CIPlatform.Entitites.ViewModel
         public List<Skill>? skills { get; set; }
         public string? Mission_city { get; set; }
         public string? Mission_theme { get; set; }
+        public int? TotalMission { get; set; }
     }
 }

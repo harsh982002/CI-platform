@@ -43,18 +43,30 @@ namespace CIPlatform.Repository.Repository
 
         public List<Entitites.ViewModel.Mission> GetAllMission()
         {
+
             var Missions = (from m in missions
                             join i in image on m.MissionId equals i.MissionId into data
                             from i in data.DefaultIfEmpty().Take(1)
-                            select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, themes = theme, skills = skills }).ToList();
-            return Missions;
+                            select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, themes = theme, skills = skills,TotalMission=missions.Count}).ToList();
+            
+            return Missions.Take(9).ToList();
+           
         }
 
-        public List<Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by)
+        public List<Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by, int page_index)
         {
             List<CIPlatform.Entitites.ViewModel.Mission> Missions = new List<Entitites.ViewModel.Mission>();
             List<City> city = new List<City>();
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
+
+            if (page_index != 0)
+            {
+                missions = missions.Skip(9 * page_index).Take(9).ToList();
+            }
+            else
+            {
+                missions = missions.Take(9).ToList();
+            }
             if (countries.Count > 0)
             {
                 city = (from c in cities
@@ -102,7 +114,7 @@ namespace CIPlatform.Repository.Repository
             {
                 mission = missions;
             }
-            if (sort_by == "Newest")
+            if (sort_by == "newest")
             {
                 Missions = (from m in mission
                             orderby m.CreatedAt descending
@@ -110,7 +122,7 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
-            else if (sort_by == "Oldest")
+            else if (sort_by == "oldest")
             {
                 Missions = (from m in mission
                             orderby m.CreatedAt ascending
@@ -118,7 +130,7 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
-            /*else if (sort_by == "Lowest available seats")
+            else if (sort_by == "lowest available seats")
             {
                 Missions = (from m in mission
                             orderby m.AvbSeat ascending
@@ -126,7 +138,7 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
-            else if (sort_by == "Highest available seats")
+            else if (sort_by == "highest available seats")
             {
                 Missions = (from m in mission
                             orderby m.AvbSeat descending
@@ -134,7 +146,7 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
-            else if (sort_by == "Registration deadline")
+            else if (sort_by == "registration deadline")
             {
 
                 Missions = (from m in mission
@@ -142,7 +154,7 @@ namespace CIPlatform.Repository.Repository
                             join i in image on m.MissionId equals i.MissionId into data
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
-            }*/
+            }
             else
             {
 
@@ -154,8 +166,16 @@ namespace CIPlatform.Repository.Repository
             return Missions;
         }
 
-        public List<Entitites.ViewModel.Mission> GetSearchMissions(string key)
+        public List<Entitites.ViewModel.Mission> GetSearchMissions(string key, int page_index)
         {
+            if (page_index != 0)
+            {
+                missions = missions.Skip(9 * page_index).Take(9).ToList();
+            }
+            else
+            {
+                missions = missions.Take(9).ToList();
+            }
 
             var mission = (from m in missions
                            where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)

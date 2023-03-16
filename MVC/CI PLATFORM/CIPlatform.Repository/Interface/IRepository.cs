@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIPlatform.Entitites.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,7 +14,5 @@ namespace CIPlatform.Repository.Interface
         IEnumerable<T> GetAll();
         T Get(int id);
         void Add(T entity);
-
-
     }
 }

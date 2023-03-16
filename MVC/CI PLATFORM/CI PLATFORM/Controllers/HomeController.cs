@@ -31,16 +31,16 @@ namespace CI_PLATFORM.Controllers
         }
         [HttpPost]
         
-        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
+        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index)
         {
             if (key is not null)
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key);
+                List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
                 return Json(new { missions = search_missions, success = true });
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by);
+                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index);
                 return Json(new { missions, success = true });
             }
         }

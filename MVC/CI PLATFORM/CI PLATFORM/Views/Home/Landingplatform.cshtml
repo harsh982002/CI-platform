@@ -382,16 +382,16 @@
             <h2>Explore : <b>@Model.Count Missions</b></h2>
 
             <div>
-                <div class="dropdown">
-                    <select class="bg-white text-black btn btn-secondary dropdown-toggle" onchange="sort_by()"   data-bs-toggle="dropdown" aria-expanded="false" id="sort">
+                <div class="d-flex sort dropdown">
+                    <select class="form-select" onchange="sort_by()" aria-label="Sort By" id="sort" >
                        
                     <option disabled  selected>Sort By</option>
-                        <option value="Newest">Newest</option>
-                        <option value="Oldest">Oldest</option>
-                        @*<option value="Lowest available seats">Lowest available seats</option>
-                        <option value="Highest available seats">Highest available seats</option>
-                        <option value="My favourites">My favourites</option>
-                        <option value="Registration deadline">Registration deadline</option>*@
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="lowest available seats">Lowest available seats</option>
+                        <option value="highest available seats">Highest available seats</option>
+                        <option value="my favourites">My favourites</option>
+                        <option value="registration deadline">Registration deadline</option>
                    </select>
                     <img src="/images/grid.png" class="view" id="grid" onclick="gridview()" alt="not load" style="object-fit:scale-down;" />
                     <img src="/images/list.png" alt="not load" onclick="listview()" style="object-fit:scale-down;" />
@@ -516,24 +516,35 @@
         </div>
     </div>
         <nav aria-label="Page navigation example" class="mt-5">
-            <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" href="#" tabindex="-1"><img src="~/images/previous.png" alt="not load" /></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" tabindex="-1"><img src="~/images/left.png" alt="not load" /></a>
-                </li>
-            <li class="page-item"><a class="page-link active" style="background-color: orange; border-color: white;" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-black" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-black" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><img src="~/images/right-arrow1.png" alt="not load" /></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><img src="~/images/next.png" alt="not load" /></a>
-                </li>
-            </ul>
-        </nav>
+            <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
+        </li> 
+         <li class="page-item">
+            <span class="page-link" onclick="prev()"><img src="~/images/left.png" alt="not load" /></span>
+        </li>
+        @{
+            int pages=(int)Math.Ceiling((double)@Model.ElementAt(0).TotalMission/9);
+            for (var i = 1; i <= pages; i++)
+            {
+                if (i == 1)
+                {
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+                else
+                {
+                     <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+            }
+        }
+        <li class="page-item">
+            <span class="page-link" onclick="next(@pages)"><img src="~/images/right-arrow1.png" alt="not load" /></span>
+        </li>
+        <li class="page-item">
+            <span class="page-link" onclick="last_page(@pages)"><img src="~/images/next.png" alt="not load" /></span>
+        </li>
+    </ul>
+</nav>
 
 
     <script src="/js/index.js"></script>
