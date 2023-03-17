@@ -27,6 +27,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Home/Storylisting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdG9yeWxpc3RpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Home/Volunteermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWb2x1bnRlZXJtaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,14 +57,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Resetpassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY291bnRcUmVzZXRwYXNzd29yZC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Storylisting.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY291bnRcU3RvcnlsaXN0aW5nLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/UserAccount/Volunteermission.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjY291bnRcVm9sdW50ZWVybWlzc2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/_ViewImports.cshtml]

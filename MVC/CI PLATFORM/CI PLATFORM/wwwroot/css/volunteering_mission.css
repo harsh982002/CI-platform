@@ -27,7 +27,9 @@
     .user-comments::-webkit-scrollbar-thumb {
         background-color: lightgray;
     }
-.applybutton {
+
+
+.applyButton {
     width: 40%;
     border: solid 2px #F88634;
     border-radius: 24px;
@@ -35,10 +37,10 @@
     color: #F88634;
 }
 
-/* .applybutton:hover {
+ .applybutton:hover {
         background-color: #F88634;
         color: white;
-}*/
+}
 
 .duration-seats-info {
     position: relative;

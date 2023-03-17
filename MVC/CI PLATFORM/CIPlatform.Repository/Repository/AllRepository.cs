@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Data;
+using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,10 @@ namespace CIPlatform.Repository.Repository
         {
             _db= db;
             missionRepository=new MissionRepository(_db);
+            volunteerRepository = new VolunteerRepository(_db); 
         }
         public IMissionRepository missionRepository { get; set; }
+        public IVolunteerRepository volunteerRepository { get; set ; }
 
         public void save()
         {

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace CIPlatform.Entitites.ViewModel
 {
-    public class Mission
+    public class VolunteerViewModel
     {
+       
+
         public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
 
-        
-        
-        public MissionMedium? image { get; set; }
+
+        public string? Image { get; set; }
         public List<Country>? Country { get; set; }
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }

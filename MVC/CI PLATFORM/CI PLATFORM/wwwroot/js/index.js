@@ -517,7 +517,7 @@ const remove_badges = (id, badge_type) => {
         }
     }
     $.ajax({
-        url: '/Landingplatform',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
@@ -535,7 +535,7 @@ const pagination = (page_index) => {
     })
     $(`#page-${page_index}`).addClass('page-active')
     $.ajax({
-        url: '/home',
+        url: '/Home/Landingplatform',
         type: 'POST',
         data: { page_index: page_index - 1 },
         success: function (result) {
@@ -560,7 +560,7 @@ const prev = () => {
     if (current_page !== 1) {
         pageindex = current_page - 2
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { page_index: current_page - 2 },
             success: function (result) {
@@ -587,7 +587,7 @@ const next = (max_page) => {
     if (current_page !== max_page) {
         pageindex = current_page
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { page_index: current_page },
             success: function (result) {
@@ -614,7 +614,7 @@ const first_page = () => {
     if (current_page !== 1) {
         pageindex = 0
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { page_index: 0 },
             success: function (result) {
@@ -641,7 +641,7 @@ const last_page = (max_page) => {
     if (current_page !== max_page) {
         pageindex = max_page - 1
         $.ajax({
-            url: '/home',
+            url: '/Home/Landingplatform',
             type: 'POST',
             data: { page_index: max_page - 1 },
             success: function (result) {

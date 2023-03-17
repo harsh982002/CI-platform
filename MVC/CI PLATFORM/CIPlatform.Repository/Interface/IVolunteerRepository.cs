@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace CIPlatform.Repository.Interface
 {
-    public interface IAllRepository
+    public interface IVolunteerRepository : IRepository<CIPlatform.Entitites.Models.Mission>
     {
         void save();
 
-        public IMissionRepository missionRepository { get; set; }
-
-        public IVolunteerRepository volunteerRepository { get; set;}
-
-       
+        List<CIPlatform.Entitites.ViewModel.VolunteerViewModel> GetAllMission(int Id);
+        VolunteerViewModel Missiondetails(int Id);
     }
 }

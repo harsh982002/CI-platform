@@ -43,6 +43,7 @@ namespace CIPlatform.Repository.Repository
 
         public List<Entitites.ViewModel.Mission> GetAllMission()
         {
+            
 
             var Missions = (from m in missions
                             join i in image on m.MissionId equals i.MissionId into data

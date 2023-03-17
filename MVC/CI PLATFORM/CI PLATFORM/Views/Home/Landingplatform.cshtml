@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </nav>
-                <div class="d-flex justify-content-end mt-3 me-1">
+         <div class="d-flex justify-content-end mt-3 me-1">
                     <a class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="rounded-circle" style="object-fit: none;" width="32" height="32">
                          @Accesor?.HttpContext?.Session.GetString("Name")
@@ -429,6 +429,7 @@
                         <button class="mission-theme border-0">
                             <span class="p-2">@item.Missions?.Theme.Title</span>
                         </button>
+                         
                     </div>
                     <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
                         <h4 class="group card-title inner list-group-item-heading">
@@ -502,9 +503,11 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center my-3">
-                            <button class="applyButton bg-white">
-                                Apply <img src="/images/right-arrow.png" alt="">
-                            </button>
+                        
+                            <a  asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.Missions.MissionId"  class="applybutton bg-white " style="text-decoration: none;"  >
+                               <span class="align-items-center" style="margin-left : 25%"> Apply <img src="/images/right-arrow.png" alt=""> </span>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>

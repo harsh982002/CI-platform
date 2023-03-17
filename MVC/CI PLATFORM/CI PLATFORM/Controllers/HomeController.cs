@@ -1,4 +1,5 @@
 ﻿using CI_PLATFORM.Models;
+using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -33,15 +34,22 @@ namespace CI_PLATFORM.Controllers
         
         public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index)
         {
+            if (page_index != 0)
+            {
+                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index);
+                
+                return Json(new { mission = missions, length = missions.Count });
+            }
+           
             if (key is not null)
             {
                 List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
-                return Json(new { missions = search_missions, success = true });
+                return Json(new { missions = search_missions, success = true, lenght = search_missions.Count });
             }
             else
             {
                 List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index);
-                return Json(new { missions, success = true });
+                return Json(new { missions, success = true, lenght = missions.Count });
             }
         }
 
@@ -49,6 +57,18 @@ namespace CI_PLATFORM.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Volunteermission(int Id)
+        {
+
+            VolunteerViewModel mission_detail = _allRepository.volunteerRepository.Missiondetails(Id);
+            return View(mission_detail);
+        }
+
+        public IActionResult Storylisting()
+        {
+            return View();
         }
     }
 }

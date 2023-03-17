@@ -158,15 +158,7 @@ namespace CI_PLATFORM.Controllers
        
         
 
-        public IActionResult Volunteermission()
-        {
-            return View();
-        }
-
-        public IActionResult Storylisting()
-        {
-            return View();
-        }
+        
 
     }
 }
