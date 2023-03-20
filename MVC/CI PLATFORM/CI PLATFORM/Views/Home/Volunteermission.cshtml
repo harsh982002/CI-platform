@@ -14,11 +14,13 @@
     <title>header</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/volunteering_mission.css" />
+    <link rel="stylesheet" href="/css/volunteering_mission.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
     
 </head>
 
@@ -184,11 +186,8 @@
 
                     <hr>
 
-                    <div class="d-flex flex-wrap">
-                        <button class="rounded-pill border me-2  color-white" style="flex: 45%;">
-                            <i class="fa fa-heart-o px-2" style="color:#757575;"></i> Add to
-                            favourite
-                        </button>
+                    <div class=" d-flex flex-wrap">
+                             <button type="submit" onclick="Add(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" class="rounded-pill border " style="flex: 45%;"><i class="bi bi-heart-fill" id="addToFav"></i> Add to favourite</button>
                         <button class="rounded-pill border me-2 " style="flex: 45%;">
                             <i class="fa fa-square px-2"></i>Recommend
                             to a Co-Worker
@@ -197,12 +196,9 @@
 
 
                      <div class="rating mt-2" style="margin-left:38%">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/star.png" alt="">
-                                <img src="/images/star.png" alt="">
+                                <span id="rateMe2"  class="empty-stars"></span>
                             </div>
+                    
                     
 
 
@@ -295,37 +291,12 @@
 
                                 <h5 class="py-3" style="font-size: 25px;">Introduction</h5>
                                 <p class="m-2 intro" >
-                                    Lorem
-                                    ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat.<br><br> Duis aute irure dolor in reprehenderit in voluptate velit
-                                    esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                    laborum.<br><br>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                    officia deserunt mollit anim id est laborum.
+                                    @Model.Missions.Description
                                 </p>
 
                                 <h5 class="py-3" style="font-size: 25px;">Challenge</h5>
                                 <p class="challenge">
-                                    Lorem ipsum dolor sit amet,
-                                    consectetur adipiscing
-                                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                    enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                                    anim id est laborum. <br><br>Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing
-                                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                    enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    @Model.Missions.ShortDescription
                                 </p>
 
                                 <h5 class="py-3" style="font-size: 25px;">Documents</h5>
@@ -336,17 +307,7 @@
                                         <span class="ms-2">lorem-ipsum.pdf</span>
                                     </div>
 
-                                    <div class=" col border rounded-pill  d-flex align-items-center doc"
-                                         >
-                                        <img src="images/doc.png" alt="">
-                                        <span class="ms-2">lorem-ipsum.pdf</span>
-                                    </div>
-
-                                    <div class=" col border rounded-pill  d-flex align-items-center doc"
-                                        ">
-                                        <img src="images/doc.png" alt="">
-                                        <span class="ms-2">lorem-ipsum.pdf</span>
-                                    </div>
+    
 
                                 </div>
 
@@ -361,20 +322,7 @@
 
                                 <h5 class="py-3" style="font-size: 25px;">About Organization</h5>
                                 <p class="m-2 org">
-                                    Lorem
-                                    ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat.<br><br> Duis aute irure dolor in reprehenderit in voluptate velit
-                                    esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                    laborum.<br><br>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                    officia deserunt mollit anim id est laborum.
+                                   @Model.Missions.OrganizationDetail
                                 </p>
 
 
@@ -444,7 +392,7 @@
 
                             <ul class="nav nav-tabs card-title ">
                                 <li class="nav-item">
-                                    <div class="nav-link active text-decoration-none border-0 ps-0 information"
+                                    <div class="nav-link text-black  text-decoration-none border-0 ps-0 information"
                                          >
                                         Information
                                     </div>
@@ -456,13 +404,19 @@
                                     <thead>
                                         <tr>
                                             <td class="py-3">Skills</td>
-                                            <td class="py-3">Cool, Easy going, Math, Computer </td>
+                                            
+                                            <td class="py-3">
+                                                 @foreach (var i in @Model.Missions.MissionSkills)
+                                                     {
+                                                        @i.Skill.SkillName <span>,</span>
+                                                      }
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td class="py-3">Days</td>
-                                            <td class="py-3">Weekend only</td>
+                                            <td class="py-3">@Model.Missions.Availability</td>
                                         </tr>
                                         <tr>
                                             <td class="py-3 border-bottom-0">Rating</td>
@@ -656,7 +610,7 @@
                     <div class="img-event">
                         <img class="group list-group-image w-100 h-100"
                              src="/images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="" />
-                        <div class="location-img">
+                        <div class="location-img" >
                             <img class="text-light" src="/images/pin.png" alt="">
                             <span class="text-light">Toronto</span>
                         </div>
@@ -716,144 +670,16 @@
                     </div>
                 </div>
             </div>
-            <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card d-flex">
-                    <div class="img-event">
-                        <img class="group list-group-image w-100 h-100"
-                             src="/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" alt="" />
-                        <div class="location-img">
-                            <img class="text-light" src="/images/pin.png" alt="">
-                            <span class="text-light">Melbourn</span>
-                        </div>
-                        <button class="like-img border-0">
-                            <img class="text-light" src="/images/heart.png" alt="">
-                        </button>
-                        <button class="stop-img border-0">
-                            <img class="text-light" src="/images/user.png" alt="">
-                        </button>
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Children</span>
-                        </button>
-                    </div>
-                    <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Education supplies for Every Pair of Shoes Sold
-                        </h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...
-                        </p>
-                        <div class="d-flex justify-content-between">
-                            <span class="organization">Australian Paradise</span>
-                            <div class="rating">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/star.png" alt="">
-                                <img src="/images/star.png" alt="">
-                            </div>
-                        </div>
-                        <div class="duration-seats-info mt-4">
-                            <div class="duration">
-                                <p id="duration-txt" style="margin-bottom: 0;">From 10/01/2019 until 25/02/2019</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between border-bottom mt-3">
-                            <div class="Seats d-flex align-items-center">
-                                <img src="/images/Seats-left.png" alt="">
-                                <span>
-                                    250 <p>Already Volunteered</p>
-                                </span>
-                            </div>
-                            <div class="deadline d-flex align-items-center">
-                                <img src="/images/deadline.png" alt="">
-                                <span>
-                                    09/01/2019
-                                    <p>Deadline</p>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center my-3">
-                            <button class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px">
-                                Apply <img src="/images/right-arrow.png" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card d-flex">
-                    <div class="img-event">
-                        <img class="group list-group-image w-100 h-100"
-                             src="/images/Nourish-the-Children-in--African-country.png" alt="" />
-                        <div class="location-img">
-                            <img class="text-light" src="/images/pin.png" alt="">
-                            <span class="text-light">Barcelona</span>
-                        </div>
-                        <button class="like-img border-0">
-                            <img class="text-light" src="/images/heart.png" alt="">
-                        </button>
-                        <button class="stop-img border-0">
-                            <img class="text-light" src="/images/user.png" alt="">
-                        </button>
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Nutrition</span>
-                        </button>
-                    </div>
-                    <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Nourish the Children in African country
-                        </h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...
-                        </p>
-                        <div class="d-flex justify-content-between">
-                            <span class="organization">The Hunger</span>
-                            <div class="rating">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/selected-star.png" alt="">
-                                <img src="/images/star.png" alt="">
-                                <img src="/images/star.png" alt="">
-                            </div>
-                        </div>
-                        <div class="duration-seats-info mt-4">
-                            <div class="duration">
-                                <p id="duration-txt" style="margin-bottom: 0;">Ongoing Oppertunity</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between border-bottom mt-3">
-                            <div class="Seats d-flex align-items-center">
-                                <img src="/images/Seats-left.png" alt="">
-                                <span>
-                                    10 <p>seats left</p>
-                                </span>
-                            </div>
-                            <div class="deadline d-flex align-items-center">
-                                <img src="/images/deadline.png" alt="">
-                                <span>
-                                    09/01/2019
-                                    <p>Deadline</p>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center my-3">
-                            <button class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px">
-                                Apply <img src="/images/right-arrow.png" alt="">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            
         </div>
 
 
 
     </div>
 
-
+    <script src="/js/volunteering_mission.js"></script>
 
 
 

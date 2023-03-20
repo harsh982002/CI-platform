@@ -6,7 +6,7 @@ using CIPlatform.Entitites.Models;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-
+using Microsoft.AspNetCore.Http;
 
 namespace CI_PLATFORM.Controllers
 {
@@ -49,6 +49,7 @@ namespace CI_PLATFORM.Controllers
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("Avtar", user.Avatar);
+                        HttpContext.Session.SetString("UserId", user.UserId.ToString());
                         return RedirectToAction("Landingplatform", "Home");
                     }
                 }

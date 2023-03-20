@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Data;
+using CIPlatform.Entitites.Models;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using System;
@@ -21,6 +22,30 @@ namespace CIPlatform.Repository.Repository
         }
         public IMissionRepository missionRepository { get; set; }
         public IVolunteerRepository volunteerRepository { get; set ; }
+
+        public bool AddFavouriteMission(long MissionId, long UserId)
+        {
+
+            FavoriteMission favoriteMission = new FavoriteMission();
+            favoriteMission.UserId = UserId;
+            favoriteMission.MissionId = MissionId;
+
+            var favmission = _db.FavoriteMissions.FirstOrDefault(s => s.UserId == UserId && s.MissionId == MissionId);
+            if (favmission == null)
+            {
+                _db.FavoriteMissions.Add(favoriteMission);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                _db.FavoriteMissions.Remove(favmission);
+                _db.SaveChanges();
+                return false;
+            }
+        }
+
+         
 
         public void save()
         {

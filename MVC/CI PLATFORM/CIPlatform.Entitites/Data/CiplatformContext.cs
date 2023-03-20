@@ -203,11 +203,14 @@ public partial class CiplatformContext : DbContext
             entity.ToTable("comment");
 
             entity.Property(e => e.CommentId).HasColumnName("comment_id");
-            entity.Property(e => e.ApprovalStatus)
+            entity.Property(e => e.approvalstatus)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasDefaultValueSql("('PENDING')")
                 .HasColumnName("approval_status");
+            entity.Property(e => e.Comment1)
+                .HasColumnType("text")
+                .HasColumnName("comment");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")

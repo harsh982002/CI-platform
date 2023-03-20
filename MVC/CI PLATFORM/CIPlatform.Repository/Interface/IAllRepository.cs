@@ -15,6 +15,9 @@ namespace CIPlatform.Repository.Interface
 
         public IVolunteerRepository volunteerRepository { get; set;}
 
-       
+        bool AddFavouriteMission(long MissionId, long UserId);
+      
+
+
     }
 }

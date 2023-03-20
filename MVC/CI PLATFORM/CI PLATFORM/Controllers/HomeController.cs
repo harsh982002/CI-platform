@@ -2,6 +2,7 @@
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace CI_PLATFORM.Controllers
@@ -9,6 +10,7 @@ namespace CI_PLATFORM.Controllers
     public class HomeController : Controller
     {
         private readonly IAllRepository _allRepository;
+       
 
         public HomeController(IAllRepository allRepository)
         {
@@ -63,9 +65,31 @@ namespace CI_PLATFORM.Controllers
         {
 
             VolunteerViewModel mission_detail = _allRepository.volunteerRepository.Missiondetails(Id);
+
             return View(mission_detail);
         }
+    
+            public ActionResult AddToFavourite(long MissionId,string UserId)
+        {
+            long userId = Convert.ToInt64(UserId);
 
+            bool mission = _allRepository.AddFavouriteMission(MissionId, userId);
+            if (mission == true)
+            {
+
+                TempData["Success"] = "Added to your faviroute";
+            }
+            else
+            {
+
+                TempData["Success"] = "Removed from your faviroute";
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+       
         public IActionResult Storylisting()
         {
             return View();

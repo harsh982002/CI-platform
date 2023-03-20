@@ -1,4 +1,5 @@
-﻿using CIPlatform.Entitites.ViewModel;
+﻿using CIPlatform.Entitites.Models;
+using CIPlatform.Entitites.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,10 @@ namespace CIPlatform.Repository.Interface
 
         List<CIPlatform.Entitites.ViewModel.VolunteerViewModel> GetAllMission(int Id);
         VolunteerViewModel Missiondetails(int Id);
+        List<MissionRating> getMissionRatings(int Id);
+
+        bool apply_for_mission(long UserId, long MissionId);
+
+        List<CIPlatform.Entitites.ViewModel.Mission> GetAllMission();
     }
 }
