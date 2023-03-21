@@ -47,35 +47,6 @@ namespace CIPlatform.Repository.Repository
             missionskills = _db.MissionSkills.ToList();
             mission_documents = _db.MissionDocuments.ToList();
         }
-        public bool apply_for_mission(long UserId, long MissionId)
-        {
-            DateTime current = DateTime.Now;
-            if (UserId != 0 && MissionId != 0)
-            {
-                var missionapplication = (from ma in missionApplications
-                                          where ma.UserId.Equals(UserId) && ma.MissionId.Equals(MissionId)
-                                          select ma).ToList();
-                if (missionapplication.Count == 0)
-                {
-                    _db.MissionApplications.Add(new MissionApplication
-                    {
-                        AppliedAt = current,
-                        UserId = UserId,
-                        MissionId = MissionId
-                    });
-                    Save();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
         public VolunteerViewModel Missiondetails(int Id)
         {
             var missions = _db.Missions.FirstOrDefault(m => m.MissionId == Id);
@@ -88,30 +59,16 @@ namespace CIPlatform.Repository.Repository
             var missionskills = _db.MissionSkills.ToList();
             var mission_documents = _db.MissionDocuments.ToList();
             var image = _db.MissionMedia.FirstOrDefault(x => x.MissionId == Id).MediaPath;
-          
+            var comment = _db.Comments.ToList();
             VolunteerViewModel data = new VolunteerViewModel
             {
-                Missions = missions, Cities = cities, Country = countries, themes = themes, skills = skills, Image = image 
+                Missions = missions, Cities = cities, Country = countries, themes = themes, skills = skills, Image = image , comments = comment
             };
             return data;
         }
 
-        public List<Entitites.ViewModel.Mission> GetAllMission()
-        {
-
-
-            var Missions = (from m in missions
-                            join i in image on m.MissionId equals i.MissionId into data
-                            from i in data.DefaultIfEmpty().Take(1)
-                            select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, themes = theme, skills = skills, TotalMission = missions.Count }).ToList();
-
-            return Missions.ToList();
-
-        }
-        public List<VolunteerViewModel> GetAllMission(int Id)
-        {
-            throw new NotImplementedException();
-        }
+        
+       
 
         public void save()
         {
@@ -124,7 +81,51 @@ namespace CIPlatform.Repository.Repository
             return rating;
         }
 
-        
+
+        /* public bool ApplyMission(long MissionId, long UserId)
+         { 
+             MissionApplication missionApplication = new MissionApplication();
+             missionApplication.MissionId = MissionId;
+             missionApplication.UserId = UserId;
+
+             var applymission = _db.MissionApplications.FirstOrDefault(s => s.MissionId == MissionId && s.UserId == UserId);
+
+             if (applymission != null)
+             {
+                 _db.MissionApplications.Add(missionApplication);
+                 _db.SaveChanges();
+                 return true;
+             }
+             else
+             {
+                 return false;
+             }
+         }*/
+
+        public void ApplyMission(long MissionId, long UserId)
+        {
+            MissionApplication missionapplication = new MissionApplication();
+            missionapplication.UserId = UserId;
+            missionapplication.MissionId = MissionId;
+            missionapplication.AppliedAt = DateTime.Now;
+
+            var applymission = _db.MissionApplications.FirstOrDefault(s => s.MissionId == MissionId && s.UserId == UserId);
+
+            if (applymission == null)
+            {
+                _db.MissionApplications.Add(missionapplication);
+                _db.SaveChanges();
+               
+            }   
+            else
+            {
+                missionapplication.ApprovalStatus = "PENDING";
+                missionapplication.AppliedAt= DateTime.Now;
+            }
+            _db.SaveChanges();
+            
+        }
+
 
         public bool AddFavouriteMission(long userId, long Id)
         {
@@ -148,10 +149,42 @@ namespace CIPlatform.Repository.Repository
             }
         }
 
-     
+       /* public List<CommentViewModel> GetComments(long MissionId)
+        {
+            List<Comment> comments = _db.Comments.Where(a => a.MissionId == MissionId && a.approvalstatus == "PUBLISHED").ToList();
+            List<CommentViewModel> commentViewModels = new List<CommentViewModel>();
+            foreach (Comment comment in comments)
+            {
+                CommentViewModel commentViewModel = new CommentViewModel();
+                User user = _db.Users.FirstOrDefault(a => a.UserId == comment.UserId);
+                commentViewModel.Avatar = user.Avatar;
+                commentViewModel.Comment = comment.Comment1;
+                commentViewModel.UserName = user.FirstName + " " + user.LastName;
+                commentViewModel.WeekDay = comment.CreatedAt.DayOfWeek.ToString();
+                commentViewModel.Time = comment.CreatedAt.ToString("h:mm tt");
+                commentViewModel.Month = comment.CreatedAt.ToString("MMM");
+                commentViewModel.Day = comment.CreatedAt.Day.ToString();
+                commentViewModel.Year = comment.CreatedAt.Year.ToString();
+
+                commentViewModels.Add(commentViewModel);
+            }
+            return commentViewModels;
+        }*/
+
+        public void AddComment(string userComment, long MissionId, long userId)
+        {
+            Comment comment = new Comment();
+            comment.UserId = userId;
+            comment.Comment1 = userComment;
+            comment.MissionId = MissionId;
+            _db.Comments.Add(comment);
+            _db.SaveChanges();
+        }
         private void Save()
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

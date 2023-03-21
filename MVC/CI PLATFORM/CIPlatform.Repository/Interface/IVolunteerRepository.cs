@@ -12,12 +12,15 @@ namespace CIPlatform.Repository.Interface
     {
         void save();
 
-        List<CIPlatform.Entitites.ViewModel.VolunteerViewModel> GetAllMission(int Id);
+        
         VolunteerViewModel Missiondetails(int Id);
         List<MissionRating> getMissionRatings(int Id);
 
-        bool apply_for_mission(long UserId, long MissionId);
+        /* bool ApplyMission(long UserId, long MissionId);*/
 
-        List<CIPlatform.Entitites.ViewModel.Mission> GetAllMission();
+        void ApplyMission(long MissionId, long UserId);
+       
+        void AddComment(string comment, long MissonId, long userId);
+/*        List<CommentViewModel> GetComments(long missionId);*/
     }
 }

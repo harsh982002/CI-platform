@@ -99,7 +99,7 @@ function addcities(name, type) {
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()  },
         success: function (result) {
             loadmissions(result.missions)
         },
@@ -119,6 +119,7 @@ const addcountries = (name, type) => {
     else {
         country = document.getElementById(name)
     }
+   
     if (country.checked) {
         if (!countries.includes(name)) {
             countries.push(name)
@@ -148,14 +149,18 @@ const addcountries = (name, type) => {
 
         }
     }
+    console.log(1)
     $.ajax({
+
         url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: async function (result) {
+        success: function (result) {
+            debugger
+            console.log(result)
             if (result.missions.length > 0) {
-                await loadcities(result.missions[0].cities);
-                await loadmissions(result.missions)
+                 loadcities(result.missions[0].cities);
+                 loadmissions(result.missions)
             }
         },
         error: function () {
@@ -528,7 +533,7 @@ const remove_badges = (id, badge_type) => {
         }
     })
 }
-const pagination = (page_index) => {
+/*const pagination = (page_index) => {
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {
         item.classList.remove('page-active')
@@ -653,7 +658,7 @@ const last_page = (max_page) => {
         })
     }
 }
-
+*/
 function setfilters(a) {
     if (document.getElementById(a).checked) {
         allchoices.push(a)

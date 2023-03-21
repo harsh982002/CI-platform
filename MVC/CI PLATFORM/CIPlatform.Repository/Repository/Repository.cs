@@ -1,5 +1,5 @@
 ﻿using CIPlatform.Entitites.Data;
-using CIPlatform.Entitites.ViewModel;
+
 using CIPlatform.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;

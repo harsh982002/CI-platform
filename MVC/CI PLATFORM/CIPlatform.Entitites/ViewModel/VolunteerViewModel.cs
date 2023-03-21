@@ -17,6 +17,7 @@ namespace CIPlatform.Entitites.ViewModel
         
         public string? Image { get; set; }
         public List<Country>? Country { get; set; }
+        public List<Comment> comments { get; set; }
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }

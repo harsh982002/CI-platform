@@ -32,26 +32,19 @@ namespace CI_PLATFORM.Controllers
             List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetAllMission();
             return View(missions);
         }
+        [Route("/Home/Landingplatform")]
         [HttpPost]
-        
-        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index)
+        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
         {
-            if (page_index != 0)
-            {
-                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index);
-                
-                return Json(new { mission = missions, length = missions.Count });
-            }
-           
             if (key is not null)
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
-                return Json(new { missions = search_missions, success = true, lenght = search_missions.Count });
+                List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key);
+                return Json(new { missions = search_missions, success = true });
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index);
-                return Json(new { missions, success = true, lenght = missions.Count });
+                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by);
+                return Json(new { missions, success = true });
             }
         }
 
@@ -67,9 +60,12 @@ namespace CI_PLATFORM.Controllers
             VolunteerViewModel mission_detail = _allRepository.volunteerRepository.Missiondetails(Id);
 
             return View(mission_detail);
+           
         }
-    
-            public ActionResult AddToFavourite(long MissionId,string UserId)
+     
+
+
+        public ActionResult AddToFavourite(long MissionId,string UserId)
         {
             long userId = Convert.ToInt64(UserId);
 
@@ -88,8 +84,21 @@ namespace CI_PLATFORM.Controllers
         }
 
 
+
+        public void ApplyMission(long MissionId, long UserId)
+        {
+            long userId = Convert.ToInt64(UserId);
+            _allRepository.volunteerRepository.ApplyMission(MissionId, userId);
+
+        }
+        public void AddComment(string Comment, long MissionId, string UserId)
+        {
+            long userId = Convert.ToInt64(UserId);
+            _allRepository.volunteerRepository.AddComment(Comment, MissionId, userId);
+        }
         [HttpPost]
-       
+
+        
         public IActionResult Storylisting()
         {
             return View();

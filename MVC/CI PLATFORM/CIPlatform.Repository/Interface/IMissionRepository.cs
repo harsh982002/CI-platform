@@ -12,8 +12,8 @@ namespace CIPlatform.Repository.Interface
 
 
         List<CIPlatform.Entitites.ViewModel.Mission> GetAllMission();
-        List<CIPlatform.Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by, int page_index);
-        List<CIPlatform.Entitites.ViewModel.Mission> GetSearchMissions(string key, int page_index);
+        List<CIPlatform.Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by);
+        List<CIPlatform.Entitites.ViewModel.Mission> GetSearchMissions(string key);
         CIPlatform.Entitites.Models.Mission Mission(long id);
     }
 }

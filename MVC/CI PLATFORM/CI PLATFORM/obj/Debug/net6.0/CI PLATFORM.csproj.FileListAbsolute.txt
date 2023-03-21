@@ -23,6 +23,8 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\WebMatrix.WebData
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
@@ -55,6 +57,8 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Web.Inf
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\MimeKit.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Mono.TextTemplating.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.CodeDom.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
@@ -84,7 +88,9 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\win\lib\
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entitites.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Repository.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entitites.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Repository.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.csproj.AssemblyReference.cache
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.GeneratedMSBuildEditorConfig.editorconfig
@@ -104,9 +110,3 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\ref\CI PLATFORM.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.pdb
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.genruntimeconfig.cache
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entitites.dll
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\CIPlatform.Entitites.pdb
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

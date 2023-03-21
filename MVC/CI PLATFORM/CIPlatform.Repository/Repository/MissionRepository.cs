@@ -49,25 +49,17 @@ namespace CIPlatform.Repository.Repository
                             join i in image on m.MissionId equals i.MissionId into data
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, themes = theme, skills = skills,TotalMission=missions.Count}).ToList();
-            
+
             return Missions.Take(9).ToList();
            
         }
 
-        public List<Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by, int page_index)
+        public List<Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by)
         {
             List<CIPlatform.Entitites.ViewModel.Mission> Missions = new List<Entitites.ViewModel.Mission>();
             List<City> city = new List<City>();
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
-
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
+            
             if (countries.Count > 0)
             {
                 city = (from c in cities
@@ -167,16 +159,9 @@ namespace CIPlatform.Repository.Repository
             return Missions;
         }
 
-        public List<Entitites.ViewModel.Mission> GetSearchMissions(string key, int page_index)
+        public List<Entitites.ViewModel.Mission> GetSearchMissions(string key)
         {
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
+            
 
             var mission = (from m in missions
                            where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)

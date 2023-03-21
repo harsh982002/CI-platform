@@ -45,7 +45,25 @@ namespace CIPlatform.Repository.Repository
             }
         }
 
-         
+        public bool ApplyMission(long MissionId, long UserId)
+        {
+            MissionApplication missionApplication = new MissionApplication();
+            missionApplication.MissionId = MissionId;
+            missionApplication.UserId = UserId;
+
+            var applymission = _db.MissionApplications.FirstOrDefault(s => s.MissionId == MissionId && s.UserId == UserId);
+
+            if (applymission != null)
+            {
+                _db.MissionApplications.Add(missionApplication);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void save()
         {
