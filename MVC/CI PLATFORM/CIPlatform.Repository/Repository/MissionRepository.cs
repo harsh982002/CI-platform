@@ -50,8 +50,13 @@ namespace CIPlatform.Repository.Repository
                             from i in data.DefaultIfEmpty().Take(1)
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, themes = theme, skills = skills,TotalMission=missions.Count}).ToList();
 
-            return Missions.Take(9).ToList();
+            return Missions;
            
+        }
+
+        public  void GetFiltered()
+        {
+            
         }
 
         public List<Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by)
@@ -59,8 +64,8 @@ namespace CIPlatform.Repository.Repository
             List<CIPlatform.Entitites.ViewModel.Mission> Missions = new List<Entitites.ViewModel.Mission>();
             List<City> city = new List<City>();
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
-            
-            if (countries.Count > 0)
+
+            if (Countries.Count > 0)
             {
                 city = (from c in cities
                         where Countries.Contains(c.Country.Name)
@@ -157,6 +162,7 @@ namespace CIPlatform.Repository.Repository
                             select new CIPlatform.Entitites.ViewModel.Mission { image = i, Missions = m, Country = countries, Cities = city, Mission_city = m.City.Name, Mission_theme = m.Theme.Title }).ToList();
             }
             return Missions;
+            
         }
 
         public List<Entitites.ViewModel.Mission> GetSearchMissions(string key)

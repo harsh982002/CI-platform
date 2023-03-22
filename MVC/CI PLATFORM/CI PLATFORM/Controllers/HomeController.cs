@@ -32,10 +32,11 @@ namespace CI_PLATFORM.Controllers
             List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetAllMission();
             return View(missions);
         }
-        [Route("/Home/Landingplatform")]
+        
         [HttpPost]
-        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
+        public ActionResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
         {
+            
             if (key is not null)
             {
                 List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key);
@@ -44,9 +45,12 @@ namespace CI_PLATFORM.Controllers
             else
             {
                 List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by);
-                return Json(new { missions, success = true });
+                return Json(new { missions = missions, success = true });
             }
+
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -65,7 +69,7 @@ namespace CI_PLATFORM.Controllers
      
 
 
-        public ActionResult AddToFavourite(long MissionId,string UserId)
+        public JsonResult AddToFavourite(long MissionId,string UserId)
         {
             long userId = Convert.ToInt64(UserId);
 
@@ -73,23 +77,40 @@ namespace CI_PLATFORM.Controllers
             if (mission == true)
             {
 
-                TempData["Success"] = "Added to your faviroute";
+                return Json(mission);
             }
             else
             {
 
-                TempData["Success"] = "Removed from your faviroute";
+                return Json(null);
             }
-            return View();
+            
         }
 
-
-
-        public void ApplyMission(long MissionId, long UserId)
+        public JsonResult RecommendCoWorker(string[] emailList, long MissionId,long UserId)
         {
             long userId = Convert.ToInt64(UserId);
-            _allRepository.volunteerRepository.ApplyMission(MissionId, userId);
 
+            if (emailList != null)
+            {
+                var mail = _allRepository.volunteerRepository.sendMail(emailList, MissionId, userId);
+                return Json(mail);
+            }
+            return Json(null);
+        }
+
+        public JsonResult ApplyMission(long MissionId, long UserId)
+        {
+            long userId = Convert.ToInt64(UserId);
+           bool application = _allRepository.volunteerRepository.ApplyMission(MissionId, userId);
+            if (application == true)
+            {
+                return Json(application);
+            }
+            else
+            {
+                return Json(null);
+            }
         }
         public void AddComment(string Comment, long MissionId, string UserId)
         {

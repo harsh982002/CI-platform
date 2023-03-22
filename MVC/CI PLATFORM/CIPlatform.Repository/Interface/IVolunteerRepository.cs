@@ -18,8 +18,10 @@ namespace CIPlatform.Repository.Interface
 
         /* bool ApplyMission(long UserId, long MissionId);*/
 
-        void ApplyMission(long MissionId, long UserId);
-       
+        bool ApplyMission(long MissionId, long UserId);
+
+        bool sendMail(string[] email, long MissionId, long UserId);
+
         void AddComment(string comment, long MissonId, long userId);
 /*        List<CommentViewModel> GetComments(long missionId);*/
     }

@@ -2,11 +2,16 @@
 using CIPlatform.Entitites.Models;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
+using MailKit.Security;
+using MimeKit;
+using MimeKit.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace CIPlatform.Repository.Repository
 {
@@ -28,6 +33,7 @@ namespace CIPlatform.Repository.Repository
         List<FavoriteMission> favoriteMissions = new List<FavoriteMission>();
         List<MissionRating> ratings = new List<MissionRating>();
         List<MissionInvite> already_recommended_users = new List<MissionInvite>();
+
         public VolunteerRepository(CiplatformContext db) : base(db)
         {
             _db = db;
@@ -46,6 +52,7 @@ namespace CIPlatform.Repository.Repository
             skills = _db.Skills.ToList();
             missionskills = _db.MissionSkills.ToList();
             mission_documents = _db.MissionDocuments.ToList();
+            
         }
         public VolunteerViewModel Missiondetails(int Id)
         {
@@ -54,15 +61,18 @@ namespace CIPlatform.Repository.Repository
             var countries = _db.Countries.ToList();
             
             var themes = _db.MissionThemes.ToList();
-           
+            var user = _db.Users.ToList();
             var skills = _db.Skills.ToList();
             var missionskills = _db.MissionSkills.ToList();
             var mission_documents = _db.MissionDocuments.ToList();
             var image = _db.MissionMedia.FirstOrDefault(x => x.MissionId == Id).MediaPath;
             var comment = _db.Comments.ToList();
+            var recentvol = _db.MissionApplications.ToList();
+            var rating = _db.MissionRatings.ToList();
+            
             VolunteerViewModel data = new VolunteerViewModel
             {
-                Missions = missions, Cities = cities, Country = countries, themes = themes, skills = skills, Image = image , comments = comment
+                Missions = missions, Cities = cities, Country = countries, themes = themes, skills = skills, Image = image , comments = comment, MissionApplications = recentvol, users = user , missionRating = rating,
             };
             return data;
         }
@@ -102,7 +112,7 @@ namespace CIPlatform.Repository.Repository
              }
          }*/
 
-        public void ApplyMission(long MissionId, long UserId)
+        public bool ApplyMission(long MissionId, long UserId)
         {
             MissionApplication missionapplication = new MissionApplication();
             missionapplication.UserId = UserId;
@@ -115,14 +125,9 @@ namespace CIPlatform.Repository.Repository
             {
                 _db.MissionApplications.Add(missionapplication);
                 _db.SaveChanges();
-               
+                return true;
             }   
-            else
-            {
-                missionapplication.ApprovalStatus = "PENDING";
-                missionapplication.AppliedAt= DateTime.Now;
-            }
-            _db.SaveChanges();
+            return false;
             
         }
 
@@ -143,9 +148,39 @@ namespace CIPlatform.Repository.Repository
             }
             else
             {
-                _db.FavoriteMissions.Remove(favmission);
-                _db.SaveChanges();
-                return false;
+                if (favmission.DeletedAt == null)
+                {
+                    favmission.DeletedAt = DateTime.Now;
+                    // if error occurs then remove below line and check whether it works or not. also check the getdate() as default in createdat
+                    //also check for createdat and appliedat in mission application table why getdate() not working...
+                    //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
+                    _db.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    if (favmission.UpdatedAt == null)
+                    {
+                        favmission.UpdatedAt = DateTime.Now;
+                        //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        if (favmission.DeletedAt < favmission.UpdatedAt)
+                        {
+                            favmission.DeletedAt = DateTime.Now;
+                            //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
+                            _db.SaveChanges();
+                            return false;
+                        }
+                        favmission.UpdatedAt = DateTime.Now;
+                        //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
+                        _db.SaveChanges();
+                        return true;
+                    }
+                }
             }
         }
 
@@ -183,6 +218,70 @@ namespace CIPlatform.Repository.Repository
         private void Save()
         {
             throw new NotImplementedException();
+        }
+
+        public bool Ratemission(long MissionId, long UserId, int rating)
+        {
+
+            var Rating = (from r in ratings
+                          where r.UserId.Equals(UserId) && r.MissionId.Equals(MissionId)
+                          select r).ToList();
+            if (Rating.Count == 0)
+            {
+                _db.MissionRatings.Add(new MissionRating
+                {
+                    UserId = UserId,
+                    MissionId = MissionId,
+                    Rating = rating
+                });
+                Save();
+                return true;
+            }
+            else
+            {
+                Rating.ElementAt(0).Rating = rating;
+                Save();
+                return true;
+            }
+
+        }
+
+        public bool sendMail(string[] emailList, long MissionId, long UserId)
+        {
+            User fromUser = _db.Users.FirstOrDefault(u => u.UserId == UserId);
+            foreach (var item in emailList)
+            {
+                User toUser = _db.Users.FirstOrDefault(u => u.Email == item);
+                MissionInvite missionInvite = new MissionInvite();
+                missionInvite.FromUserId = UserId;
+                missionInvite.ToUserId = toUser.UserId;
+                missionInvite.MissionId = MissionId;
+                _db.MissionInvites.Add(missionInvite);
+
+            }
+                _db.SaveChanges();
+          
+
+            var mailBody = "<h1>" + fromUser.FirstName + "Recommended Mission</h1><br><h2><a href='" + "https://localhost:44367/Home/Volunteermission?id=" + MissionId + "'>Go to Mission</a></h2>";
+            //var mailBody = "<h1>" + HttpContext.Session.GetString("UserName") + " Suggest Mission : " + mission.Title + " to You</h1><br><h2><a href='https://localhost:7227/Mission/MisionDetail?id= " + model.MissionId + "'>Go Website</a></h2>";
+            //create email message
+            foreach (var item in emailList)
+            {
+
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse("parthv480@gmail.com"));
+                email.To.Add(MailboxAddress.Parse(item));
+                email.Subject = "Co-Worker Suggestion";
+                email.Body = new TextPart(TextFormat.Html) { Text = mailBody };
+
+                // send email
+                using var smtp = new SmtpClient();
+                smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("harshrathod982002@gmail.com", "ejvjkaneyltiqawq");
+                smtp.Send(email);
+                smtp.Disconnect(true);
+            }
+            return true;
         }
 
 

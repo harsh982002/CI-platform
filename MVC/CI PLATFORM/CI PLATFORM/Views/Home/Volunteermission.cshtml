@@ -187,11 +187,55 @@
                     <hr>
 
                     <div class=" d-flex flex-wrap">
-                             <button type="submit" onclick="Add(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" class="rounded-pill border " style="flex: 45%;><i class="bi bi-heart-fill" id="addToFav"></i> Add to favourite</button>
-                        <button class="rounded-pill border me-2 " style="flex: 45%;">
+                             <button type="submit" onclick="Add(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" class="rounded-pill border bg-white" style="flex: 45%;><i class="bi bi-heart-fill" id="addToFav"></i> Add to favourite</button>
+@*                        <button class="rounded-pill border me-2 " type="submit"  style="flex: 45%;">
                             <i class="fa fa-square px-2"></i>Recommend
                             to a Co-Worker
+                        </button>*@
+
+                        <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;">
+                                @*data-url="@Url.Action(" SuggestCoWorker", "Platform" ,new{id=Model.MissionId})">*@
+
+                            <i class="fa fa-square px-2"></i> Recommend to a
+                            Co-Worker
                         </button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Recommend to a Co-Worker</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class=table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mark/UnMark</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @Model.users )
+                                                    {
+                                                        <tr>
+                                                            <td><input class="form-check-input" type="checkbox" value="@item.UserId" name="email" id="@item.Email"><td>
+                                                            <td>@item.FirstName</td>
+                                                            <td> <label class="form-check-lable" for="@item.Email">@item.Email</label></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" onclick="sendMail(@Model.Missions.MissionId, @Model.UserId)">Send Mail</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
 
@@ -358,7 +402,7 @@
                                                             <img src="/images/volunteer1.png" class="rounded-circle" alt="">
                                                         </div>
                                                         <div class="d-flex ms-2 flex-column justify-content-center">
-                                                            <div>@Accesor?.HttpContext?.Session.GetString("Name")</div>
+                                                            <div>@item.User.FirstName @item.User.LastName</div>
                                                             <div>@item.CreatedAt</div>
                                                         </div>
                                                     </div>
@@ -467,111 +511,25 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane container active " id="previous">
+                                
                                 <div class="card-body row justify-content-center">
-
-
+                                    @if (@Model.Missions.MissionApplications != null)
+                                    {
+                                    @foreach(var item in @Model.Missions.MissionApplications)
+                                    {
                                     <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer1.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Andrew Johnson</div>
+                                        <img src="@item.User.Avatar" alt="" class="rounded-circle" >
+                                        <div class="text-center">@item.User.FirstName @item.User.LastName</div>
                                     </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer2.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Charles Vigue</div>
-                                    </div>
-
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer3.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Kathyryn Robert</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer4.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Estella Fowles</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer5.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Rose Lewis</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer6.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Raymond Pabon</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer7.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Travis Steen</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer8.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Sarah Santlian</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer9.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Linda Richards</div>
-                                    </div>
+  }
+                                }
+                                    
                                 </div>
-
+                              
                             </div>
 
 
-                            <div class="tab-pane container fade border" id="next">
-                                <div class="card-body row justify-content-center">
-
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer1.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Andrew Johnson</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer2.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Charles Vigue</div>
-                                    </div>
-
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer3.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Kathyryn Robert</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer4.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Estella Fowles</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer5.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Rose Lewis</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer6.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Raymond Pabon</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer7.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Travis Steen</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer8.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Sarah Santlian</div>
-                                    </div>
-
-                                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="/images/volunteer9.png" alt="" class="rounded-circle">
-                                        <div class="text-center">Linda Richards</div>
-                                    </div>
-
-                                </div>
-                            </div>
+                           
 
                         </div>
 

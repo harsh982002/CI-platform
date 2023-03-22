@@ -96,6 +96,7 @@ function addcities(name, type) {
             city_count--;
         }
     }
+    debugger
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
@@ -141,7 +142,9 @@ const addcountries = (name, type) => {
             country_count++;
         }
     }
+    
     else {
+        debugger
         if (countries.includes(name)) {
             countries.splice(countries.indexOf(name), 1)
             $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
@@ -149,14 +152,21 @@ const addcountries = (name, type) => {
 
         }
     }
+  
     console.log(1)
     $.ajax({
-
-        url: '/Home/Landingplatform',
         type: 'POST',
+        url: '/Home/Landingplatform',
+        contentType: false,
+        processData: false,
+        cache: false,
+       
+
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
-            debugger
+            console.log(2);
+           
+            
             console.log(result)
             if (result.missions.length > 0) {
                  loadcities(result.missions[0].cities);
@@ -208,6 +218,7 @@ const addthemes = (name, type) => {
             theme_count--;
         }
     }
+    
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',

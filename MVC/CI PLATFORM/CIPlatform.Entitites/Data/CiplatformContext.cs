@@ -203,7 +203,7 @@ public partial class CiplatformContext : DbContext
             entity.ToTable("comment");
 
             entity.Property(e => e.CommentId).HasColumnName("comment_id");
-            entity.Property(e => e.approvalstatus)
+            entity.Property(e => e.ApprovalStatus)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasDefaultValueSql("('PENDING')")
@@ -475,13 +475,12 @@ public partial class CiplatformContext : DbContext
 
         modelBuilder.Entity<MissionInvite>(entity =>
         {
-            entity.HasKey(e => e.MissionInviteId).HasName("PK__mission___A97ED158E6025FEA");
+            entity.HasKey(e => e.MissionInviteId).HasName("PK__mission___A97ED158A679B162");
 
             entity.ToTable("mission_invite");
 
             entity.Property(e => e.MissionInviteId).HasColumnName("mission_invite_id");
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
@@ -493,21 +492,6 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
-
-            entity.HasOne(d => d.FromUser).WithMany(p => p.MissionInviteFromUsers)
-                .HasForeignKey(d => d.FromUserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__from___31B762FC");
-
-            entity.HasOne(d => d.Mission).WithMany(p => p.MissionInvites)
-                .HasForeignKey(d => d.MissionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__missi__30C33EC3");
-
-            entity.HasOne(d => d.ToUser).WithMany(p => p.MissionInviteToUsers)
-                .HasForeignKey(d => d.ToUserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_i__to_us__32AB8735");
         });
 
         modelBuilder.Entity<MissionMedium>(entity =>
@@ -554,37 +538,25 @@ public partial class CiplatformContext : DbContext
 
         modelBuilder.Entity<MissionRating>(entity =>
         {
-            entity.HasKey(e => e.MissionRatingId).HasName("PK__mission___320E51723A052143");
+            entity
+                .HasNoKey()
+                .ToTable("mission_rating");
 
-            entity.ToTable("mission_rating");
-
-            entity.Property(e => e.MissionRatingId).HasColumnName("mission_rating_id");
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
-            entity.Property(e => e.Rating)
-                .HasMaxLength(4)
-                .IsUnicode(false)
-                .HasColumnName("rating");
+            entity.Property(e => e.MissionRatingId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("mission_rating_id");
+            entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.Mission).WithMany(p => p.MissionRatings)
-                .HasForeignKey(d => d.MissionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_r__missi__40F9A68C");
-
-            entity.HasOne(d => d.User).WithMany(p => p.MissionRatings)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission_r__user___40058253");
         });
 
         modelBuilder.Entity<MissionSkill>(entity =>

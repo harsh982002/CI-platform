@@ -13,11 +13,17 @@ namespace CIPlatform.Entitites.ViewModel
 
         public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
         
-
+        public int? UserId { get; set; }
         
         public string? Image { get; set; }
         public List<Country>? Country { get; set; }
         public List<Comment> comments { get; set; }
+
+        public List<User> users { get; set; }
+        
+        public List<MissionRating> missionRating { get; set; }  
+
+        public List<MissionApplication> MissionApplications { get; set; }
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }

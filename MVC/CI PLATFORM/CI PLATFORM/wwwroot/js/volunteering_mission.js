@@ -4,7 +4,7 @@
 }
 
 function Add(MissionId,UserId) {
-    debugger
+    
     $.ajax({
 
         url: "/Home/AddToFavourite",
@@ -20,13 +20,16 @@ function Add(MissionId,UserId) {
 
             if (data == true) {
                 //$('#addToFav').removeClass();
-                //$('#addToFav').addClass("bi bi-heart-fill");
+               /* $('#addToFav').addClass("bi-heart-fill");*/
                 $('#addToFav').css("color", "red");
+                $('#addToFav').html("Remove From Favourites");
             }
             else {
                 $('#addToFav').css("color", "black");
                 //$('#addToFav').removeClass();
-                //$('#addToFav').addClass("bi bi-heart");
+              /*  $('#addToFav').addClass("bi-heart");*/
+                $('#addToFav').html("Add to Favourites");
+
             }
         }
     })
@@ -112,12 +115,87 @@ function ApplyMission(MissionId, UserId) {
             MissionId: MissionId
         },
         success: function (data) {
-            console.log("success");
-            $("#volunteer-status").html("Request sent for approvel");
-            $("#volunteer-status").css("color", "green");
+            if (data == true) {
+                console.log("success");
+                $("#volunteer-status").html("Request sent for approvel");
+                $("#volunteer-status").css("color", "green");
+            }
+            else {
+                $("#volunteer-status").html("Already Applied");
+                $("#volunteer-status").css("color", "red");
+            }
+
+            
         }
     });
 
 
+  
+}
+    function RateMisson(MissionId, UserId, rate) {
+        var url = "/Home/RateMission";
+        console.log(rate);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                "rate": rate,
+                "MissionId": MissionId,
+                "UserId": UserId
+            },
+            success: (data) => {
+                console.log(data);
 
+            },
+
+            error: function () {
+                alert("An error occurred while Sending Mission Rating!");
+            }
+        });
+}
+
+function sendMail(MissionId, UserId) {
+
+    var emailList = [];
+
+    $('input[name="email"]:checked').each(function () {
+        emailList.push(this.id);
+    });
+
+    $.ajax({
+
+        url: "/Home/RecommendCoWorker",
+        method: "POST",
+
+        data: {
+            "emailList": emailList,
+            "MissionId": MissionId.
+            "UserId" : UserId,
+        },
+        success: function (data) {
+            if (data) {
+
+                toastr.options = {
+                    "positionClass": "toast-bottom-right"
+                }
+                toastr.success("Mail Successfully...")
+
+                //// Loop through each ID in the emailList array
+                //for (var i = 0; i < emailList.length; i++) {
+                //    // Get the checkbox element with the current ID
+                //    var checkbox = $('#' + emailList[i]);
+
+                //    // Set the checked property of the checkbox to false
+                //    checkbox.prop('checked', false);
+                //}
+
+
+            }
+        },
+        error: function (request, error) {
+
+            console.log(error);
+        }
+
+    })
 }
