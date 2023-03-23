@@ -35,7 +35,9 @@ namespace CIPlatform.Entitites.ViewModel
         public int RatingUser { get; set; }
 
         public List<Mission> RelatedMissions { get; set; }
- 
+        public List<User>? coworkers { get; set; }
+
+
 
     }
 }

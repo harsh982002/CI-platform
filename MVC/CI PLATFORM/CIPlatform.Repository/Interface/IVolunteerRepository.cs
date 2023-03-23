@@ -13,8 +13,8 @@ namespace CIPlatform.Repository.Interface
         void save();
 
         
-        VolunteerViewModel Missiondetails(int Id);
-        List<MissionRating> getMissionRatings(int Id);
+        VolunteerViewModel Missiondetails(long Id);
+        List<MissionRating> getMissionRatings(long Id);
 
         /* bool ApplyMission(long UserId, long MissionId);*/
 

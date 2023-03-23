@@ -70,6 +70,7 @@ namespace CIPlatform.Repository.Repository
                 city = (from c in cities
                         where Countries.Contains(c.Country.Name)
                         select c).ToList();
+
             }
             else
             {

@@ -9,6 +9,8 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class Mission
     {
+        public int total_missions;
+
         public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
 
         
@@ -21,5 +23,6 @@ namespace CIPlatform.Entitites.ViewModel
         public string? Mission_city { get; set; }
         public string? Mission_theme { get; set; }
         public int? TotalMission { get; set; }
+        public List<Story> Stories { get; set; }
     }
 }

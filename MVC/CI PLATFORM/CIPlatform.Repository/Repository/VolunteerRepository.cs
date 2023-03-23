@@ -54,8 +54,9 @@ namespace CIPlatform.Repository.Repository
             mission_documents = _db.MissionDocuments.ToList();
             
         }
-        public VolunteerViewModel Missiondetails(int Id)
+        public VolunteerViewModel Missiondetails(long Id)
         {
+            
             var missions = _db.Missions.FirstOrDefault(m => m.MissionId == Id);
             var cities = _db.Cities.ToList();
             var countries = _db.Countries.ToList();
@@ -78,7 +79,13 @@ namespace CIPlatform.Repository.Repository
         }
 
         
-       
+        public List<MissionRating> getMissionRatings(long MissionId)
+        {
+            List<MissionRating> rating = _db.MissionRatings.Where(a => a.MissionId == MissionId).ToList();
+            return rating;
+        }
+
+
 
         public void save()
         {
@@ -246,16 +253,17 @@ namespace CIPlatform.Repository.Repository
 
         }
 
-        public bool sendMail(string[] emailList, long MissionId, long UserId)
+        public bool sendMail(string[] emailList, long MissionId, long userId)
         {
-            User fromUser = _db.Users.FirstOrDefault(u => u.UserId == UserId);
+            User fromUser = _db.Users.FirstOrDefault(u => u.UserId == userId);
             foreach (var item in emailList)
             {
                 User toUser = _db.Users.FirstOrDefault(u => u.Email == item);
                 MissionInvite missionInvite = new MissionInvite();
-                missionInvite.FromUserId = UserId;
+                missionInvite.FromUserId = userId;
                 missionInvite.ToUserId = toUser.UserId;
                 missionInvite.MissionId = MissionId;
+                missionInvite.CreatedAt = DateTime.Now; 
                 _db.MissionInvites.Add(missionInvite);
 
             }

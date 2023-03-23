@@ -154,8 +154,8 @@ function ApplyMission(MissionId, UserId) {
         });
 }
 
-function sendMail(MissionId, UserId) {
-
+function sendMail(MissionId) {
+    
     var emailList = [];
 
     $('input[name="email"]:checked').each(function () {
@@ -169,8 +169,8 @@ function sendMail(MissionId, UserId) {
 
         data: {
             "emailList": emailList,
-            "MissionId": MissionId.
-            "UserId" : UserId,
+            "MissionId": MissionId,
+            
         },
         success: function (data) {
             if (data) {
@@ -179,6 +179,7 @@ function sendMail(MissionId, UserId) {
                     "positionClass": "toast-bottom-right"
                 }
                 toastr.success("Mail Successfully...")
+
 
                 //// Loop through each ID in the emailList array
                 //for (var i = 0; i < emailList.length; i++) {

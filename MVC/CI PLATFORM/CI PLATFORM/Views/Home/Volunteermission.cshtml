@@ -230,7 +230,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" onclick="sendMail(@Model.Missions.MissionId, @Model.UserId)">Send Mail</button>
+                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.Missions.MissionId)">Send Mail</button>
                                         </div>
                                 </div>
                             </div>
@@ -239,10 +239,22 @@
                     </div>
 
 
-                     <div class="rating mt-2" style="margin-left:38%">
-                                <span id="rateMe2"  class="empty-stars"></span>
-                            </div>
-                    
+                       <div class="row text-center">
+                    <div class="ratings mt-3">
+                        @if (true)
+                        {
+                            for (var j = 0; j < (@Model.Rating); j++)
+                            {
+                                <i class="bi bi-star-fill checked" style="color:#F8D441"></i>
+                            }
+                            for (var j = 0; j < 5 - (@Model.Rating); j++)
+                            {
+                                <i class="bi bi-star"></i>
+                            }
+
+                        }
+                    </div>
+                </div>
                     
 
 
@@ -466,17 +478,26 @@
                                             <td class="py-3">@Model.Missions.Availability</td>
                                         </tr>
                                         <tr>
-                                            <td class="py-3 border-bottom-0">Rating</td>
-                                            <td class="py-3 border-bottom-0">
-                                                <img src="images/selected-star.png" alt="">
-                                                <img src="images/selected-star.png" alt="">
-                                                <img src="images/selected-star.png" alt="">
-                                                <img src="images/selected-star.png" alt="">
-                                                <img src="images/selected-star.png" alt=""><span class="px-2 ">
-                                                    (by 125
+                                            <td class="py-3 border-bottom-0 ">Rating</td>
+                                            <td class="py-3 border-bottom-0 ">
+                                                @if (true)
+                                    {
+                                        for (var j = 0; j < (@Model.Rating); j++)
+                                        {
+                                            <i class="bi bi-star-fill checked" style="color:#F8D441"></i>
+                                        }
+                                        for (var j = 0; j < 5 - (@Model.Rating); j++)
+                                        {
+                                            <i class="bi bi-star"></i>
+                                        }
+
+                                    }<span class="px-2 ">
+                                                    (by @Model.RatingUser
                                                     volunteers)
                                                 </span>
                                             </td>
+
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -640,7 +661,7 @@
 
     </div>
 
-    <script src="/js/volunteering_mission.js"></script>
+    <script src="~/js/volunteering_mission.js"></script>
 
 
 

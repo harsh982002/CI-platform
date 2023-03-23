@@ -96,12 +96,13 @@ function addcities(name, type) {
             city_count--;
         }
     }
-    debugger
+   
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()  },
         success: function (result) {
+            console.log(result,"result");
             loadmissions(result.missions)
         },
         error: function () {
@@ -155,19 +156,11 @@ const addcountries = (name, type) => {
   
     console.log(1)
     $.ajax({
-        type: 'POST',
         url: '/Home/Landingplatform',
-        contentType: false,
-        processData: false,
-        cache: false,
-       
-
+        type: 'POST',
+  
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
-            console.log(2);
-           
-            
-            console.log(result)
             if (result.missions.length > 0) {
                  loadcities(result.missions[0].cities);
                  loadmissions(result.missions)
@@ -218,12 +211,13 @@ const addthemes = (name, type) => {
             theme_count--;
         }
     }
-    
+    debugger
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
+            debugger
             loadmissions(result.missions)
         },
         error: function () {
@@ -306,6 +300,7 @@ const loadcities = (cities) => {
 //load filtered missions
 
 const loadmissions = (missions) => {
+    debugger
     if (missions.length == 0) {
         $('.missions').empty()
         var no_mission = "<p>" +
@@ -361,7 +356,7 @@ const loadmissions = (missions) => {
                 + " <img src='/images/star.png' alt=''>"
                 + " </div>"
                 + "</div>"
-                + "<div class='duration-seats-info mt-4'>"
+                + "<div class='duration-lts-info mt-4'>"
                 + " <div class='duration'>"
                 + " </div>"
                 + " </div>"
