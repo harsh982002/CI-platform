@@ -9,20 +9,24 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class Mission
     {
-        public int total_missions;
-
-        public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
-
-        
-        
-        public MissionMedium? image { get; set; }
+        public int? total_missions { get; set; }
+        public List<Story>? Stories { get; set; }
+        public List<CIPlatform.Entitites.Models.Mission>? Missions { get; set; }
         public List<Country>? Country { get; set; }
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
-        public string? Mission_city { get; set; }
-        public string? Mission_theme { get; set; }
-        public int? TotalMission { get; set; }
-        public List<Story> Stories { get; set; }
+
+        public List<User> users { get; set; }
+
+
+
+        public List<User>? Recent_volunteers { get; set; }
+        public List<User>? All_volunteers { get; set; }
+        public int? Total_volunteers { get; set; }
+        public int? Favorite_mission { get; set; }
+        public int? Rating { get; set; }
+
+        public double? Avg_ratings { get; set; }
     }
 }

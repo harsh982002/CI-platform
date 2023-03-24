@@ -1,92 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Volunteer Mission";
-}
-@{
-    Layout = null;
-}
-@model CIPlatform.Entitites.ViewModel.VolunteerViewModel
+﻿@model CIPlatform.Entitites.ViewModel.VolunteerViewModel
+@using System.Security.Claims
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accesor
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>header</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/volunteering_mission.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-    
-</head>
-
-<body>
-    <header>
-        <div class="container">
-            <div class="demo d-flex flex-row justify-content-between">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link ms-lg-5 text-black" aria-current="page" href="#"> Stories </a>
-                                </li>
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle ms-lg-5 text-black" href="#" role="button"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        Policy
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Privacy Policy</a></li>
-                                        <li><a class="dropdown-item" href="#">Contact us</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <div class="d-flex justify-content-end mt-3 me-1">
-                    <a class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="rounded-circle" style="object-fit: none;" width="32" height="32">
-                       @Accesor?.HttpContext?.Session.GetString("Name")
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-    <hr class="m-0 p-0">
 
 
-    <div class="container mt-5">
+@{
+    ViewData["title"] = "volunteering mission";
+    ViewData["css"] = "volunteering_mission.css";
+}
+
+
+
+
+ <div class="container mt-5">
 
 
         <div class="main1  row">
 
             <div class="image  col-lg-6  d-flex flex-column h-100" style="border: none;">
-                <img src="@Model.Image" id="image-area" class=""
+                <img src="@Model.mission.MissionMedia.ElementAt(0).MediaPath" id="image-area" class=""
                      style="max-width: 720px; height: 428px;" />
                 <div id="carousel-bottom" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row p-1">
                                 <div class="col-3 p-1">
-                                    <img src="@Model.Image"
+                                    <img src="@Model.mission.MissionMedia.ElementAt(0).MediaPath"
                                          class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" height="120"
                                          role="img" onclick="display(this)">
                                 </div>
@@ -148,7 +87,7 @@
             <div class="card col-lg-6" style="border: none;">
                 <div class="card-body mt-3 ">
                     <span class="fs-4 fw-bold dark-gray mt">
-                        @Model.Missions.Title
+                        @Model.mission.Title
                     </span>
                     <p class="light-gray mt-2" style="font-size:15px">
                         Lorem ipsum dolor sit amet, consectetur
@@ -158,7 +97,7 @@
                     <div class=" d-flex justify-content-center ">
                         <span class="rounded-pill border p-2  bg-white"
                               style="z-index: 5;">
-                           <span> @Model.Missions.StartDate.Value.Day/@Model.Missions.StartDate.Value.Month/@Model.Missions.StartDate.Value.Year until @Model.Missions.EndDate.Value.Day/@Model.Missions.EndDate.Value.Month/@Model.Missions.EndDate.Value.Year </span>
+                           <span> @Model.mission.StartDate.Value.Day/@Model.mission.StartDate.Value.Month/@Model.mission.StartDate.Value.Year until @Model.mission.EndDate.Value.Day/@Model.mission.EndDate.Value.Month/@Model.mission.EndDate.Value.Year </span>
                         </span>
                     </div>
                     <hr style="margin-top:-20px" />
@@ -168,7 +107,7 @@
                         <div class="d-flex align-items-center ">
                             <img src="/images/Seats-left.png" />
                             <div class="d-flex flex-column ms-2 ">
-                                <span class="dark-gray">@Model.Missions.AvbSeat</span>
+                                <span class="dark-gray">@Model.mission.AvbSeat</span>
                                 <span class="light-gray fs-fourteen">Seats Left</span>
                             </div>
                         </div>
@@ -179,7 +118,7 @@
                                      aria-valuemax="100" style="height:8px">
                                     <div class="progress-bar" style="width: 75%; background-color: orange;"></div>
                                 </div>
-                                <span class="light-gray fs-fourteen mt-2">@Model.Missions.TotalSeats</span>
+                                <span class="light-gray fs-fourteen mt-2">@Model.mission.TotalSeats</span>
                             </div>
                         </div>
                     </div>
@@ -187,7 +126,7 @@
                     <hr>
 
                     <div class=" d-flex flex-wrap">
-                             <button type="submit" onclick="Add(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" class="rounded-pill border bg-white" style="flex: 45%;><i class="bi bi-heart-fill" id="addToFav"></i> Add to favourite</button>
+                             <button type="submit" onclick="Add(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" class="rounded-pill border bg-white" style="flex: 45%;><i class="bi bi-heart-fill" id="addToFav"></i> Add to favourite</button>
 @*                        <button class="rounded-pill border me-2 " type="submit"  style="flex: 45%;">
                             <i class="fa fa-square px-2"></i>Recommend
                             to a Co-Worker
@@ -217,7 +156,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in @Model.users )
+                                                    @foreach (var item in @Model.users)
                                                     {
                                                         <tr>
                                                             <td><input class="form-check-input" type="checkbox" value="@item.UserId" name="email" id="@item.Email"><td>
@@ -230,7 +169,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.Missions.MissionId)">Send Mail</button>
+                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.mission.MissionId)">Send Mail</button>
                                         </div>
                                 </div>
                             </div>
@@ -265,7 +204,7 @@
                                 <img src="/images/pin1.png" alt="" class="">
                                 <div class="mt-3">
                                     <div>city</div>
-                                    <div>@Model.Missions.City.Name</div>
+                                    <div>@Model.mission.City.Name</div>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +214,7 @@
                                 <img src="/images/web.png" alt="" class="">
                                 <div class="mt-3">
                                     <div>Theme</div>
-                                    <div>@Model.Missions.Theme.Title</div>
+                                    <div>@Model.mission.Theme.Title</div>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +224,7 @@
                                 <img src="/images/calender.png" alt="" class="">
                                 <div class="mt-3">
                                     <div>Date</div>
-                                    <div>@Model.Missions.Deadline.Value.Day/@Model.Missions.Deadline.Value.Month/@Model.Missions.Deadline.Value.Year</div>
+                                    <div>@Model.mission.Deadline.Value.Day/@Model.mission.Deadline.Value.Month/@Model.mission.Deadline.Value.Year</div>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +234,7 @@
                                 <img src="/images/organization.png" alt="" class="">
                                 <div class="mt-3">
                                     <div>Organization</div>
-                                    <div>@Model.Missions.OrganizationName</div>
+                                    <div>@Model.mission.OrganizationName</div>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +244,7 @@
 
 
                     <div class="d-flex justify-content-center mt-5 " id="apply-btn">
-                        <button type="submit" value="Apply" onclick="ApplyMission(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                        <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
                                 class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
                             Apply now
                             <img src="/images/right-arrow.png" class="ms-2" />
@@ -347,12 +286,12 @@
 
                                 <h5 class="py-3" style="font-size: 25px;">Introduction</h5>
                                 <p class="m-2 intro" >
-                                    @Model.Missions.Description
+                                    @Model.mission.Description
                                 </p>
 
                                 <h5 class="py-3" style="font-size: 25px;">Challenge</h5>
                                 <p class="challenge">
-                                    @Model.Missions.ShortDescription
+                                    @Model.mission.ShortDescription
                                 </p>
 
                                 <h5 class="py-3" style="font-size: 25px;">Documents</h5>
@@ -378,7 +317,7 @@
 
                                 <h5 class="py-3" style="font-size: 25px;">About Organization</h5>
                                 <p class="m-2 org">
-                                   @Model.Missions.OrganizationDetail
+                                   @Model.mission.OrganizationDetail
                                 </p>
 
 
@@ -390,7 +329,7 @@
                                     <textarea id="user-comment" class=" w-100" placeholder="Enter Your Comments.." rows="4"
                                               required></textarea>
                                     <button class="bg-white  mt-3 border   border-warning rounded-pill" type="submit"
-                                            style="color: orange;    flex-grow: 1;" onclick="AddComments(@Model.Missions.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))">
+                                            style="color: orange;    flex-grow: 1;" onclick="AddComments(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))">
                                         Post comment
                                     </button>
                                     <p id="comment-status"></p>
@@ -403,10 +342,10 @@
                                 <div class="overflow-auto mt-2" style="background-color: #f2f2f2">
 
 
-                                    <div class="bg-white card ms-3 me-3 mt-1">
-                                        @if (@Model.Missions.Comments != null)
+                                    <div class="bg-white card ms-3 me-3 mt-1 " data-spy="scroll">
+                                        @if (@Model.mission.Comments != null)
                                         {
-                                            @foreach (var item in @Model.Missions.Comments)
+                                            @foreach (var item in @Model.mission.Comments)
                                             {
                                                 <div class="card-body">
                                                     <div class="d-flex">
@@ -465,7 +404,7 @@
                                             <td class="py-3">Skills</td>
                                             
                                             <td class="py-3">
-                                                 @foreach (var i in @Model.Missions.MissionSkills)
+                                                 @foreach (var i in @Model.mission.MissionSkills)
                                                      {
                                                         @i.Skill.SkillName <span>,</span>
                                                       }
@@ -475,7 +414,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="py-3">Days</td>
-                                            <td class="py-3">@Model.Missions.Availability</td>
+                                            <td class="py-3">@Model.mission.Availability</td>
                                         </tr>
                                         <tr>
                                             <td class="py-3 border-bottom-0 ">Rating</td>
@@ -492,7 +431,7 @@
                                         }
 
                                     }<span class="px-2 ">
-                                                    (by @Model.RatingUser
+                                                    (by 100
                                                     volunteers)
                                                 </span>
                                             </td>
@@ -534,9 +473,9 @@
                             <div class="tab-pane container active " id="previous">
                                 
                                 <div class="card-body row justify-content-center">
-                                    @if (@Model.Missions.MissionApplications != null)
+                                    @if (@Model.mission.MissionApplications != null)
                                     {
-                                    @foreach(var item in @Model.Missions.MissionApplications)
+                                    @foreach(var item in @Model.mission.MissionApplications)
                                     {
                                     <div class="d-flex col-3 flex-column m-1 justify-content-center">
                                         <img src="@item.User.Avatar" alt="" class="rounded-circle" >
@@ -587,14 +526,18 @@
     </div>
     <div class=" container  ">
         <div class="row">
-            <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card d-flex">
+
+        @{
+            foreach (var item in @Model.related_mission)
+            {
+                <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
+                    <div class="thumbnail card d-flex">
                     <div class="img-event">
                         <img class="group list-group-image w-100 h-100"
-                             src="/images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="" />
+                             src="@Model.mission.MissionMedia.ElementAt(0).MediaPath" alt="" />
                         <div class="location-img" >
                             <img class="text-light" src="/images/pin.png" alt="">
-                            <span class="text-light">Toronto</span>
+                            <span class="text-light">@item.City.Name</span>
                         </div>
                         <button class="like-img border-0">
                             <img class="text-light" src="/images/heart.png" alt="">
@@ -603,19 +546,18 @@
                             <img class="text-light" src="/images/user.png" alt="">
                         </button>
                         <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
+                            <span class="p-2">@item.Theme.Title</span>
                         </button>
                     </div>
                     <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
                         <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability
+                           @item.Title
                         </h4>
                         <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...
+                           @item.Description
                         </p>
                         <div class="d-flex justify-content-between">
-                            <span class="organization">Tree Canada</span>
+                            <span class="organization">@item.OrganizationName</span>
                             <div class="rating">
                                 <img src="/images/selected-star.png" alt="">
                                 <img src="/images/selected-star.png" alt="">
@@ -626,22 +568,59 @@
                         </div>
                         <div class="duration-seats-info mt-4">
                             <div class="duration">
-                                <p id="duration-txt" style="margin-bottom: 0;">From 10/01/2019 until 25/02/2019</p>
+                                @{
+                                if (@item.MissionType == "GOAL")
+                                {
+                                    <p id="duration-txt" style="margin-bottom: 0;">@item.GoalObject</p>
+                                }
+                                else
+                                {
+                                    <p id="duration-txt" style="margin-bottom: 0;">From @item.StartDate?.ToString().Substring(0,10) To @item.EndDate?.ToString().Substring(0,10)</p>
+                                }
+                            }
                             </div>
                         </div>
                         <div class="d-flex justify-content-between border-bottom mt-3">
                             <div class="Seats d-flex align-items-center">
                                 <img src="/images/Seats-left.png" alt="">
                                 <span>
-                                    10 <p>seats left</p>
+                                    @item.AvbSeat <p>seats left</p>
                                 </span>
                             </div>
                             <div class="deadline d-flex align-items-center">
-                                <img src="/images/deadline.png" alt="">
-                                <span>
-                                    09/01/2019
-                                    <p>Deadline</p>
-                                </span>
+                                 @{
+                                if (@item.MissionType == "GOAL")
+                                {
+                                    string? str1 = @item.GoalObject;
+                                    string str2 = string.Empty;
+                                    int goal = 0;
+                                    for (int i = 0; i <= str1.Length - 1; i++)
+                                    {
+                                        if (Char.IsDigit(str1[i]))
+                                            str2 += str1[i];
+                                    }
+                                    if (str2.Length > 0)
+                                    {
+                                        goal = int.Parse(str2);
+                                    }
+                                    double? percent = (@item.Achieved / (double)goal) * 100;
+                                    <img src="~/images/achieved.png" alt="">
+                                    <div class="w-100">
+                                        <div class="progress" style="width:90%;margin-left:10px;">
+                                            <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <p class="text-muted">@item.Achieved achieved</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <img src="images/deadline.png" alt="">
+                                    <span>
+                                        @item.Deadline?.ToString().Substring(0,10)
+                                        <p>Deadline</p>
+                                    </span>
+                                }
+                            }
                             </div>
                         </div>
                         <div class="d-flex justify-content-center my-3">
@@ -652,6 +631,8 @@
                     </div>
                 </div>
             </div>
+            }
+            }
 
 
             
@@ -665,6 +646,3 @@
 
 
 
-</body>
-
-</html>

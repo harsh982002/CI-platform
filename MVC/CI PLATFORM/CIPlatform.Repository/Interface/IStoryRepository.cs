@@ -10,5 +10,7 @@ namespace CIPlatform.Repository.Interface
     {
 
         CIPlatform.Entitites.ViewModel.Mission GetStories(long user_id);
+
+        List<CIPlatform.Entitites.Models.Mission> mission_of_user(long user_id);
     }
 }

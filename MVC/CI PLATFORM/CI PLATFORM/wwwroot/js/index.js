@@ -11,9 +11,11 @@ let country_count = 0
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
+let pageindex = 0;
+var view = "grid"
 var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
-let allchoices = []
-/*const view_detail_onmouseover = (id, img) => {
+var key = document.getElementById('floatingSearch')
+const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
     let item = document.getElementById(id);
@@ -24,8 +26,8 @@ const view_detail_onmouseout = (id, img) => {
     image.classList.remove("story-image")
     let item = document.getElementById(id);
     item.style.display = "none";
-}*/
-function listview() { 
+}
+function listview() {
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
         items[i].classList.add("col-lg-12")
@@ -36,10 +38,12 @@ function listview() {
         items[i].classList.add("mb-5")
         cards[i].classList.remove("card")
         cards[i].classList.add("d-flex")
+        img_event[i].classList.add('list_image')
     }
     grid.classList.remove("view")
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
+    view = "list"
 }
 function gridview() {
     for (var i = 0; i < items.length; i++) {
@@ -52,11 +56,14 @@ function gridview() {
         items[i].classList.remove("mb-5")
         cards[i].classList.remove("d-flex")
         cards[i].classList.add("card")
+        img_event[i].classList.remove('list_image')
     }
     grid.classList.add("view")
     list.classList.remove("view")
     list.style.marginLeft = 0 + "px";
+    view = "grid"
 }
+
 
 //filters by cities
 function addcities(name, type) {
@@ -73,7 +80,7 @@ function addcities(name, type) {
             cities.push(name)
             var badge = "<div class='border rounded-pill mt-3'>"
                 + "<span class='p-2'>" + cities[city_count] + "</span>"
-                + "<img src='images/cancel.png' class='p-2' alt='not found' />"
+                + "<img src='/images/cancel.png' class='p-2' alt='not found' />"
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
@@ -96,14 +103,12 @@ function addcities(name, type) {
             city_count--;
         }
     }
-   
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()  },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            console.log(result,"result");
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -121,13 +126,12 @@ const addcountries = (name, type) => {
     else {
         country = document.getElementById(name)
     }
-   
     if (country.checked) {
         if (!countries.includes(name)) {
             countries.push(name)
             var badge = "<div class='border rounded-pill mt-3'>"
                 + "<span class='p-2'>" + countries[country_count] + "</span>"
-                + "<img src='images/cancel.png' class='p-2' alt='not found' />"
+                + "<img src='/images/cancel.png' class='p-2' alt='not found' />"
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
@@ -143,9 +147,7 @@ const addcountries = (name, type) => {
             country_count++;
         }
     }
-    
     else {
-        debugger
         if (countries.includes(name)) {
             countries.splice(countries.indexOf(name), 1)
             $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
@@ -153,18 +155,13 @@ const addcountries = (name, type) => {
 
         }
     }
-  
-    console.log(1)
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-  
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            if (result.missions.length > 0) {
-                 loadcities(result.missions[0].cities);
-                 loadmissions(result.missions)
-            }
+            loadmissions(result.mission.result, result.length)
+            loadcities(result.city.result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -173,7 +170,6 @@ const addcountries = (name, type) => {
 }
 
 //filters by themes
-
 const addthemes = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var theme;
@@ -188,7 +184,7 @@ const addthemes = (name, type) => {
             themes.push(name)
             var badge = "<div class='border rounded-pill mt-3'>"
                 + "<span class='p-2'>" + themes[theme_count] + "</span>"
-                + "<img src='images/cancel.png' class='p-2' alt='not found' />"
+                + "<img src='/images/cancel.png' class='p-2' alt='not found' />"
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
@@ -211,14 +207,12 @@ const addthemes = (name, type) => {
             theme_count--;
         }
     }
-    debugger
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            debugger
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -241,7 +235,7 @@ const addskills = (name, type) => {
             skills.push(name)
             var badge = "<div class='border rounded-pill mt-3'>"
                 + "<span class='p-2'>" + skills[skill_count] + "</span>"
-                + "<img src='images/cancel.png' class='p-2' alt='not found' />"
+                + "<img src='/images/cancel.png' class='p-2' alt='not found' />"
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
@@ -267,9 +261,9 @@ const addskills = (name, type) => {
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: async function (result) {
-            await loadmissions(result.missions)
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -280,147 +274,26 @@ const addskills = (name, type) => {
 
 //cities according to coutry
 const loadcities = (cities) => {
-    $('.city').empty()
-    $.each(cities, function (i, item) {
-        var data = "<span class='dropdown-item'>"
-            + "<input class='form-check-input' type='checkbox'>"
-            + "<label class='form-check-label ms-1' for='flexCheckDefault'>"
-            + item.name
-            + "</label>"
-            + "</span>";
-        $('.city').append(data)
-        $('.city span').each(function () {
-            $('.city span').eq(i).find('input').attr('id', item.name)
-            $('.city span').eq(i).find('input').attr('onchange', `addcities('${item.name}')`)
-        })
-    })
+    $('.city').empty().append(cities)
 }
 
 
 //load filtered missions
-
-const loadmissions = (missions) => {
-    debugger
-    if (missions.length == 0) {
-        $('.missions').empty()
-        var no_mission = "<p>" +
-            "No Mission Found"
-            + "</p>" +
-            "<button class='applyButton btn'>" + "Submit New Mission" + "<img src='images/right-arrow.png' alt=''>"
-            + "</button>"
-        $('.no-mission-found').append(no_mission);
+const loadmissions = (missions, length) => {
+    if (length === 0) {
+        $('.no-mission-found').removeClass("d-none").addClass("d-flex flex-column");
+        $('.missions').empty();
     }
     else {
-        $('.missions').empty()
-        $('.no-mission-found').empty();
-        $.each(missions, function (i, item) {
-            var data = "<div class='item col-md-6 col-lg-4 col-sm-6 mt-3'>"
-                + "<div class='thumbnail card d-flex'>"
-                + "<div class='img-event'>"
-                + " <img class='group list-group-image w-100 h-100'  src='' alt='' />"
-                + "<div class='location-img'>"
-                + "<img class='text-light' src='/images/pin.png' alt=''>"
-                + "<span class='text-light ms-1'>"
-                + item.mission_city
-                + "</span>"
-                + "</div>"
-                + "<button class='like-img border-0'>"
-                + "<img class='text-light' src='/images/heart.png' alt=''>"
-                + "</button>"
-                + "<button class='stop-img border-0'>"
-                + "<img class='text-light' src='/images/user.png' alt=''>"
-                + " </button>"
-                + "<button class='mission-theme border-0'>"
-                + "<span class='p-2'>"
-                + item.mission_theme
-                + "</span > "
-                + " </button>" +
-                "<div class='view-detail position-absolute' style = 'display:none;'>" +
-                "<a>" + "<button class='applyButton  btn d-flex  justify-content-around align-items-center' style='border: 2px solid white; color: white;'>View Details <img class='ms-2' src='images/right-arrow.png' alt=''>" +
-                "</button>" + "</a>" +
-                "</div>"
-                + "</div>"
-                + " <div class='caption card-body' style=' padding-right: 2% !important; padding-left: 2% !important;'>"
-                + "<h4 class='group card-title inner list-group-item-heading'>"
-                + item.missions.title.slice(0, 50) + "..." + "</h4>"
-                + " <p class='group inner list-group-item-text'>"
-                + item.missions.description.slice(0, 100) + "....." + "</p>"
-                + "<div class='d-flex list-view justify-content-between'>"
-                + " <span class='organization'>" + item.missions.organizationName + "</span>"
-                + "<div class='rating'>"
-
-                + "<img src='/images/selected-star.png' alt=''>"
-                + " <img src='/images/selected-star.png' alt=''>"
-                + " <img src='/images/selected-star.png' alt=''>"
-                + " <img src='/images/star.png' alt=''>"
-                + " <img src='/images/star.png' alt=''>"
-                + " </div>"
-                + "</div>"
-                + "<div class='duration-lts-info mt-4'>"
-                + " <div class='duration'>"
-                + " </div>"
-                + " </div>"
-                + "<div class='d-flex justify-content-between border-bottom mt-3'>"
-                + " <div class='Seats d-flex align-items-center'>"
-                + "<img src='/images/Seats-left.png' alt=''>"
-                + " <span>" + item.missions.avbSeat + "<p>" + "seats left" + "</p>"
-                + " </span>"
-                + " </div>"
-                + " <div class='deadline d-flex align-items-center'>"
-                + "</div>"
-                + " </div>"
-                + " <div class='d-flex justify-content-center mt-4'>"
-                + "<button class='applybutton btn' style=' border: solid 2px #F88634;border-radius: 24px;'>" + "Apply" + "<img src='/images/right-arrow.png' alt=''>"
-                + "</button>"
-                + "</div>"
-                + " </div>"
-                + "</div>"
-                + " </div>"
-
-            // some operations.
-            if ($('#list').hasClass('view')) {
-                var $mydata = $(data);
-                $mydata.removeClass('col-md-6 col-lg-4 col-sm-6').addClass('col-lg-12 col-md-12 col-sm-12 mb-5')
-                $mydata.find('div').eq(0).removeClass('card')
-                $mydata.find('div').eq(1).addClass('list_image')
-                data = $mydata
-            }
-            $('.missions').append(data)
-            $('.img-event').eq(i).find('img').eq(0).attr('src', `${item.image.mediaPath}`)
-
-            //for view deatils funstion
-            $('.img-event').eq(i).find('img').eq(0).attr('id', item.image.missionMediaId + "-" + item.image.mediaPath)
-            /*$('.img-event').eq(i).find('img').eq(0).attr('onmouseover', `view_detail_onmouseover(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('img').eq(0).attr('onmouseout', `view_detail_onmouseout(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)*/
-            /*$('.img-event').eq(i).find('.view-detail').attr('id', item.missions.missionId)
-            $('.img-event').eq(i).find('.view-detail').attr('onmouseover', `view_detail_onmouseover(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('.view-detail').attr('onmouseout', `view_detail_onmouseout(${item.missions.missionId},'${item.image.missionMediaId + "-" + item.image.mediaPath}')`)
-            $('.img-event').eq(i).find('a').attr('href', `/volunteering_mission/${item.missions.missionId}`)*/
-
-            if (item.missions.missionType === "GOAL") {
-                var achieved = "<img src='/images/deadline.png' alt=''>"
-                    + "<div class='w-100'>"
-                    + "<div class='progress' style='width:90%;margin-left:10px;'>"
-                    + "<div class='progress-bar' role='progressbar'' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'>" + "</div>"
-                    + "</div>"
-                    + "<p class='text-muted'>" + item.missions.achieved + " achieved" + "</p>"
-                    + " </div>"
-                var goalobject = parseInt(item.missions.goalObject.match(/\d/g).join(''), 10)
-                var percent = (item.missions.achieved / goalobject) * 100;
-                var goal = "<p id='duration-txt' style='margin-bottom: 0;'>" + item.missions.goalObject + "</p>"
-                $('.duration').eq(i).append(goal)
-                $('.deadline').eq(i).append(achieved)
-                $('.deadline').eq(i).find('.progress-bar').css("width", percent + "%")
-            }
-            else {
-                var deadline = "<img src='/images/deadline.png' alt=''>"
-                    + "<span>" + item.missions.deadline.slice(0, 10) +
-                    "<p>" + "Deadline" + "</p>" + "</span>"
-                var time = "<p id='duration-txt' style='margin-bottom: 0;'>" + "From " + item.missions.startDate.slice(0, 10) + " To " + item.missions.endDate.slice(0, 10) + "</p>"
-                $('.duration').eq(i).append(time)
-                $('.deadline').eq(i).append(deadline)
-            }
-        })
+        $('.explore').find('b').empty().append(`${length} Missions`)
+        $('.no-mission-found').addClass("d-none").removeClass("d-flex flex-column");
+        $('.missions').empty().append(missions)
+        if (view == "list") {
+            listview()
+        }
+        else {
+            gridview()
+        }
     }
 }
 
@@ -432,9 +305,9 @@ const search_missions = () => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { key },
+            data: { key: key, page_index: pageindex },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -445,9 +318,9 @@ const search_missions = () => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, page_index: pageindex },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -455,18 +328,22 @@ const search_missions = () => {
         })
     }
 }
-
+key.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {
+        search_missions()
+    }
+})
 
 //sort missions
-const sort_by = () => {
+const sort_by = (user_id) => {
     var selected = $('#sort').find(':selected').text();
     if (selected != "Sort By") {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex, user_id: user_id },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -486,9 +363,9 @@ const clear_all = () => {
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -498,6 +375,29 @@ const clear_all = () => {
     $('#clear-all').empty()
 }
 
+
+//add to favourite
+const add_to_favourite = (user_id, mission_id) => {
+    $.ajax({
+        url: `/Home/Landingplatform`,
+        type: 'POST',
+        data: { mission_id: mission_id, user_id: user_id },
+        success: function (result) {
+            console.log(result)
+            if (result.success) {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/red-heart.png')
+                $(`.heart-${mission_id}`).css('height', 24)
+            }
+            else {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/heart.png')
+                $(`.heart-${mission_id}`).css('height', 20)
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 //remove badges
 const remove_badges = (id, badge_type) => {
     var selected = $('#sort').find(':selected').text();
@@ -530,16 +430,17 @@ const remove_badges = (id, badge_type) => {
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
         }
     })
 }
-/*const pagination = (page_index) => {
+const pagination = (page_index) => {
+    var selected = $('#sort').find(':selected').text();
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {
         item.classList.remove('page-active')
@@ -548,7 +449,7 @@ const remove_badges = (id, badge_type) => {
     $.ajax({
         url: '/Home/Landingplatform',
         type: 'POST',
-        data: { page_index: page_index - 1 },
+        data: { page_index: page_index - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
         },
@@ -558,6 +459,7 @@ const remove_badges = (id, badge_type) => {
     })
 }
 const prev = () => {
+    var selected = $('#sort').find(':selected').text();
     var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
@@ -573,7 +475,7 @@ const prev = () => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { page_index: current_page - 2 },
+            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -584,6 +486,7 @@ const prev = () => {
     }
 }
 const next = (max_page) => {
+    var selected = $('#sort').find(':selected').text();
     var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
@@ -600,7 +503,7 @@ const next = (max_page) => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { page_index: current_page },
+            data: { page_index: current_page, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -612,6 +515,7 @@ const next = (max_page) => {
 }
 
 const first_page = () => {
+    var selected = $('#sort').find(':selected').text();
     var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
@@ -627,7 +531,7 @@ const first_page = () => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { page_index: 0 },
+            data: { page_index: 0, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -638,6 +542,7 @@ const first_page = () => {
     }
 }
 const last_page = (max_page) => {
+    var selected = $('#sort').find(':selected').text();
     var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
@@ -654,7 +559,7 @@ const last_page = (max_page) => {
         $.ajax({
             url: '/Home/Landingplatform',
             type: 'POST',
-            data: { page_index: max_page - 1 },
+            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -664,17 +569,4 @@ const last_page = (max_page) => {
         })
     }
 }
-*/
-function setfilters(a) {
-    if (document.getElementById(a).checked) {
-        allchoices.push(a)
-        console.log(allchoices)
-    }
-    else {
-        allchoices.pop(1, allchoices.indexOf(a))
-        console.log(allchoices)
-    }
-}
-function getfilters() {
-    return allchoices
-}
+

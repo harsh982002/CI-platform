@@ -18,11 +18,11 @@ namespace CIPlatform.Repository.Repository
         {
             _db= db;
             missionRepository=new MissionRepository(_db);
-            volunteerRepository = new VolunteerRepository(_db); 
+         
             storyRepository = new StoryRepository(_db);
         }
         public IMissionRepository missionRepository { get; set; }
-        public IVolunteerRepository volunteerRepository { get; set ; }
+        
         public IStoryRepository storyRepository { get; set ; }
 
      

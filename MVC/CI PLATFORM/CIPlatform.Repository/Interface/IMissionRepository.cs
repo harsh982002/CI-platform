@@ -9,11 +9,15 @@ namespace CIPlatform.Repository.Interface
     public interface IMissionRepository : IRepository<CIPlatform.Entitites.Models.Mission>
     {
         void Save();
+        Entitites.ViewModel.Mission GetAllMission();
+        Entitites.ViewModel.Mission GetFilteredMissions(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string sort_by, int page_index, long user_id);
+        Entitites.ViewModel.Mission GetSearchMissions(string key, int page_index);
+        CIPlatform.Entitites.ViewModel.VolunteerViewModel Mission(long id);
+        void AddComment(string comment, long MissonId, long userId);
+        bool ApplyMission(long user_id, long mission_id);
+        bool add_to_favourite(long user_id, long mission_id);
 
+        bool sendMail(string[] email, long mission_id, long user_id);
 
-        List<CIPlatform.Entitites.ViewModel.Mission> GetAllMission();
-        List<CIPlatform.Entitites.ViewModel.Mission> GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by);
-        List<CIPlatform.Entitites.ViewModel.Mission> GetSearchMissions(string key);
-        CIPlatform.Entitites.Models.Mission Mission(long id);
     }
 }

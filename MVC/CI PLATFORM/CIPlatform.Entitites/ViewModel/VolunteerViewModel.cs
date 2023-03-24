@@ -9,33 +9,23 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class VolunteerViewModel
     {
-       
 
-        public CIPlatform.Entitites.Models.Mission? Missions { get; set; }
-        
-        public int? UserId { get; set; }
-        
-        public string? Image { get; set; }
-        public List<Country>? Country { get; set; }
+
+        public CIPlatform.Entitites.Models.Mission? mission { get; set; }
+        public List<CIPlatform.Entitites.Models.Mission>? related_mission { get; set; }
+        public List<User>? Recent_volunteers { get; set; }
         public List<Comment> comments { get; set; }
 
+        public List<MissionSkill> mission_skill { get; set; }
+
+        public List<User>? All_volunteers { get; set; }
+        public int? Total_volunteers { get; set; }
+        public int? Favorite_mission { get; set; }
+        public int? Rating { get; set; }
         public List<User> users { get; set; }
-        
-        public List<MissionRating> missionRating { get; set; }  
-
-        public List<MissionApplication> MissionApplications { get; set; }
-        public List<City>? Cities { get; set; }
-        public List<MissionTheme>? themes { get; set; }
-        public List<Skill>? skills { get; set; }
-        public string? Mission_city { get; set; }
-        public string? Mission_theme { get; set; }
-        public int? TotalMission { get; set; }
-
-        public int Rating { get; set; }
-        public int RatingUser { get; set; }
-
-        public List<Mission> RelatedMissions { get; set; }
-        public List<User>? coworkers { get; set; }
+        public double? Avg_ratings { get; set; }
+        public int? Rating_count { get; set; }
+        public bool Applied_or_not { get; set; }
 
 
 

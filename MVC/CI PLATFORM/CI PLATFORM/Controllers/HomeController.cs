@@ -1,4 +1,5 @@
-﻿using CI_PLATFORM.Models;
+﻿using CI_platform.Areas.User.Controllers;
+using CI_PLATFORM.Models;
 using CIPlatform.Entitites.Data;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
@@ -31,26 +32,41 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Landingplatform()
         {
-            List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetAllMission();
+
+
+            CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetAllMission();
             return View(missions);
+
+
         }
-
         [HttpPost]
-        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by)
-        {
 
+        public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index, long user_id, long mission_id)
+        {
             if (key is not null)
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> search_missions = _allRepository.missionRepository.GetSearchMissions(key);
-                return Json(new { missions = search_missions, success = true });
+                CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
+                var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
+                return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
+            }
+
+
+
+            else if (page_index != 0)
+            {
+                CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
+                var page_missions = this.RenderViewAsync("mission_partial", missions, true);
+                return Json(new { mission = page_missions, length = missions.Missions.Count });
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.Mission> missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by);
-                return Json(new { missions = missions, success = true });
+                CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
+                var Cities = this.RenderViewAsync("City_partial", missions, true);
+                var filtered_missions = this.RenderViewAsync("mission_partial", missions, true);
+                return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
             }
-
         }
+
 
 
 
@@ -62,16 +78,19 @@ namespace CI_PLATFORM.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Volunteermission(long Id)
+        public IActionResult Volunteermission(long id)
         {
+            CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id);
 
-            VolunteerViewModel mission_detail = _allRepository.volunteerRepository.Missiondetails(Id);
 
-            return View(mission_detail);
+            return View(mission);
+
 
         }
 
 
+
+        
 
         public JsonResult AddToFavourite(long MissionId, string UserId)
         {
@@ -97,7 +116,7 @@ namespace CI_PLATFORM.Controllers
 
             if (emailList != null)
             {
-                var mail = _allRepository.volunteerRepository.sendMail(emailList, MissionId, userId);
+                var mail = _allRepository.missionRepository.sendMail(emailList, MissionId, userId);
                 return Json(mail);
             }
             return Json(null);
@@ -106,7 +125,7 @@ namespace CI_PLATFORM.Controllers
         public JsonResult ApplyMission(long MissionId, long UserId)
         {
             long userId = Convert.ToInt64(UserId);
-            bool application = _allRepository.volunteerRepository.ApplyMission(MissionId, userId);
+            bool application = _allRepository.missionRepository.ApplyMission(MissionId, userId);
             if (application == true)
             {
                 return Json(application);
@@ -119,7 +138,7 @@ namespace CI_PLATFORM.Controllers
         public void AddComment(string Comment, long MissionId, string UserId)
         {
             long userId = Convert.ToInt64(UserId);
-            _allRepository.volunteerRepository.AddComment(Comment, MissionId, userId);
+            _allRepository.missionRepository.AddComment(Comment, MissionId, userId);
         }
         
 

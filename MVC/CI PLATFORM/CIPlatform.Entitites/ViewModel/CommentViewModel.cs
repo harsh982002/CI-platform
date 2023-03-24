@@ -9,13 +9,7 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class CommentViewModel
     {
-        public string UserName { get; set; }
-        public string Time { get; set; }
-        public string Month { get; set; }
-        public string Day { get; set; }
-        public string Year { get; set; }
-        public string Avatar { get; set; }
-        public string WeekDay { get; set; }
-        public string Comment { get; set; }
+        public Comment? comment { get; set; }
+        public User? user { get; set; }
     }
 }

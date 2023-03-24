@@ -1,4 +1,6 @@
-﻿using CIPlatform.Repository.Interface;
+﻿
+using CIPlatform.Entitites.ViewModel;
+using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -21,6 +23,12 @@ namespace CI_PLATFORM.Controllers
             return View(stories);
         }
 
+        public IActionResult ShareStory()
+        {
+            
+            return View();
+
+        }
 
     }
 }

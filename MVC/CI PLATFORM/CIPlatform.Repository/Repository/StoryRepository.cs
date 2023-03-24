@@ -42,5 +42,13 @@ namespace CIPlatform.Repository.Repository
                        select s).ToList();
             return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Take(9).ToList(), total_missions = stories.Count };
         }
+
+        public List<Mission> mission_of_user(long user_id)
+        {
+            List<CIPlatform.Entitites.Models.Mission> User_Applied_Missions = (from m in missionApplications
+                                                     where m.UserId == user_id
+                                                     select m.Mission).ToList();
+            return User_Applied_Missions;
+        }
     }
 }
