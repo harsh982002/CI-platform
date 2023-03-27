@@ -488,8 +488,14 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.FromUser)
+                .IsUnicode(false)
+                .HasColumnName("from_user");
             entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.ToUser)
+                .IsUnicode(false)
+                .HasColumnName("to_user");
             entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
@@ -515,6 +521,10 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.FromUser)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("from_user");
             entity.Property(e => e.MediaName)
                 .HasMaxLength(64)
                 .IsUnicode(false)
@@ -528,6 +538,10 @@ public partial class CiplatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("media_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.ToUser)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("to_user");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");

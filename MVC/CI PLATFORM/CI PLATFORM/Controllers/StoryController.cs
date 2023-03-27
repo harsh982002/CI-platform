@@ -25,10 +25,31 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult ShareStory()
         {
-            
-            return View();
+            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+            List<CIPlatform.Entitites.Models.Mission> missions = _allRepository.storyRepository.mission_of_user(user_id);
+            return View(missions);
 
         }
+
+        [HttpPost]
+       
+        public JsonResult ShareStory(long story_id, long mission_id, string title, string mystory, List<string> media, string type)
+        {
+            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+            if (type == "PUBLISHED")
+            {
+                bool success = _allRepository.storyRepository.AddStory(user_id, story_id, mission_id, title, mystory, media, type);
+                return Json(new { success });
+            }
+            else
+            {
+                bool success = _allRepository.storyRepository.AddStory(user_id, 0, mission_id, title, mystory, media, type);
+                return Json(new { success });
+            }
+
+        }
+
+       
 
     }
 }

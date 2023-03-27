@@ -63,7 +63,7 @@
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" asp-action="Login" asp-controller="UserAccount">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -71,85 +71,7 @@
     </header>
     <hr class="m-0 p-0">
 
-
-
-    <div class="container">
-        <div class="row  ">
-            <div class="col-lg-6 col-12 my-3">
-                <input type="search" class="form-control no-border"
-                       style="font-family: FontAwesome; font-size: 20px;" placeholder=" &#xf002   Search mission..."
-                       aria-label="Search">
-            </div>
-
-
-
-            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height:54px;">
-                <div class="align-self-center">
-                    <a href="#"
-                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Country
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
-            </div>
-
-
-
-
-            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
-                <div class="align-self-center">
-                    <a href="#"
-                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        City
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
-            </div>
-
-
-            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
-                <div class="align-self-center">
-                    <a href="#"
-                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Theme
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
-            </div>
-
-
-            <div class=" dropdown border col px-3 d-flex justify-content-between" style="min-height: 54px;">
-                <div class="align-self-center">
-                    <a href="#"
-                       class="d-block link-dark text-decoration-none data-toggle" id="dropdownUser2"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Skills
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="me-0 align-self-center"><img src="/images/drop-down.png" alt=""></div>
-            </div>
-        </div>
-    </div>
-
-
-    </div>
-    </div>
-    <hr class="m-0 p-0">
+    
 
     <div class="d-flex w-100 justify-content-center align-items-center position-relative responsive">
         <img src="/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="w-100" style="height: 300px; object-fit: cover; object-position: 0 40%; filter: brightness(30%);" alt="">
@@ -170,7 +92,7 @@
                     <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
                         <div class="thumbnail card d-flex">
                     <div class="img-event list-group-image">
-                        <a href="#"><img class="group w-100 h-100"
+                        <a asp-action="StoryDetails" asp-controller="Story" ><img class="group w-100 h-100"
                              src="@item.StoryMedia.ElementAt(0).Path" alt="" />
                             </a>
                         <button class="mission-theme border-0">
@@ -185,7 +107,7 @@
                              @{
                             string content = System.Text.RegularExpressions.Regex.Replace(@item.Description, "<.*?>", string.Empty);
                             <span>
-                            @content.ToString()
+                            @content.ToString().Substring(0,140)....
                             </span>
                         }
                         </p>

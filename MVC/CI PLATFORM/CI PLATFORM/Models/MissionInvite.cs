@@ -18,4 +18,8 @@ public partial class MissionInvite
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public string? FromUser { get; set; }
+
+    public string? ToUser { get; set; }
 }

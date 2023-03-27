@@ -58,6 +58,8 @@ public partial class CiplatformContext : DbContext
 
     public virtual DbSet<StoryMedium> StoryMedia { get; set; }
 
+    public virtual DbSet<StoryView> StoryViews { get; set; }
+
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -486,8 +488,14 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.FromUser)
+                .IsUnicode(false)
+                .HasColumnName("from_user");
             entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.ToUser)
+                .IsUnicode(false)
+                .HasColumnName("to_user");
             entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
@@ -513,6 +521,10 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.FromUser)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("from_user");
             entity.Property(e => e.MediaName)
                 .HasMaxLength(64)
                 .IsUnicode(false)
@@ -526,6 +538,10 @@ public partial class CiplatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("media_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.ToUser)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("to_user");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -557,6 +573,11 @@ public partial class CiplatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Mission).WithMany()
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_rating_mission");
         });
 
         modelBuilder.Entity<MissionSkill>(entity =>
@@ -755,6 +776,17 @@ public partial class CiplatformContext : DbContext
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__story_med__story__59C55456");
+        });
+
+        modelBuilder.Entity<StoryView>(entity =>
+        {
+            entity.HasKey(e => e.ViewId).HasName("PK__story_vi__B5A34EE2C223E93E");
+
+            entity.ToTable("story_views");
+
+            entity.Property(e => e.ViewId).HasColumnName("view_id");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
         });
 
         modelBuilder.Entity<Timesheet>(entity =>

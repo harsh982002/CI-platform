@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ABGe8YneasOnHVuoWFiYlGgu+EHDajnDq4jVzLxWlB4=",
+  "Hash": "lOZL2Dcu0beQbWKt4C36xGevAbNiUKVaUKhSsxMBTEI=",
   "Source": "CI PLATFORM",
   "BasePath": "_content/CI PLATFORM",
   "Mode": "Default",
@@ -1496,6 +1496,23 @@
       "OriginalItemSpec": "wwwroot\\images\\previous.png"
     },
     {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\red-heart.png",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "images/red-heart.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\red-heart.png"
+    },
+    {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\right.png",
       "SourceId": "CI PLATFORM",
       "SourceType": "Discovered",
@@ -2038,6 +2055,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\index.js"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\ShareStory.js",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "js/ShareStory.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ShareStory.js"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\site.js",

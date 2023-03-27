@@ -23,5 +23,9 @@ public partial class MissionMedium
 
     public DateTime? DeletedAt { get; set; }
 
+    public string? FromUser { get; set; }
+
+    public string? ToUser { get; set; }
+
     public virtual Mission Mission { get; set; } = null!;
 }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Share Your Story";
     ViewData["css"] = "ShareStory.css";
 }
-@*@model List<Mission>*@
+@model List<CIPlatform.Entitites.Models.Mission>
 <div class="container mt-5">
     <h1> Share Your Story</h1>
     <div class="story-details row justify-content-between w-100 mt-4">
@@ -14,13 +14,13 @@
          <select class="form-select me-3" aria-label="Select Mission">
 
    <option value=0 disabled  selected>Select Your Mission</option>
- @* @{
+  @{
       foreach (var item in Model)
       {
-           <option value=@item.MissionId id=@item.MissionId>@item.Title.ToString().Substring(0,50)...</option>
+           <option value=@item.MissionId id=@item.MissionId>@item.Title.ToString().Substring(0,20)...</option>
       }
   }
-*@
+
  
   </select>
   <span class="text-danger d-none" id="mission">Mission Must Be Selected</span>
@@ -31,8 +31,8 @@
         <span class="text-danger d-none" id="title-big">Title Is Too Big</span>
    </div>
    <div class=" col-lg-3 col-md-3 col-sm-3 mt-2">
-       <label  class="form-label">Select Date</label>
-       <input type="text" class="form-control" id="datepicker" placeholder="Select Date" />
+       <label  class="form-label" type="date">Select Date</label>
+       <input type="date" class="form-control" id="datepicker" placeholder="Select Date" />
         <span class="text-danger d-none" id="date">Date Is Required</span>
         <span class="text-danger d-none" id="date-valid">Select Valid Date</span>
        </div>
@@ -73,7 +73,8 @@
 
 
 
-@*javascript*@
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="~/js/ShareStory.js" asp-append-version="true"></script>

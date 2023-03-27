@@ -18,4 +18,6 @@ public partial class MissionRating
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public virtual Mission Mission { get; set; } = null!;
 }

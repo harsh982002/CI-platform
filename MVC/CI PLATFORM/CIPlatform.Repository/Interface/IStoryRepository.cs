@@ -12,5 +12,9 @@ namespace CIPlatform.Repository.Interface
         CIPlatform.Entitites.ViewModel.Mission GetStories(long user_id);
 
         List<CIPlatform.Entitites.Models.Mission> mission_of_user(long user_id);
+
+        bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type);
+
+  
     }
 }
