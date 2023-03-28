@@ -1,8 +1,142 @@
-﻿let pageindex = 0;
+﻿const view_detail_onmouseover = (id, img) => {
+    let image = document.getElementById(img)
+    image.classList.add("story-image")
+    let item = document.getElementById(id);
+    item.style.display = "block";
+}
+const view_detail_onmouseout = (id, img) => {
+    let image = document.getElementById(img)
+    image.classList.remove("story-image")
+    let item = document.getElementById(id);
+    item.style.display = "none";
+}
+var count = 0
+const editor = (StoryId) => {
+    CKEDITOR.replace(`editor-${StoryId}`, {
+        maxLength: 40000,
+        toolbar: [
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+            { name: 'clipboard', items: ['RemoveFormat'] }
+        ]
+    });
+}
+const next = () => {
+    $('.prev').removeClass('d-block').addClass('d-none')
+    $('.next').removeClass('d-none').addClass('d-block')
+    $('.page-1').addClass('d-none').removeClass('d-block')
+    $('.page-2').removeClass('d-none').addClass('d-block')
+}
+const prev = () => {
+    $('.prev').removeClass('d-none').addClass('d-block')
+    $('.next').removeClass('d-block').addClass('d-none')
+    $('.page-1').addClass('d-block').removeClass('d-none')
+    $('.page-2').removeClass('d-block').addClass('d-none')
+}
+const remove = (id) => {
+    document.getElementById(id).remove()
+}
+function convertDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat)
+    return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+}
+function load_userimages(id) {
+    var image = document.getElementById(`images-${id}`).files
+    var images_count = $(`.gallary-${id}`).find('.main-image').length
+    if (images_count + image.length <= 20 && image.length <= 20) {
+        if (images_count == 1) {
+            var fr = new FileReader()
+            const div = document.createElement('div')
+            const img = document.createElement('img')
+            const close_div = document.createElement('div')
+            close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+            const close_img = document.createElement('img')
+            close_img.src = "/images/cancel.png"
+            div.id = `story-${id}-user-newimage-${count}`
+            div.className = "main-image-div"
+            fr.readAsDataURL(image[0])
+            fr.onload = () => {
+                img.src = fr.result
+            }
+            img.className = "main-image"
+            $(`.gallary-${id}`).append(div)
+            $(`#story-${id}-user-newimage-${count}`).append(img)
+            close_div.append(close_img)
+            close_div.onclick = function () { this.parentNode.remove() }
+            $(`#story-${id}-user-newimage-${count}`).append(close_div)
+            count++
+        }
+        else {
+            for (var i = 0; i < image.length; i++) {
+                let fr = new FileReader()
+                fr.onload = () => {
+                    const div = document.createElement('div')
+                    const img = document.createElement('img')
+                    const close_div = document.createElement('div')
+                    close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+                    const close_img = document.createElement('img')
+                    close_img.src = "/images/cancel.png"
+                    div.id = `story-${id}-user-newimage-${count}`
+                    div.className = "main-image-div"
+                    img.src = fr.result
+                    img.className = "main-image"
+                    $(`.gallary-${id}`).append(div)
+                    $(`#story-${id}-user-newimage-${count}`).append(img)
+                    close_div.append(close_img)
+                    close_div.onclick = function () { this.parentNode.remove() }
+                    $(`#story-${id}-user-newimage-${count}`).append(close_div)
+                    count++
+                }
+                fr.readAsDataURL(image[i])
+            }
+        }
+    }
+}
+function poststory(type, id, mission_id) {
+    var current_date = new Date()
+    var title = $(`#edit-${id}`).find('.title').val()
+   /* var date = convertDate($(`#edit-${id}`).find('#datepicker').val())
+    var compareddate = new Date($(`#edit-${id}`).find('#datepicker').val())*/
+    var mystory = CKEDITOR.instances[`editor-${id}`].getData();
+    var video = $(`#edit-${id}`).find(`.video`).val()
+    var media = []
+    if (video.trim().length > 3) {
+        media.push(video_url)
+    }
+    $(`.gallary-${id}`).find('.main-image').each(function (i, item) {
+        media.push(item.src)
+    })
+    if (title.trim().length > 50 && title.trim().length < 255
+         mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
+        $.ajax({
+            url: '/Story/Story',
+            type: 'POST',
+            data: { story_id: id, mission_id: mission_id, title: title, mystory: mystory, media: media, type: type },
+            success: function (result) {
+                if (result.success) {
+                    $("#edit-story").addClass('d-none')
+                    $(`#edit-${id}`).modal('hide');
+                }
+            },
+            error: function () {
+                alert('some error accured')
+            }
+        })
+        $('#alert').removeClass('d-block').addClass('d-none')
+
+    }
+    else {
+        $('#alert').removeClass('d-none').addClass('d-block')
+    }
+
+}
+
+
+let pageindex = 0;
 const loadstories = (stories) => {
     $('.stories').empty().append(stories)
 }
-
+//pagination
 const pagination = (page_index) => {
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {

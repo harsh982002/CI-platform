@@ -103,7 +103,7 @@ namespace CIPlatform.Repository.Repository
         {
 
             int total_missions = missions.Count;
-            missions = missions.Take(9).ToList();
+            missions = missions.Take(6).ToList();
             var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions };
             return Missions;
         }
@@ -118,11 +118,11 @@ namespace CIPlatform.Repository.Repository
             //get missions as per page
             if (page_index != 0)
             {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
+                missions = missions.Skip(6 * page_index).Take(6).ToList();
             }
             else
             {
-                missions = missions.Take(9).ToList();
+                missions = missions.Take(6).ToList();
             }
 
             //get cities as per country
@@ -252,11 +252,11 @@ namespace CIPlatform.Repository.Repository
         {
             if (page_index != 0)
             {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
+                missions = missions.Skip(6 * page_index).Take(6).ToList();
             }
             else
             {
-                missions = missions.Take(9).ToList();
+                missions = missions.Take(6).ToList();
             }
             var mission = (from m in missions
                            where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)
@@ -268,19 +268,34 @@ namespace CIPlatform.Repository.Repository
             return Missions;
         }
 
-        CIPlatform.Entitites.ViewModel.VolunteerViewModel IMissionRepository.Mission(long id)
+        CIPlatform.Entitites.ViewModel.VolunteerViewModel IMissionRepository.Mission(long id, long user_id)
         {
+            var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var user = _db.Users.ToList();
+            
+            bool applied_or_not = false;
+
             Entitites.Models.Mission? mission = _db.Missions.Find(id);
             if (mission is not null)
             {
                 List<User> users = new List<User>();
+
+                List<MissionApplication> applied = (from ma in missionApplications
+                                                    where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
+                                                    select ma).ToList();
+                if (applied.Count > 0)
+                {
+                    applied_or_not = true;
+                }
 
 
                 //get related missions
                 List<Entitites.Models.Mission> related_mission = (from m in missions
                                                                   where m.City.Name.Equals(mission?.City.Name) && !m.MissionId.Equals(mission.MissionId)
                                                                   select m).Take(3).ToList();
+
+
+
 
                 //get related mission if no mission available in city
                 if (related_mission.Count == 0)
@@ -296,11 +311,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav};
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission= fav};
             }
 
         }
@@ -348,7 +363,7 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + "Recommended Mission</h1><br><h2><a href='" + "https://localhost:44367/Home/Volunteermission?id=" + mission_id + "'>Go to Mission</a></h2>";
+            var mailBody = "<h1>" + fromUser.FirstName + "Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Home/Volunteermission?id=" + mission_id + "'>Go to Mission</a></h2>";
             //var mailBody = "<h1>" + HttpContext.Session.GetString("UserName") + " Suggest Mission : " + mission.Title + " to You</h1><br><h2><a href='https://localhost:7227/Mission/MisionDetail?id= " + model.MissionId + "'>Go Website</a></h2>";
             //create email message
             foreach (var item in emailList)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIPlatform.Entitites.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace CIPlatform.Repository.Interface
         List<CIPlatform.Entitites.Models.Mission> mission_of_user(long user_id);
 
         bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type);
+        Mission GetFileredStories(int page_index, long user_id);
 
-  
+        Entitites.ViewModel.StoryViewModel GetStory(long user_id, long Storyid);
     }
 }

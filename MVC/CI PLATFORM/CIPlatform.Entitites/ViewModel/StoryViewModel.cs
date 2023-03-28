@@ -11,7 +11,7 @@ namespace CIPlatform.Entitites.ViewModel
     {
         public CIPlatform.Entitites.Models.Story? story{ get; set; }
 
-        public List<User> users { get; set; }
+        public List<User> Users { get; set; }
 
 
     }

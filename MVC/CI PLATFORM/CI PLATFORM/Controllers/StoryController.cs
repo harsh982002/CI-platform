@@ -1,4 +1,5 @@
 ﻿
+using CI_platform.Areas.User.Controllers;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,22 @@ namespace CI_PLATFORM.Controllers
         public IActionResult Story()
         {
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+            ViewData["user"] = user_id;
             CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetStories(user_id);
             return View(stories);
         }
+
+        [HttpPost]
+        
+        public JsonResult Story(int page_index)
+        {
+            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+
+            CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetFileredStories(page_index, user_id);
+            var next_stories = this.RenderViewAsync("story_partial", stories, true);
+            return Json(new { next_stories });
+        }
+
 
         public IActionResult ShareStory()
         {
@@ -49,6 +63,15 @@ namespace CI_PLATFORM.Controllers
 
         }
 
+        public IActionResult  StoryDetails()
+        {
+/*
+            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+            CIPlatform.Entitites.ViewModel.StoryViewModel story = _allRepository.storyRepository.GetStory(user_id,Storyid);*/
+
+
+            return View();
+        }
        
 
     }

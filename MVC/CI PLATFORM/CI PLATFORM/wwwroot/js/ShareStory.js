@@ -7,9 +7,7 @@ var mystory
 var video_url
 var media = []
 var count = 0
-/*$(function () {
-    $("#datepicker").datepicker();
-});*/
+
 CKEDITOR.replace('editor', {
     maxLength: 40000,
     toolbar: [
@@ -94,9 +92,7 @@ function getdetails(type) {
 function validate() {
     mission = parseInt($('.form-select').find(':selected').val())
     title = $('.title').val()
-   /* date = convertDate($('#datepicker').datepicker().val())*/
-    /*current_date = new Date()*/
-   /* comparedate = new Date($('#datepicker').datepicker().val())*/
+ 
     mystory = CKEDITOR.instances.editor.getData();
     video_url = $('.video').val()
     if (video_url.trim().length > 3) {
@@ -124,19 +120,7 @@ function validate() {
     else {
         $('#title-big').removeClass('d-block').addClass('d-none')
     }
-   /* if ($('#datepicker').datepicker().val().length == 0) {
-        $('#date').removeClass('d-none').addClass('d-block')
-    }
-    else {
-        $('#date').removeClass('d-block').addClass('d-none')
-    }*/
-   /* if (Date.parse(current_date) <= Date.parse(comparedate)) {
-        $('#date-valid').removeClass('d-none').addClass('d-block')
-    }
-    else {
-        $('#date-valid').removeClass('d-block').addClass('d-none')
 
-    }*/
     if (mystory.trim().length < 70) {
         $('#mystory').removeClass('d-none').addClass('d-block')
 

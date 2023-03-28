@@ -34,23 +34,7 @@ function Add(MissionId,UserId) {
         }
     })
 }
-/*const add_comments = (MissionId, UserId) => {
-    var comment = document.getElementById('usercomment').value
-    var length = $('.user-comments').find('.usercomment-image').length
-    if (comment.length > 3) {
-        $.ajax({
-            url: `/Home//Home/AddToFavourite/${mission_id}`,
-            type: 'POST',
-            data: { UserId: UserId, MissionId: MissionId, comment: comment, length: length },
-            success: function (result) {
-                load_comments(result.comments.result)
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
-    }
-}*/
+
 
 function AddComments(missionId, UserId) {
 
@@ -77,6 +61,7 @@ function AddComments(missionId, UserId) {
                 $("#comment-status").html("comment sent for approvel");
                 $("#comment-status").css("color", "green");
                 $('#user-comment').val('');
+                
             }
         })
     }
@@ -119,6 +104,7 @@ function ApplyMission(MissionId, UserId) {
                 console.log("success");
                 $("#volunteer-status").html("Request sent for approvel");
                 $("#volunteer-status").css("color", "green");
+                alert("Your request has been sent.");
             }
             else {
                 $("#volunteer-status").html("Already Applied");

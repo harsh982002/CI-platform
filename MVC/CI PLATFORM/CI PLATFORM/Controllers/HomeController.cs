@@ -80,7 +80,8 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Volunteermission(long id)
         {
-            CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id);
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id, userId);
 
 
             return View(mission);
@@ -94,7 +95,7 @@ namespace CI_PLATFORM.Controllers
 
         public JsonResult AddToFavourite(long MissionId, string UserId)
         {
-            long userId = Convert.ToInt64(UserId);
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
 
             bool mission = _allRepository.AddFavouriteMission(MissionId, userId);
             if (mission == true)
@@ -124,7 +125,7 @@ namespace CI_PLATFORM.Controllers
 
         public JsonResult ApplyMission(long MissionId, long UserId)
         {
-            long userId = Convert.ToInt64(UserId);
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             bool application = _allRepository.missionRepository.ApplyMission(MissionId, userId);
             if (application == true)
             {

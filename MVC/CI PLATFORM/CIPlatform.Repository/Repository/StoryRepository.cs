@@ -126,7 +126,7 @@ namespace CIPlatform.Repository.Repository
             return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Take(9).ToList(), total_missions = stories.Count };
         }
 
-       /* public Entitites.ViewModel.Mission GetFileredStories(int page_index, long user_id)
+        public Entitites.ViewModel.Mission GetFileredStories(int page_index, long user_id)
         {
             //get stories as per page
             stories = (from s in stories
@@ -134,7 +134,7 @@ namespace CIPlatform.Repository.Repository
                        orderby s.Status ascending
                        select s).ToList();
             return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Skip(9 * page_index).Take(9).ToList() };
-        }*/
+        }
 
         public List<Mission> mission_of_user(long user_id)
         {
@@ -144,6 +144,21 @@ namespace CIPlatform.Repository.Repository
             return User_Applied_Missions;
         }
 
-        
+        public Entitites.ViewModel.StoryViewModel GetStory(long user_id, long Storyid)
+        {
+            List<User> users = _db.Users.ToList();
+            var story = _db.Stories.FirstOrDefault(c => c.StoryId == Storyid);
+            if (story is not null)
+            {
+                List<User> already_recommended = new List<User>();
+               
+               
+                return new Entitites.ViewModel.StoryViewModel { story = story, Users = users };
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
