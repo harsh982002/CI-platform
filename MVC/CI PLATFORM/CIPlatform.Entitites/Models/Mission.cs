@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CIPlatform.Entitites.Models;
 
@@ -66,7 +65,6 @@ public partial class Mission
 
     public virtual ICollection<MissionMedium> MissionMedia { get; } = new List<MissionMedium>();
 
-    [NotMapped]
     public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
 
     public virtual ICollection<MissionSkill> MissionSkills { get; } = new List<MissionSkill>();

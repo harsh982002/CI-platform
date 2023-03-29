@@ -18,5 +18,9 @@ namespace CIPlatform.Repository.Interface
         Mission GetFileredStories(int page_index, long user_id);
 
         Entitites.ViewModel.StoryViewModel GetStory(long user_id, long Storyid);
+
+        bool Recommend(string[] email, long Storyid, long user_id);
+        void Views(long user_id, long Storyid);
+
     }
 }

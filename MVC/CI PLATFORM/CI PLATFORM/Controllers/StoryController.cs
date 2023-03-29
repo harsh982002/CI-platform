@@ -62,17 +62,35 @@ namespace CI_PLATFORM.Controllers
             }
 
         }
-
-        public IActionResult  StoryDetails()
+        [Route("Story/StoryDetails/{id}")]
+        public IActionResult  StoryDetails(long id)
         {
-/*
+
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
-            CIPlatform.Entitites.ViewModel.StoryViewModel story = _allRepository.storyRepository.GetStory(user_id,Storyid);*/
-
-
-            return View();
+            CIPlatform.Entitites.ViewModel.StoryViewModel story = _allRepository.storyRepository.GetStory(user_id, id);
+            if (story is not null)
+            {
+                _allRepository.storyRepository.Views(user_id, id);
+                return View(story);
+            }
+            else
+            {
+                return View("page_not_found");
+            }
         }
-       
 
+        [HttpPost]
+        [Route("Story/StoryDetails/{id}")]
+        public JsonResult RecommendCoWorker(string[] emailList, long id, string UserId)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+
+            if (emailList != null)
+            {
+                var mail = _allRepository.storyRepository.Recommend(emailList, id, userId);
+                return Json(mail);
+            }
+            return Json(null);
+        }
     }
 }

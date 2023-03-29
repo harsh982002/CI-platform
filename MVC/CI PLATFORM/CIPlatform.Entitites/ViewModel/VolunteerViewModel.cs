@@ -18,6 +18,7 @@ namespace CIPlatform.Entitites.ViewModel
 
         public List<MissionSkill> mission_skill { get; set; }
 
+        public int? applyuser { get; set; }
         public List<User>? All_volunteers { get; set; }
         public int? Total_volunteers { get; set; }
         public int? Favorite_mission { get; set; }

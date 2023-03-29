@@ -89,15 +89,14 @@ namespace CI_PLATFORM.Controllers
 
         }
 
+     
 
-
-        
 
         public JsonResult AddToFavourite(long MissionId, string UserId)
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
 
-            bool mission = _allRepository.AddFavouriteMission(MissionId, userId);
+            bool mission = _allRepository.missionRepository.AddFavouriteMission(MissionId, userId);
             if (mission == true)
             {
 

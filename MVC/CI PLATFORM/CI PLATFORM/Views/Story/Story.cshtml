@@ -15,7 +15,7 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae veritatis molestias at praesentium, laboriosam atque quam expedita voluptates.
     </p>
      <div class="mt-2 d-flex justify-content-center">
-                            <a asp-action="StoryDetails" asp-controller="Story" class="applyButton btn d-flex justify-content-around align-items-center" style="border: 2px solid white; color: white;">Share your Story <img class="ms-2" src="images/right-arrow.png" alt="">
+                            <a asp-action="ShareStory" asp-controller="Story" class="applyButton btn d-flex justify-content-around align-items-center" style="border: 2px solid white; color: white;">Share your Story <img class="ms-2" src="images/right-arrow.png" alt="">
                            </a>
                         </div>
 </div>
@@ -32,13 +32,13 @@
 <nav aria-label="Page navigation example" class="mt-5">
     <ul class="pagination justify-content-center">
          <li class="page-item">
-            <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
+            <span class="page-link"  onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
         </li> 
          <li class="page-item">
             <span class="page-link" onclick="prev_page()"><img src="~/images/left.png" alt="not load" /></span>
         </li>
          @{
-            int pages=(int)Math.Ceiling((double)@Model?.total_missions/9);
+            int pages=(int)Math.Ceiling((double)@Model?.total_missions/2);
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)

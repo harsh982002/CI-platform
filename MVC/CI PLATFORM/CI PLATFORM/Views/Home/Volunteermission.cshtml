@@ -181,20 +181,9 @@
 
 
                        <div class="row text-center">
-                    <div class="ratings mt-3">
-                        @if (true)
-                        {
-                            for (var j = 0; j < (@Model.Rating); j++)
-                            {
-                                <i class="bi bi-star-fill checked" style="color:#F8D441"></i>
-                            }
-                            for (var j = 0; j < 5 - (@Model.Rating); j++)
-                            {
-                                <i class="bi bi-star"></i>
-                            }
-
-                        }
-                    </div>
+                    <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
+                         
+                           </div>
                 </div>
                     
 
@@ -246,11 +235,21 @@
                      
 
                     <div class="d-flex justify-content-center mt-5 " id="apply-btn">
-                        <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                        @if(@Model.applyuser == 1)
+                    {
+                         <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                                class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status" disabled>
+                            Already applied
+                            
+                        </button>
+                    }
+                    else{
+                    <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
                                 class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
                             Apply now
                             <img src="/images/right-arrow.png" class="ms-2" />
                         </button>
+                    }
                     </div>
 
                 </div>

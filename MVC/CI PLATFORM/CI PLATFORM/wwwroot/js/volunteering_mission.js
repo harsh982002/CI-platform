@@ -66,24 +66,7 @@ function AddComments(missionId, UserId) {
         })
     }
 }
-/*
-function applymission = (MissionId, UserId) => {
-    debugger
-    $.ajax({
-        url: "/Home/ApplyMission",
-        type: "POST",
-        data: { MissionId: MissionId, UserId: UserId },
-        success: function (data) {
-            if (result.success) {
-                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
-                $('.validate-recommend').removeClass('d-none').addClass('d-flex')
-            }
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
-    })
-}*/
+
 
 
 function ApplyMission(MissionId, UserId) {
@@ -117,27 +100,6 @@ function ApplyMission(MissionId, UserId) {
 
 
   
-}
-    function RateMisson(MissionId, UserId, rate) {
-        var url = "/Home/RateMission";
-        console.log(rate);
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {
-                "rate": rate,
-                "MissionId": MissionId,
-                "UserId": UserId
-            },
-            success: (data) => {
-                console.log(data);
-
-            },
-
-            error: function () {
-                alert("An error occurred while Sending Mission Rating!");
-            }
-        });
 }
 
 function sendMail(MissionId) {

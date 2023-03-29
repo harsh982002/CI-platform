@@ -106,7 +106,7 @@ function poststory(type, id, mission_id) {
     $(`.gallary-${id}`).find('.main-image').each(function (i, item) {
         media.push(item.src)
     })
-    if (title.trim().length > 50 && title.trim().length < 255
+    if (title.trim().length > 50 && title.trim().length < 255 &&
          mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
         $.ajax({
             url: '/Story/Story',
@@ -137,7 +137,7 @@ const loadstories = (stories) => {
     $('.stories').empty().append(stories)
 }
 //pagination
-const pagination = (page_index) => {
+const pagination= (page_index) => {
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {
         item.classList.remove('page-active')

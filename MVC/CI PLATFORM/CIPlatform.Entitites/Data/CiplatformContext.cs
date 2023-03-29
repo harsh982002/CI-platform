@@ -554,10 +554,9 @@ public partial class CiplatformContext : DbContext
 
         modelBuilder.Entity<MissionRating>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("mission_rating");
+            entity.ToTable("mission_rating");
 
+            entity.Property(e => e.MissionRatingId).HasColumnName("mission_rating_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -565,16 +564,13 @@ public partial class CiplatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
-            entity.Property(e => e.MissionRatingId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("mission_rating_id");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Mission).WithMany()
+            entity.HasOne(d => d.Mission).WithMany(p => p.MissionRatings)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_mission_rating_mission");
@@ -787,6 +783,11 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.ViewId).HasColumnName("view_id");
             entity.Property(e => e.StoryId).HasColumnName("story_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryViews)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__story_vie__story__79FD19BE");
         });
 
         modelBuilder.Entity<Timesheet>(entity =>

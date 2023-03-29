@@ -17,7 +17,8 @@ namespace CIPlatform.Repository.Interface
         bool ApplyMission(long user_id, long mission_id);
         bool add_to_favourite(long user_id, long mission_id);
 
+        bool AddFavouriteMission(long MissionId, long UserId);
         bool sendMail(string[] email, long mission_id, long user_id);
-
+      
     }
 }

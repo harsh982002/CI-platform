@@ -20,7 +20,7 @@ namespace CIPlatform.Entitites.ViewModel
         public List<User> users { get; set; }
 
 
-
+        public int? applyuser { get; set; }
         public List<User>? Recent_volunteers { get; set; }
         public List<User>? All_volunteers { get; set; }
         public int? Total_volunteers { get; set; }

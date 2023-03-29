@@ -10,4 +10,6 @@ public partial class StoryView
     public long StoryId { get; set; }
 
     public long UserId { get; set; }
+
+    public virtual Story Story { get; set; } = null!;
 }

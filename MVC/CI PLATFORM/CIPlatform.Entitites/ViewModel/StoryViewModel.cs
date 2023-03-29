@@ -13,6 +13,8 @@ namespace CIPlatform.Entitites.ViewModel
 
         public List<User> Users { get; set; }
 
+        public CIPlatform.Entitites.Models.StoryView? StoryViews { get; set; }
+
 
     }
 }
