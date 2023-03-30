@@ -122,12 +122,11 @@ function sendMail(MissionId) {
         },
         success: function (data) {
             if (data) {
-
+/*
                 toastr.options = {
                     "positionClass": "toast-bottom-right"
                 }
-                toastr.success("Mail Successfully...")
-
+                toastr.success("Mail Successfully...")*/
 
                 //// Loop through each ID in the emailList array
                 //for (var i = 0; i < emailList.length; i++) {
@@ -148,3 +147,112 @@ function sendMail(MissionId) {
 
     })
 }
+
+const prev_volunteers = (user_id, id) => {
+    var one_page_volunteers = 9
+    if (count > 1) {
+        count--;
+        $.ajax({
+            url: `/Home/Volunteermission/${id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, id: id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+const next_volunteers = (max_page, user_id, id) => {
+    var one_page_volunteers = 9
+    if (count < max_page) {
+        count++;
+        $.ajax({
+            url: `/Home/Volunteermission/${id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", id: id, user_id: user_id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+
+
+const rating = (rating, user_id, mission_id) => {
+    if (rating == 1) {
+        $('.rating').find('img').each(function (i, item) {
+            if (i == (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty`) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                    $.ajax({
+                        url: `/Home/Volunteermission/${mission_id}`,
+                        type: 'POST',
+                        data: {mission_id: mission_id, user_id: user_id, rating: rating },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                    $.ajax({
+                        url: `/Home/Volunteermission/${mission_id}`,
+                        type: 'POST',
+                        data: {mission_id: mission_id, user_id: user_id, rating: 0 },
+                        success: function (result) {
+                        },
+                        error: function () {
+                            console.log("Error updating variable");
+                        }
+                    })
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
+    }
+    else {
+        $('.rating').find('img').each(function (i, item) {
+            if (i <= (rating - 1)) {
+                if (item.id == `${i + 1}-star-empty` || i <= (rating - 1)) {
+                    item.src = '/images/selected-star.png'
+                    item.id = `${i + 1}-star`
+                }
+                else {
+                    item.src = '/images/star-empty.png'
+                    item.id = `${i + 1}-star-empty`
+                }
+            }
+            else {
+                item.src = '/images/star-empty.png'
+                item.id = `${i + 1}-star-empty`
+            }
+        })
+        $.ajax({
+            url: `/Home/Volunteermission/${mission_id}`,
+            type: 'POST',
+            data: {mission_id: mission_id, user_id: user_id, rating: rating },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+
+}
+

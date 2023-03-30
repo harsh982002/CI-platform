@@ -40,7 +40,28 @@
                     </p>
                     <div class="d-flex list-view justify-content-between">
                         <span class="organization">@item.OrganizationName</span>
-                        
+                        <div class="rating">
+                            @{
+                                double avg_rating = 0;
+                                int total = @item.MissionRatings.Count;
+                                foreach (var rating in @item.MissionRatings)
+                                {
+                                    avg_rating= avg_rating + rating.Rating;
+                                }
+                                avg_rating = avg_rating / total;
+                                for (var i = 1; i <= 5; i++)
+                                {
+                                    if (i <= @avg_rating)
+                                    {
+                                        <img style="height:30px"  src="~/images/selected-star.png"alt="" />
+                                    }
+                                    else
+                                    {
+                                       <img style="height:30px"  src="~/images/star-empty.png" alt="" /> 
+                                    }
+                                }
+                                }
+                        </div>
                     </div>
                     <div class="duration-seats-info mt-4">
                         <div class="duration">

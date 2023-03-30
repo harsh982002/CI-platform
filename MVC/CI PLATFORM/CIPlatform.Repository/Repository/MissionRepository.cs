@@ -270,12 +270,17 @@ namespace CIPlatform.Repository.Repository
 
         CIPlatform.Entitites.ViewModel.VolunteerViewModel IMissionRepository.Mission(long id, long user_id)
         {
+            int rate = 0;
+            int avg_rating = 0;
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
+            /*var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).ToList();*/
             var user = _db.Users.ToList();
-            int rate = _db.MissionRatings.Where(x => x.MissionId == id && x.UserId == user_id).Count();
+            if(_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
+            {
+                rate = _db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id).Rating;
+            }
             
-
             Entitites.Models.Mission? mission = _db.Missions.Find(id);
             if (mission is not null)
             {
@@ -284,6 +289,7 @@ namespace CIPlatform.Repository.Repository
                 bool applied_or_not = false;
                 int rating_count = 0;
                 int rating = 0;
+                
 
                 List<User> users = new List<User>();
 
@@ -340,11 +346,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, };
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate };
             }
 
         }
@@ -393,9 +399,8 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + "Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Home/Volunteermission?id=" + mission_id + "'>Go to Mission</a></h2>";
-            //var mailBody = "<h1>" + HttpContext.Session.GetString("UserName") + " Suggest Mission : " + mission.Title + " to You</h1><br><h2><a href='https://localhost:7227/Mission/MisionDetail?id= " + model.MissionId + "'>Go Website</a></h2>";
-            //create email message
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
+           
             foreach (var item in emailList)
             {
 
@@ -415,57 +420,6 @@ namespace CIPlatform.Repository.Repository
             return true;
         }
 
-        /*  public bool AddFavouriteMission(long userId, long Id)
-          {
-
-              FavoriteMission favoriteMission = new FavoriteMission();
-              favoriteMission.UserId = userId;
-              favoriteMission.MissionId = Id;
-
-              var favmission = _db.FavoriteMissions.FirstOrDefault(s => s.UserId == userId && s.MissionId == Id);
-              if (favmission == null)
-              {
-                  _db.FavoriteMissions.Add(favoriteMission);
-                  _db.SaveChanges();
-                  return true;
-              }
-              else
-              {
-                  if (favmission.DeletedAt == null)
-                  {
-                      favmission.DeletedAt = DateTime.Now;
-                      // if error occurs then remove below line and check whether it works or not. also check the getdate() as default in createdat
-                      //also check for createdat and appliedat in mission application table why getdate() not working...
-                      //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
-                      _db.SaveChanges();
-                      return false;
-                  }
-                  else
-                  {
-                      if (favmission.UpdatedAt == null)
-                      {
-                          favmission.UpdatedAt = DateTime.Now;
-                          //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
-                          _db.SaveChanges();
-                          return true;
-                      }
-                      else
-                      {
-                          if (favmission.DeletedAt < favmission.UpdatedAt)
-                          {
-                              favmission.DeletedAt = DateTime.Now;
-                              //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
-                              _db.SaveChanges();
-                              return false;
-                          }
-                          favmission.UpdatedAt = DateTime.Now;
-                          //_CIPlatformDbContext.FavoriteMissions.Update(favourite);
-                          _db.SaveChanges();
-                          return true;
-                      }
-                  }
-              }
-          }*/
         public bool AddFavouriteMission(long MissionId, long UserId)
         {
 
@@ -488,6 +442,30 @@ namespace CIPlatform.Repository.Repository
             }
         }
 
+        public bool addRatings(int rating, long mission_id, long userId)
+        {
+            var missionRating = new MissionRating();
+            var alradyRate = _db.MissionRatings.Where(x => x.MissionId == mission_id && x.UserId == userId).Count();
+
+            if (alradyRate == 0)
+            {
+                missionRating.MissionId = mission_id;
+                missionRating.Rating = rating;
+                missionRating.UserId = userId;
+                missionRating.CreatedAt= DateTime.Now;  
+                _db.MissionRatings.Add(missionRating);
+            }
+            else
+            {
+                missionRating = (MissionRating)_db.MissionRatings.FirstOrDefault(x => x.MissionId == mission_id && x.UserId == userId);
+                missionRating.Rating = rating;
+                missionRating.UpdatedAt = DateTime.Now;
+                _db.MissionRatings.Update(missionRating);
+            }
+            _db.SaveChanges();
+
+            return true;
+        }
 
     }
 }

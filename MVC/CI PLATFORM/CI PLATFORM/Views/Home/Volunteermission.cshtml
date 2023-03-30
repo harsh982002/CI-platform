@@ -180,12 +180,33 @@
                     </div>
 
 
-                       <div class="row text-center">
-                    <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
-                         
-                           </div>
-                </div>
-                    
+                        <div class="duration-seats-info mt-4">
+                        <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
+                        @{
+                        if(@Model.Rating==0){
+                        <img style="height:30px" id='1-star-empty' onclick="rating(1,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        <img style="height:30px" id='2-star-empty' onclick="rating(2,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        <img style="height:30px" id='3-star-empty' onclick="rating(3,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        <img style="height:30px" id='4-star-empty' onclick="rating(4,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        <img style="height:30px" id='5-star-empty' onclick="rating(5,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                        }
+                        else
+                        {
+                        for (var i = 1; i <= 5; i++)
+                        {
+                        if (i <= @Model.Rating)
+                        {
+                        <img style="height:30px" id='@i-star' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/selected-star.png"alt="" />
+                        }
+                        else
+                        {
+                        <img style="height:30px" id='@i-star-empty' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" /> 
+                        }
+                        }
+                        }
+                        }
+                        </div>
+                        </div>
 
 
                     <div class=" d-flex flex-wrap justify-content-evenly mt-4">
@@ -424,21 +445,20 @@
                                         <tr>
                                             <td class="py-3 border-bottom-0 ">Rating</td>
                                             <td class="py-3 border-bottom-0 ">
-                                                @if (true)
-                                    {
-                                        for (var j = 0; j < (@Model.Rating); j++)
-                                        {
-                                            <i class="bi bi-star-fill checked" style="color:#F8D441"></i>
-                                        }
-                                        for (var j = 0; j < 5 - (@Model.Rating); j++)
-                                        {
-                                            <i class="bi bi-star"></i>
-                                        }
-
-                                    }<span class="px-2 ">
-                                                    (by 100
-                                                    volunteers)
-                                                </span>
+                                                @{
+                                                   for (var i = 1; i <= 5; i++)
+                                                    {
+                                                        if (i <= @Model.Avg_ratings)
+                                                        {
+                                                            <img style="height:30px"  src="~/images/selected-star.png"alt="" />
+                                                        }
+                                                        else
+                                                        {
+                                                           <img style="height:30px"  src="~/images/star-empty.png" alt="" /> 
+                                                        }
+                                                    }
+                                                    }
+                                                    <span class="ms-2">(By @Model.Rating_count volunteers)</span>
                                             </td>
 
 
@@ -478,8 +498,10 @@
                             <div class="tab-pane container active " id="previous">
                                 
                                 <div class="card-body row justify-content-center">
+                                  
                                     @if (@Model.mission.MissionApplications != null)
                                     {
+                                        
                                     @foreach(var item in @Model.mission.MissionApplications)
                                     {
                                     <div class="d-flex col-3 flex-column m-1 justify-content-center">
@@ -487,14 +509,10 @@
                                         <div class="text-center">@item.User.FirstName @item.User.LastName</div>
                                     </div>
   }
-                                }
-                                    
+                                }  
                                 </div>
-                              
-                            </div>
-
-
                            
+                            </div>
 
                         </div>
 
@@ -539,7 +557,7 @@
                     <div class="thumbnail card d-flex">
                     <div class="img-event">
                         <img class="group list-group-image w-100 h-100"
-                             src="@Model.mission.MissionMedia.ElementAt(0).MediaPath" alt="" />
+                             src="@item.MissionMedia.ElementAt(0).MediaPath" alt="" />
                         <div class="location-img" >
                             <img class="text-light" src="/images/pin.png" alt="">
                             <span class="text-light">@item.City.Name</span>
@@ -629,9 +647,11 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center my-3">
-                            <button class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px">
-                                Apply <img src="/images/right-arrow.png" alt="">
-                            </button>
+                             <a class="applyButton btn"  asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId" >    
+                    
+                            Apply <img src="/images/right-arrow.png" alt="">
+                       
+                        </a>
                         </div>
                     </div>
                 </div>

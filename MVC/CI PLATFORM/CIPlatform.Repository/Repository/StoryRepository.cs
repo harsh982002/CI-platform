@@ -153,7 +153,7 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.StoryViewModel GetStory(long user_id, long Storyid)
         {
-            var viewer = _db.StoryViews.FirstOrDefault(x => x.UserId.Equals(user_id) && x.StoryId.Equals(Storyid));
+            var viewer = _db.StoryViews.Where(x=>x.StoryId.Equals(Storyid)).ToList().Count;
             List<User> users = _db.Users.ToList();
             var story = _db.Stories.FirstOrDefault(c => c.StoryId == Storyid);
             if (story is not null)
@@ -186,7 +186,7 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + "Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Story/StoryDetails?id=" + story_id + "'>Go to Story</a></h2>";
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Story</h1><br><h2><a href='" + "https://localhost:44335/Story/StoryDetails/" + story_id + "'>Go to Story</a></h2>";
             
             foreach (var item in emailList)
             {

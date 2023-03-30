@@ -22,7 +22,7 @@ namespace CIPlatform.Entitites.ViewModel
         public List<User>? All_volunteers { get; set; }
         public int? Total_volunteers { get; set; }
         public int? Favorite_mission { get; set; }
-        public int? Rating { get; set; }
+        public int Rating { get; set; }
         public List<User> users { get; set; }
         public double? Avg_ratings { get; set; }
         public int? Rating_count { get; set; }

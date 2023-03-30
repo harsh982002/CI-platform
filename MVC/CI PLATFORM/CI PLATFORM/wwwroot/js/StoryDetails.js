@@ -17,7 +17,7 @@
 
         },
         success: function (data) {
-            if (data) {
+            if (data == success) {
 
                 toastr.options = {
                     "positionClass": "toast-bottom-right"

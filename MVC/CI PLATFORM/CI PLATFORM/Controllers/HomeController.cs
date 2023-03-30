@@ -78,19 +78,26 @@ namespace CI_PLATFORM.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Volunteermission(long id)
+        [Route("Home/Volunteermission/{id}")]
+        public IActionResult Volunteermission(long id, long UserId)
         {
-            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
-            CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id, userId);
+          
+            if(string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            {
+                return RedirectToAction("Login", "UserAccount");
+            }
+            
+            
+                long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+                CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id, userId);
 
 
-            return View(mission);
+                return View(mission);
+           
+           
 
 
         }
-
-     
-
 
         public JsonResult AddToFavourite(long MissionId, string UserId)
         {
@@ -140,9 +147,16 @@ namespace CI_PLATFORM.Controllers
             long userId = Convert.ToInt64(UserId);
             _allRepository.missionRepository.AddComment(Comment, MissionId, userId);
         }
-        
+
+        [HttpPost]
+        [Route("/Home/Volunteermission/{mission_id}")]
+        public JsonResult RateMission(long mission_id, int rating)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            var Rating = _allRepository.missionRepository.addRatings(rating, mission_id, userId);
+            return Json(Rating);
+        }
 
 
-    
     }
 }
