@@ -29,7 +29,7 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
 
-
+        [Route("/Home/Landingplatform")]
         public IActionResult Landingplatform()
         {
 
@@ -40,7 +40,7 @@ namespace CI_PLATFORM.Controllers
 
         }
         [HttpPost]
-
+        [Route("/Home/Landingplatform")]
         public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index, long user_id, long mission_id)
         {
             if (key is not null)
@@ -117,7 +117,7 @@ namespace CI_PLATFORM.Controllers
 
         }
 
-        public JsonResult RecommendCoWorker(string[] emailList, long MissionId, string UserId)
+        public JsonResult RecommendCoWorker(string[] emailList, long MissionId)
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
 

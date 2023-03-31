@@ -1,6 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+
 @using System.Security.Claims;
 @model CIPlatform.Entitites.ViewModel.Mission
 @{
@@ -16,9 +19,20 @@
                         <img class="text-light" src="/images/pin.png" alt="">
                         <span class="text-light">@item.City.Name</span>
                     </div>
-                      <button class="like-img border-0" >
-                            <img class="text-light" src="/images/heart.png" alt="">
-                        </button>
+                     @{
+                        if(@item.FavoriteMissions.Where(c=>c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@Accesor?.HttpContext?.Session.GetString("UserId")))).ToList().Count>0 )
+                        {
+                            
+                    <button onclick="Add(@Accesor?.HttpContext?.Session.GetString("UserId"),@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" style="height:24px;" src="/images/red-heart.png" alt="">
+                    </button>
+                        }
+                        else{
+                         <button onclick="Add(@Accesor?.HttpContext?.Session.GetString("UserId"),@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" src="/images/heart.png" alt="">
+                    </button>
+                        }
+                    }
                     <button class="stop-img border-0">
                         <img class="text-light" src="/images/user.png" alt="">
                     </button>
@@ -122,6 +136,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
+                    
                      <a class="applyButton btn"  asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId" >    
                     
                             Apply <img src="/images/right-arrow.png" alt="">

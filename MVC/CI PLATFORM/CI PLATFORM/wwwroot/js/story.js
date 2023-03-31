@@ -106,10 +106,11 @@ function poststory(type, id, mission_id) {
     $(`.gallary-${id}`).find('.main-image').each(function (i, item) {
         media.push(item.src)
     })
+
     if (title.trim().length > 50 && title.trim().length < 255 &&
          mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
         $.ajax({
-            url: '/Story/Story',
+            url: '/Story/ShareStory',
             type: 'POST',
             data: { story_id: id, mission_id: mission_id, title: title, mystory: mystory, media: media, type: type },
             success: function (result) {

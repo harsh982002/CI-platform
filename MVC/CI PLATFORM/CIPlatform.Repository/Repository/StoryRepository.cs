@@ -171,6 +171,7 @@ namespace CIPlatform.Repository.Repository
 
         public bool Recommend(string[] emailList, long story_id, long user_id)
         {
+         
             User fromUser = _db.Users.FirstOrDefault(u => u.UserId == user_id);
             foreach (var item in emailList)
             {
@@ -186,8 +187,8 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Story</h1><br><h2><a href='" + "https://localhost:44335/Story/StoryDetails/" + story_id + "'>Go to Story</a></h2>";
-            
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended you a story</h1><br><h2><a href='" + "https://localhost:44335/Story/StoryDetails/" + story_id + "'>Go to Story</a></h2>";
+
             foreach (var item in emailList)
             {
 

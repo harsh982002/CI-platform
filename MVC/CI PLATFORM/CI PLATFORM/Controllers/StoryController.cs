@@ -36,7 +36,7 @@ namespace CI_PLATFORM.Controllers
             return Json(new { next_stories });
         }
 
-
+        [Route("/Story/ShareStory")]
         public IActionResult ShareStory()
         {
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -46,7 +46,7 @@ namespace CI_PLATFORM.Controllers
         }
 
         [HttpPost]
-       
+        [Route("/Story/ShareStory")]
         public JsonResult ShareStory(long story_id, long mission_id, string title, string mystory, List<string> media, string type)
         {
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -65,6 +65,11 @@ namespace CI_PLATFORM.Controllers
         [Route("Story/StoryDetails/{id}")]
         public IActionResult  StoryDetails(long id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            {
+                return RedirectToAction("Login", "UserAccount");
+            }
+
 
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
             CIPlatform.Entitites.ViewModel.StoryViewModel story = _allRepository.storyRepository.GetStory(user_id, id);
@@ -81,13 +86,16 @@ namespace CI_PLATFORM.Controllers
 
         [HttpPost]
         [Route("Story/StoryDetails/{id}")]
-        public JsonResult RecommendCoWorker(string[] emailList, long id, string UserId)
+        public JsonResult RecommendCoWorker(string[] emailList, long Storyid)
         {
+           
+
+
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
 
             if (emailList != null)
             {
-                var mail = _allRepository.storyRepository.Recommend(emailList, id, userId);
+                var mail = _allRepository.storyRepository.Recommend(emailList, Storyid, userId);
                 return Json(mail);
             }
             return Json(null);

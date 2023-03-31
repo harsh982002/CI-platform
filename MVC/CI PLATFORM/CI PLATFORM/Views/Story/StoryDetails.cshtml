@@ -152,11 +152,12 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.story.StoryId)">Send Mail</button>
+                                            <button type="submit" class="btn btn-primary"  onclick="Recommend(@Model.story.StoryId)">Send Mail</button>
                                         </div>
                                 </div>
                             </div>
                         </div>
+
 
         <a asp-action="Volunteermission" asp-controller="Home" asp-route-id="@Model.story.MissionId"  class="applyButton mt-3 btn col-lg-5 col-md-12 col-sm-5">Open Mission<img class="ms-2" src="~/images/right-arrow.png" alt=""/></a>
         </div>

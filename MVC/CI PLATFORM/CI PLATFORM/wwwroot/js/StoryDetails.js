@@ -1,4 +1,4 @@
-﻿function sendMail(id) {
+﻿function Recommend(StoryId) {
 
     var emailList = [];
 
@@ -8,23 +8,30 @@
 
     $.ajax({
 
-        url: "Story/StoryDetails/{id}",
+        url: "/Story/StoryDetails/{id}",
         method: "POST",
 
         data: {
             "emailList": emailList,
-            "id": id,
+            "StoryId": StoryId,
 
         },
         success: function (data) {
-            if (data == success) {
+            if (data) {
+                /*
+                                toastr.options = {
+                                    "positionClass": "toast-bottom-right"
+                                }
+                                toastr.success("Mail Successfully...")*/
 
-                toastr.options = {
-                    "positionClass": "toast-bottom-right"
-                }
-                toastr.success("Mail Successfully...")
+                //// Loop through each ID in the emailList array
+                //for (var i = 0; i < emailList.length; i++) {
+                //    // Get the checkbox element with the current ID
+                //    var checkbox = $('#' + emailList[i]);
 
-
+                //    // Set the checked property of the checkbox to false
+                //    checkbox.prop('checked', false);
+                //}
 
 
             }

@@ -405,7 +405,7 @@ namespace CIPlatform.Repository.Repository
             {
 
                 var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("parthv480@gmail.com"));
+                email.From.Add(MailboxAddress.Parse("harshrathod982002@gmail.com"));
                 email.To.Add(MailboxAddress.Parse(item));
                 email.Subject = "Co-Worker Suggestion";
                 email.Body = new TextPart(TextFormat.Html) { Text = mailBody };
