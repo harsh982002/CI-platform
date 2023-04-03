@@ -157,6 +157,13 @@ namespace CI_PLATFORM.Controllers
             return Json(Rating);
         }
 
+        [Route("/Home/Profile")]
+        public IActionResult ProfilePage()
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0);
+            return View(details);
+        }
 
     }
 }

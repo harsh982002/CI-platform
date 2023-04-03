@@ -14,7 +14,7 @@ namespace CIPlatform.Repository.Interface
         public IMissionRepository missionRepository { get; set; }
 
        
-
+        public IProfileRepository profileRepository { get; set; }
         public IStoryRepository storyRepository { get; set; }
        
 

@@ -45,7 +45,7 @@
                     <span class="nav-link username text-muted dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@Accesor?.HttpContext?.Session.GetString("Name")</span>
                     <img src="~/images/drop-down.png" class="down dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" asp-action="ProfilePage" asp-controller="Home">Profile</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" asp-controller="UserAccount" asp-action="Login" >Logout</a>
                     </div>

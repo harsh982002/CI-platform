@@ -20,12 +20,13 @@ namespace CIPlatform.Repository.Repository
             missionRepository=new MissionRepository(_db);
          
             storyRepository = new StoryRepository(_db);
+
+            profileRepository=new ProfileRepository(_db);
         }
         public IMissionRepository missionRepository { get; set; }
         
         public IStoryRepository storyRepository { get; set ; }
-
-     
+        public IProfileRepository profileRepository { get; set ; }
 
         public bool AddFavouriteMission(long MissionId, long UserId)
         {
