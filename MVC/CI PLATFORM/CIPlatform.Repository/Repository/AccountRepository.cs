@@ -36,22 +36,25 @@ namespace CIPlatform.Repository.Repository
         }
         public User LoginViewModel(LoginViewModel model)
         {
-            return _context.Users.FirstOrDefault(c => c.Email.Equals(model.Email.ToLower()) && c.Password.Equals(model.Password));
+            User user = _context.Users.FirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));
+            return user;
         }
 
 
 
         public User RegistrationViewModel(RegistrationViewModel model)
         {
+            string secpass = BCrypt.Net.BCrypt.HashPassword(model.Password);
             User user = new User();
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.PhoneNumber = model.PhoneNumber;
             user.Email = model.Email;
-            user.Password = model.Password;
+            user.Password = secpass;
             var entry = _context.Users.Add(user);
             _context.SaveChanges();
             return entry.Entity;
+
         }
 
         public User ForgotPasswordViewModel(ForgotPasswordViewModel model)
@@ -84,7 +87,7 @@ namespace CIPlatform.Repository.Repository
             var PasswordReset = _context.PasswordResets.FirstOrDefault(u => u.Email == model.Email);
 
 
-            var mailBody = "<h1>Click link to reset password</h1><br><h2><a href='" + "https://localhost:44367/UserAccount/Resetpassword?token=" + PasswordReset.Token + "'>Reset Password</a></h2>";
+            var mailBody = "<h1>Click link to reset password</h1><br><h2><a href='" + "https://localhost:44335/UserAccount/Resetpassword?token=" + PasswordReset.Token + "'>Reset Password</a></h2>";
             // create email message
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("harshrathod982002@gmail.com"));
@@ -176,11 +179,12 @@ namespace CIPlatform.Repository.Repository
 
         public PasswordReset ResetPasswordViewModel(ResetPasswordViewModel model, string token)
         {
+            string passtoken = BCrypt.Net.BCrypt.HashPassword(model.Password);
             var validToken = _context.PasswordResets.FirstOrDefault(x => x.Token == token);
             if (validToken != null)
             {
                 var user = _context.Users.FirstOrDefault(x => x.Email == validToken.Email);
-                user.Password = model.Password;
+                user.Password = passtoken;
                 _context.Users.Update(user);
                 _context.SaveChanges();
 

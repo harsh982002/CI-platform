@@ -159,8 +159,6 @@ namespace CIPlatform.Repository.Repository
             if (story is not null)
             {
                 List<User> already_recommended = new List<User>();
-               
-               
                 return new Entitites.ViewModel.StoryViewModel { story = story, Users = users,  StoryViews= viewer};
             }
             else

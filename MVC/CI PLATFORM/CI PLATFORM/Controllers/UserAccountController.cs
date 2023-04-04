@@ -40,17 +40,31 @@ namespace CI_PLATFORM.Controllers
                 if (ModelState.IsValid)
                 {
                     User user = _registerInterface.LoginViewModel(model);
+                   
                     if (user == null)
                     {
                         return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User not found or invalid password ");
                     }
                     else
                     {
-                        HttpContext.Session.SetString("Email", user.Email);
-                        HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
-                        HttpContext.Session.SetString("Avtar", user.Avatar);
-                        HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                        return RedirectToAction("Landingplatform", "Home");
+                       /* if (user.Avatar is not null)
+                        {*/
+                            bool verify = BCrypt.Net.BCrypt.Verify(model.Password, user.Password);
+                            if (verify)
+                            {
+                                HttpContext.Session.SetString("Email", user.Email);
+                                HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
+                                HttpContext.Session.SetString("Avtar", user.Avatar);
+                                var userId = _registerInterface.GetUserID(user.Email);
+                                HttpContext.Session.SetString("UserId", userId.ToString());
+                                return RedirectToAction("Landingplatform", "Home");
+                            }
+                       /* }
+                        else
+                        {
+                            return RedirectToAction("ProfilePage", "Home");
+                        }*/
+
                     }
                 }
                 return View(model);
@@ -79,7 +93,9 @@ namespace CI_PLATFORM.Controllers
 
                     if (_registerInterface.IsValidUserEmail(model))
                     {
+                        
                         User registertion = _registerInterface.RegistrationViewModel(model);
+                        
                         return RedirectToAction("Login", "UserAccount");
 
                     }
@@ -112,7 +128,7 @@ namespace CI_PLATFORM.Controllers
             if (ModelState.IsValid)
             {
 
-
+               
                 var user = _registerInterface.ForgotPasswordViewModel(model);
                 if (user == null)
                 {
@@ -141,6 +157,7 @@ namespace CI_PLATFORM.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 var validToken = _registerInterface.ResetPasswordViewModel(model, token);
 
                 if (validToken != null)

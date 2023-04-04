@@ -129,6 +129,8 @@ namespace CI_PLATFORM.Controllers
             return Json(null);
         }
 
+     
+
         public JsonResult ApplyMission(long MissionId, long UserId)
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -163,6 +165,48 @@ namespace CI_PLATFORM.Controllers
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0);
             return View(details);
+        }
+
+        [HttpPost]
+        [Route("/Home/Profile")]
+        public IActionResult ProfilePage(CIPlatform.Entitites.ViewModel.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            if (oldpassword is not null && newpassword is not null)
+            {
+                bool success = _allRepository.profileRepository.Change_Password(oldpassword, newpassword, userId);
+                return Json(new { success });
+            }
+            if (ModelState.IsValid)
+            {
+                if(country != 0)
+                {
+                    CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(country);
+                    var cities = this.RenderViewAsync("profilecity_partial", details, true);
+                    return Json(new {cities = cities});
+                }
+
+                else
+                {
+                    bool success = _allRepository.profileRepository.profile_update(model, userId);
+                    return RedirectToAction("ProfilePage");
+                }
+
+            }
+            else
+            {
+                if (country != 0)
+                {
+                    CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(country);
+                    var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
+                    return Json(new { cities = cities });
+                }
+                else
+                {
+                    CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0);
+                    return View(details);
+                }
+            }
         }
 
     }

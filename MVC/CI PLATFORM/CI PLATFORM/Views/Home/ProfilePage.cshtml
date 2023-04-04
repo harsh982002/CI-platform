@@ -11,7 +11,7 @@
     <form asp-action="Profile" id="form" asp-controller="Home" method="post" enctype="multipart/form-data">
     <div class="row main w-100">
         <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column justify-content-center position-relative align-items-center" >
-            <input type="file" @*asp-for="profile"*@  onchange="upload_profile_image()" class="h-50 w-50" accept="image/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;"/>
+            <input type="file" asp-for="profile"  onchange="upload_profile_image()" class="h-50 w-50" accept="image/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;"/>
             <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
             <h5 class="mt-4">@base.User.Identity.Name</h5>
             <span style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</span>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="mt-2 row">
-               <div class="col-lg-6 mt-2 col-md-6 "><label class="form-label">Availablity</label><select id='avilablity' asp-for=Availablity class="form-select me-3" aria-label="Select Mission">
+               <div class="col-lg-6 mt-2 col-md-6 "><label class="form-label">Availablity</label><select id='avilablity' asp-for=Availability class="form-select me-3" aria-label="Select Mission">
                <option value=0 disabled  selected>Select Your Availablity</option>
                <option value='Weekend'>Weekend</option>    
                </select>

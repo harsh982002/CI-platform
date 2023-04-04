@@ -274,7 +274,7 @@ namespace CIPlatform.Repository.Repository
             int avg_rating = 0;
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
-            /*var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).ToList();*/
+            var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "APPROVE").ToList();
             var user = _db.Users.ToList();
             if(_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {
@@ -346,11 +346,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications=recentvol};
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate , missionApplications=recentvol};
             }
 
         }

@@ -843,6 +843,10 @@ public partial class CiplatformContext : DbContext
                 .HasMaxLength(2048)
                 .IsUnicode(false)
                 .HasColumnName("avatar");
+            entity.Property(e => e.Availablity)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("availability");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)

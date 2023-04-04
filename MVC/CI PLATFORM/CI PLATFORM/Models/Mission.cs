@@ -65,6 +65,8 @@ public partial class Mission
 
     public virtual ICollection<MissionMedium> MissionMedia { get; } = new List<MissionMedium>();
 
+    public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
+
     public virtual ICollection<MissionSkill> MissionSkills { get; } = new List<MissionSkill>();
 
     public virtual ICollection<Story> Stories { get; } = new List<Story>();

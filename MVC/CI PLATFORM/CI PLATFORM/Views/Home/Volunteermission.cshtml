@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.mission.MissionId)">Send Mail</button>
+                                            <button type="submit" class="btn btn-primary"  onclick="sendMail(@Model.mission.MissionId)" data-bs-dismiss="modal">Send Mail</button>
                                         </div>
                                 </div>
                             </div>
@@ -502,7 +502,7 @@
                                     @if (@Model.mission.MissionApplications != null)
                                     {
                                         
-                                    @foreach(var item in @Model.mission.MissionApplications)
+                                    @foreach(var item in @Model.missionApplications)
                                     {
                                     <div class="d-flex col-3 flex-column m-1 justify-content-center">
                                         <img src="@item.User.Avatar" alt="" class="rounded-circle" >

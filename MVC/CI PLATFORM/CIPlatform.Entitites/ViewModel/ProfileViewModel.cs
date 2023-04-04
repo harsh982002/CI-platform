@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,21 +11,21 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class ProfileViewModel
     {
-        public List<Country> countries { get; set; }   
+        public List<Country>? countries { get; set; }   
 
-        public List<City> cities { get; set;}
+        public List<City>? cities { get; set;}
 
-        public List<Skill> skill { get; set; }
+        public List<Skill>? skill { get; set; }
 
-       
+        public IFormFile? profile { get; set; }
         public string? selected_skills { get; set; }
 
 
         [Required(ErrorMessage = "Please enter your First name.")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required(ErrorMessage = "Please enter your Last name.")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public string? Avatar { get; set; }
 
@@ -33,7 +34,7 @@ namespace CIPlatform.Entitites.ViewModel
         public string? EmployeeId { get; set; }
 
         public string? Department { get; set; }
-        public string? Availablity { get; set; }
+        
         [Required]
         public long? CityId { get; set; } = 0;
         [Required]
@@ -45,6 +46,8 @@ namespace CIPlatform.Entitites.ViewModel
         public string? LinkedInUrl { get; set; }
 
         public string? Title { get; set; }
+
+        public string? Availability { get; set; }
 
     }
 }

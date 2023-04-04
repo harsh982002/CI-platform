@@ -86,7 +86,7 @@ const change_password = () => {
     }
     if (oldpassword.length >= 8 && newpassword.length >= 8 && confirmpassword.length >= 8 && confirmpassword == newpassword) {
         $.ajax({
-            url: '/profile',
+            url: '/Home/Profile',
             type: 'POST',
             data: { oldpassword: oldpassword, newpassword: newpassword },
             success: function (result) {
