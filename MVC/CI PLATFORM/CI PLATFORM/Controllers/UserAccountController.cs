@@ -47,25 +47,34 @@ namespace CI_PLATFORM.Controllers
                     }
                     else
                     {
-                       /* if (user.Avatar is not null)
-                        {*/
+                        if (user.CountryId is not null)
+                        {
                             bool verify = BCrypt.Net.BCrypt.Verify(model.Password, user.Password);
                             if (verify)
                             {
                                 HttpContext.Session.SetString("Email", user.Email);
-                                HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
-                                HttpContext.Session.SetString("Avtar", user.Avatar);
                                 var userId = _registerInterface.GetUserID(user.Email);
                                 HttpContext.Session.SetString("UserId", userId.ToString());
+                                HttpContext.Session.SetString("Country", user.CountryId.ToString());
+                                if(user.Avatar is not null)
+                                {
+                                    HttpContext.Session.SetString("Avtar", user.Avatar);
+                                }
+                                
+                                HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
                                 return RedirectToAction("Landingplatform", "Home");
                             }
-                       /* }
+                    }
                         else
                         {
+                            HttpContext.Session.SetString("Email", user.Email);
+                            var userId = _registerInterface.GetUserID(user.Email);
+                            HttpContext.Session.SetString("UserId", userId.ToString());
+                            HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
                             return RedirectToAction("ProfilePage", "Home");
-                        }*/
+                        }
 
-                    }
+                }
                 }
                 return View(model);
             }

@@ -33,6 +33,7 @@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load"/>
                 <div class="d-flex pages">
+                    <a class="nav-link text-muted"  asp-action="Landingplatform" asp-controller="Home">Home</a>
                 @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
                 <a class="nav-link text-muted"  asp-action="Story" asp-controller="Story">Stories</a>
                  
@@ -41,7 +42,15 @@
                <div class="d-flex">
                    
                     <div class="dropdown d-flex align-items-center">
-                    <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="user dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                    @{
+                        @if(@Accesor?.HttpContext?.Session.GetString("Avtar") != null ){
+                    <img src="@Accesor?.HttpContext?.Session.GetString("Avtar")" class="user dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" style="object-fit:cover" />
+                    }
+                    else
+                    {
+                        <img src="~/images//volunteer1.png" class="user dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" style="object-fit:cover" />
+                    }
+                    }
                     <span class="nav-link username text-muted dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@Accesor?.HttpContext?.Session.GetString("Name")</span>
                     <img src="~/images/drop-down.png" class="down dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

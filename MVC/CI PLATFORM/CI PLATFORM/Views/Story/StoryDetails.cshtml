@@ -14,13 +14,23 @@
     <div class="images col-lg-6 col-md-6 col-sm-12">
          <div class="carousel slide" data-bs-interval="false" id="sub-images">
             <div class="carousel-inner">
-                @{
+                    @{
                         int count = 0;
                         foreach (var item in Model?.story?.StoryMedia)
                         {
                             if (count == 0)
                             {
-                                <img class="w-100 carousel-item active main-image" src='@item.Path' alt=""/>
+                                if (@item.Type == "video")
+                                {
+                                    <iframe height="400" class="w-100 carousel-item active main-image"    
+                               src="https://www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)">   
+                                    </iframe>
+                                }
+                                else
+                                {
+                                    <img src="@item.Path"  class="w-100 carousel-item active main-image"/>
+                                }
+
                                 count = count + 1;
                             }
                             else
@@ -47,7 +57,15 @@
                                                 {
                                                     @for (int j = 0; j < sub_count; j++)
                                                     {
-                                                        <img src='@Model?.story?.StoryMedia.ElementAt(j).Path'  data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""/>
+                                                        if (@Model?.story?.StoryMedia.ElementAt(j).Type == "video")
+                                                        {
+                                                        <iframe src="https://www.youtube.com/embed/@Model.story.StoryMedia.ElementAt(j).Path" data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""></iframe>
+
+                                                        }
+
+                                                         else {
+                                                         <img src='@Model?.story?.StoryMedia.ElementAt(j).Path'  data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""/>
+                                                         }
                                                     }
                                                 }
                                                 else
@@ -112,8 +130,8 @@
                <span class="ms-1">@Model.story.StoryViews.Count views</span>
            </div>
        </div>
-       <p class="ms-3 mt-5">
-        @Model.story.User.WhyIVolunteer.Substring(0,400)....
+       <p class="ms-3 mt-5" >
+        @Model.story.User.WhyIVolunteer
 
        </p>
        <div class="row justify-content-between ms-3">
@@ -173,7 +191,7 @@
      </div>
      @{
          string content = System.Text.RegularExpressions.Regex.Replace(@Model.story.Description, "<.*?>", string.Empty);
-     <p class="mt-5 text-muted">@content</p>
+     <p class="mt-5 text-muted">@Html.Raw(@content)</p>
      }
 </div>
  

@@ -1,6 +1,4 @@
-﻿using CIPlatform.Entitites.Models;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,17 +7,8 @@ using System.Threading.Tasks;
 
 namespace CIPlatform.Entitites.ViewModel
 {
-    public class ProfileViewModel
+    public class EditViewModel
     {
-        public List<Country>? countries { get; set; }   
-
-        public List<City>? cities { get; set;}
-
-        public List<Skill>? skill { get; set; }
-
-        public IFormFile? profile { get; set; }
-        public string? selected_skills { get; set; }
-
 
         [Required(ErrorMessage = "Please enter your First name.")]
         public string? FirstName { get; set; }
@@ -34,7 +23,7 @@ namespace CIPlatform.Entitites.ViewModel
         public string? EmployeeId { get; set; }
 
         public string? Department { get; set; }
-        
+
         [Required]
         public long? CityId { get; set; } = 0;
         [Required]
@@ -48,9 +37,5 @@ namespace CIPlatform.Entitites.ViewModel
         public string? Title { get; set; }
 
         public string? Availability { get; set; }
-
-        
-
-     /*   public string? email { get; set; }*/
     }
 }

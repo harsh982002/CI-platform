@@ -9,6 +9,7 @@
 }
 @*share story*@
 <div class="w-100 d-flex justify-content-center align-items-center position-relative">
+
     <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="w-100" style="height: 300px;object-fit:cover;object-position: 0 40%;filter:brightness(45%)"/>
 <div class="w-50 position-absolute">
     <p style="color:white;">
@@ -87,7 +88,7 @@
                             <div class="page-2 d-none">
                              <div class="video-url w-100 mt-4">
          <label  class="form-label">Enter Video URL</label>
-         <input class="form-control video" type="url" placeholder="Enter Your URL"/>
+         <input class="form-control video" value="@item.StoryMedia.ElementAt(0).Path" type="url" placeholder="Enter Your URL"/>
     </div>
 
      <div class="images w-100 mt-4 ">

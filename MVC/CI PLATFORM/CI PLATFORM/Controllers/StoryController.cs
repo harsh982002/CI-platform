@@ -20,9 +20,17 @@ namespace CI_PLATFORM.Controllers
         public IActionResult Story()
         {
             long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
-            ViewData["user"] = user_id;
-            CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetStories(user_id);
-            return View(stories);
+           
+            if (HttpContext.Session.GetString("Country") is not null)
+            {
+                CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetStories(user_id);
+                return View(stories);
+            }
+            else
+            {
+                return RedirectToAction("ProfilePage", "Home");
+            }
+               
         }
 
         [HttpPost]

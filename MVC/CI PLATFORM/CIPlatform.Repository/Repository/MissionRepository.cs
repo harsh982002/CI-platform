@@ -467,5 +467,10 @@ namespace CIPlatform.Repository.Repository
             return true;
         }
 
+        public User findUser(string email)
+        {
+            return _db.Users.Where(u => u.Email.Equals(email)).First();
+        }
+
     }
 }

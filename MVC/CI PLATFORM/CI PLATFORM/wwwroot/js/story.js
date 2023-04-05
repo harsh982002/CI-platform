@@ -101,7 +101,7 @@ function poststory(type, id, mission_id) {
     var video = $(`#edit-${id}`).find(`.video`).val()
     var media = []
     if (video.trim().length > 3) {
-        media.push(video_url)
+        media.push(video)
     }
     $(`.gallary-${id}`).find('.main-image').each(function (i, item) {
         media.push(item.src)

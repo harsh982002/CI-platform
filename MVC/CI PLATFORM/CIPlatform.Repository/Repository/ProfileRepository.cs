@@ -45,19 +45,34 @@ namespace CIPlatform.Repository.Repository
 
         }
 
-        public ProfileViewModel Get_details(int country)
+        public ProfileViewModel Get_details(int country, long user_Id)
         {
+            User? user = _db.Users.Find(user_Id);
+            ProfileViewModel profile = new ProfileViewModel();
+            profile.FirstName = user.FirstName;
+            profile.LastName = user.LastName;
+            profile.WhyIVolunteer = user.WhyIVolunteer;
+            profile.ProfileText= user.ProfileText;
+            profile.CountryId = user.CountryId;
+            profile.CityId = user.CityId;
+            profile.Avatar = user.Avatar;
+           
+
           if(country == 0)
             {
                 List<Country> countries = _db.Countries.ToList();
                 List<Skill> skills = _db.Skills.ToList();
                 List<City> cities = _db.Cities.ToList();
-                return new ProfileViewModel { countries = countries, cities = cities, skill = skills };
+                profile.countries = countries;
+                profile.cities = cities;
+                profile.skill = skills;
+                return profile;
             }
             else
             {
                 List<City> cities = _db.Cities.Where(x=> x.CountryId == country).ToList();
-                return new ProfileViewModel { cities= cities };
+                profile.cities = cities;
+                return profile;
 
             }
         }
@@ -78,6 +93,7 @@ namespace CIPlatform.Repository.Repository
                 user.Department = userdetail.Department;
                 user.CityId = userdetail.CityId;
                 user.CountryId = userdetail.CountryId;
+               
                 user.UpdatedAt= DateTime.Now;
 
                 if(userdetail.profile is not null)

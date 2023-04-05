@@ -12,8 +12,10 @@
                         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
                 <div class="thumbnail card d-flex">
                     <div class="img-event">
-                       <a href="/Story/StoryDetails/@item.StoryId"> <img class="group  list-group-image w-100 h-100" 
-                            src="@item.StoryMedia.ElementAt(0).Path" id="image-@item.StoryId" alt="" /> </a>
+                        <a href="/Story/StoryDetails/@item.StoryId"> <img class="group  list-group-image w-100 h-100" 
+                            src="@item.StoryMedia.ElementAt(1).Path" id="image-@item.StoryId" alt="" /> </a>
+                    
+
                             <div class="view-detail position-absolute" style="display:none;">
                             <a class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt=""></a>
                   </div>
@@ -28,7 +30,7 @@
                         @{
                             string content = System.Text.RegularExpressions.Regex.Replace(@item.Description, "<.*?>", string.Empty);
                             <span>
-                            @content.ToString().Substring(0,70)....
+                           @content.ToString().Substring(0,100)...
                             </span>
                         }
                            </span>

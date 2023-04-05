@@ -10,6 +10,6 @@ namespace CIPlatform.Repository.Interface
     {
         bool Change_Password(string oldpassword, string newpassword, long user_id);
         bool profile_update(CIPlatform.Entitites.ViewModel.ProfileViewModel userdetail, long user_id);
-        CIPlatform.Entitites.ViewModel.ProfileViewModel Get_details(int country);
+        CIPlatform.Entitites.ViewModel.ProfileViewModel Get_details(int country, long user_Id);
     }
 }
