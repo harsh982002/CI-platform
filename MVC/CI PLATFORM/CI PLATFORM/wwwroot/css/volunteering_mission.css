@@ -296,3 +296,8 @@ cursor:pointer;
 }
 
 
+.ScrollStyle {
+    max-height: 478px;
+    overflow-y: scroll;
+}
+

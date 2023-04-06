@@ -23,7 +23,7 @@
                                 if (@item.Type == "video")
                                 {
                                     <iframe height="400" class="w-100 carousel-item active main-image"    
-                               src="https://www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)">   
+                                    src="https://www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)">   
                                     </iframe>
                                 }
                                 else
@@ -59,7 +59,7 @@
                                                     {
                                                         if (@Model?.story?.StoryMedia.ElementAt(j).Type == "video")
                                                         {
-                                                        <iframe src="https://www.youtube.com/embed/@Model.story.StoryMedia.ElementAt(j).Path" data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""></iframe>
+                                                        <img src="https://img.youtube.com/vi/@Model.story.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg" data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""></img>
 
                                                         }
 

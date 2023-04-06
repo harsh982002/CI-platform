@@ -304,7 +304,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane container active " id="msg" >
+                            <div class="tab-pane container active border" id="msg" >
 
                                 <h5 class="py-3" style="font-size: 25px;">Introduction</h5>
                                 <p class="m-2 intro" >
@@ -368,7 +368,7 @@
                                 <div class="mt-2" style="background-color: #f2f2f2">
 
 
-                                    <div class="bg-white card ms-3 me-3 mt-1 " data-spy="scroll"  >
+                                    <div class="bg-white card ms-3 me-3 mt-1 ScrollStyle " data-spy="scroll"  >
                                         @if (@Model.mission.Comments != null)
                                         {
                                             @foreach (var item in @Model.mission.Comments)
@@ -376,7 +376,16 @@
                                                 <div class="card-body">
                                                     <div class="d-flex">
                                                         <div>
-                                                            <img src="/images/volunteer1.png" class="rounded-circle" alt="">
+                                                            @{
+                                                            @if(@item.User.Avatar is not null){
+
+                                                                <img src="@item.User.Avatar" class="rounded-circle" alt="">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="/images/volunteer1.png" class="rounded-circle" alt="">
+                                                            }
+                                                            }
                                                         </div>
                                                         <div class="d-flex ms-2 flex-column justify-content-center">
                                                             <div>@item.User.FirstName @item.User.LastName</div>
@@ -407,7 +416,7 @@
                 </div>
             </div>
 
-            <div class="d-flex  col-lg-4 flex-column height ">
+            <div class="d-flex  col-lg-4 flex-column height mt-5 ">
 
                 <div class="border">
                     <div class="card">
@@ -505,7 +514,16 @@
                                     @foreach(var item in @Model.missionApplications)
                                     {
                                     <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                        <img src="@item.User.Avatar" alt="" class="rounded-circle" >
+                                            @if(@item.User.Avatar is not null)
+                                            {
+                                                <img src="@item.User.Avatar" alt="" class="rounded-circle" >
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/user-img.png" alt="" class="rounded-circle" >
+
+                                            }
+                                            
                                         <div class="text-center">@item.User.FirstName @item.User.LastName</div>
                                     </div>
   }

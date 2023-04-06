@@ -275,6 +275,7 @@ namespace CIPlatform.Repository.Repository
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "APPROVE").ToList();
+            /*var comment = _db.Comments.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "PUBLISHED").ToList();*/
             var user = _db.Users.ToList();
             if(_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {
@@ -399,7 +400,7 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/?returnedUrl=Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
            
             foreach (var item in emailList)
             {
@@ -467,10 +468,7 @@ namespace CIPlatform.Repository.Repository
             return true;
         }
 
-        public User findUser(string email)
-        {
-            return _db.Users.Where(u => u.Email.Equals(email)).First();
-        }
+
 
     }
 }

@@ -28,7 +28,15 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            if(HttpContext.Session.GetString("Country") is not null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("ProfilePage","Home");
+            }
+           
         }
 
         [Route("/Home/Landingplatform")]
@@ -153,7 +161,7 @@ namespace CI_PLATFORM.Controllers
         }
         public void AddComment(string Comment, long MissionId, string UserId)
         {
-            long userId = Convert.ToInt64(UserId);
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             _allRepository.missionRepository.AddComment(Comment, MissionId, userId);
         }
 
@@ -215,6 +223,11 @@ namespace CI_PLATFORM.Controllers
                     return View(details);
                 }
             }
+        }
+
+        public IActionResult Volunteertimesheet()
+        {
+            return View();
         }
 
     }

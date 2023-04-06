@@ -65,14 +65,14 @@
       </div>
       <div class="login col-md-4 col-sm-5">
         <div class="login-details">
-           <form asp-action="Login" method="post">
+           <form  method="post">
           <label asp-for="Email" class="form-label">Email address</label>
           <input asp-for="Email" type="email" class="form-control" id="email" aria-describedby="emailHelp"/>
           <span asp-validation-for="Email" class="text-danger d-block"></span>
           <label asp-for="Password" class="form-label mt-3">Password</label>
           <input asp-for="Password" type="password" class="form-control" id="password" />
           <span asp-validation-for="Password" class="text-danger d-block"></span>
-          <button type="submit" class="btn mt-4">Login</button>
+          <button type="submit" class="btn mt-4" asp-route-returnUrl="@Context.Request.Path" >Login</button>
           </form> 
           <div class="toregister text-center mt-3">
             <a class="l-password" asp-action="Forgotpassword">Lost Your Password?</a>

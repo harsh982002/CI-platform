@@ -49,8 +49,5 @@ namespace CIPlatform.Entitites.ViewModel
 
         public string? Availability { get; set; }
 
-        
-
-     /*   public string? email { get; set; }*/
     }
 }

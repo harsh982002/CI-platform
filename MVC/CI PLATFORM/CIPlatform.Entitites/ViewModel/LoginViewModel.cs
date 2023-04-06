@@ -16,5 +16,6 @@ namespace CIPlatform.Entities.ViewModel
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
     }
 }

@@ -14,7 +14,17 @@
     <div class="row main w-100">
         <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column justify-content-center position-relative align-items-center" >
             <input type="file" asp-for="profile" value="@Model.Avatar" onchange="upload_profile_image()" class="h-50 w-50" accept="/images/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;"/>
-            <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
+            @{
+                @if(@Model.Avatar is not null)
+                    {
+                         <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="@Model.Avatar" alt="" />
+                    }
+                    else
+                    {
+                         <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
+                    }
+                }
+           
             <h5 class="mt-4">@Accesor?.HttpContext?.Session.GetString("Name")</h5>
             <span style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</span>
         </div>

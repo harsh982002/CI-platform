@@ -33,8 +33,9 @@ namespace CI_PLATFORM.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model,string? returnedUrl)
         {
+         
             try
             {
                 if (ModelState.IsValid)
@@ -60,11 +61,21 @@ namespace CI_PLATFORM.Controllers
                                 {
                                     HttpContext.Session.SetString("Avtar", user.Avatar);
                                 }
-                                
                                 HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
-                                return RedirectToAction("Landingplatform", "Home");
+                                if (!string.IsNullOrEmpty(returnedUrl))
+                                {
+
+                                    return LocalRedirect(returnedUrl);
+
+
+                                }
+                                else {
+                                    return RedirectToAction("Landingplatform", "Home");
+                                }
+                               
                             }
                     }
+                      
                         else
                         {
                             HttpContext.Session.SetString("Email", user.Email);

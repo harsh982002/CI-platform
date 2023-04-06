@@ -24,7 +24,7 @@
   </div>
   <div class="offcanvas-body">
             <a class="nav-link text-muted" asp-area="" asp-controller="Story" asp-action="Story">Stories</a>
-            <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Index">Policy </a>
+            <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Privacy">Policy </a>
   </div>
 </div>
     <header>
@@ -37,7 +37,7 @@
                 @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
                 <a class="nav-link text-muted"  asp-action="Story" asp-controller="Story">Stories</a>
                  
-                <a class="nav-link text-muted" href="#"  >Policy </a>
+                <a class="nav-link text-muted" asp-action="Privacy" asp-controller="Home" >Policy </a>
                 </div>
                <div class="d-flex">
                    
@@ -55,7 +55,7 @@
                     <img src="~/images/drop-down.png" class="down dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" asp-action="ProfilePage" asp-controller="Home">Profile</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" asp-action="Volunteertimesheet" asp-controller="Home">TimeSheet</a>
                         <a class="dropdown-item" asp-controller="UserAccount" asp-action="Login" >Logout</a>
                     </div>
                     </div>
