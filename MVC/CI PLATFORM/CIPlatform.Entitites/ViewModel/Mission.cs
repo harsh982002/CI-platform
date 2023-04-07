@@ -17,7 +17,7 @@ namespace CIPlatform.Entitites.ViewModel
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
 
-        public List<User> users { get; set; }
+        public List<User>? users { get; set; }
 
 
         public int? applyuser { get; set; }

@@ -42,3 +42,8 @@
         --bs-gutter-x: 0;
     }
 }
+
+.ScrollStyle {
+    max-height: 478px;
+    overflow-y: scroll;
+}

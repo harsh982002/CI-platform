@@ -22,7 +22,7 @@ namespace CIPlatform.Repository.Repository
 
         public bool Change_Password(string oldpassword, string newpassword, long user_id)
         {
-            User user = _db.Users.FirstOrDefault(c => c.UserId == user_id);
+            User? user = _db.Users.FirstOrDefault(c => c.UserId == user_id);
             if (user is not null)
             {
                
@@ -47,6 +47,7 @@ namespace CIPlatform.Repository.Repository
 
         public ProfileViewModel Get_details(int country, long user_Id)
         {
+            
             User? user = _db.Users.Find(user_Id);
             ProfileViewModel profile = new ProfileViewModel();
             profile.FirstName = user.FirstName;
@@ -56,7 +57,9 @@ namespace CIPlatform.Repository.Repository
             profile.CountryId = user.CountryId;
             profile.CityId = user.CityId;
             profile.Avatar = user.Avatar;
-           
+            profile.Availability = user.Availablity;
+            profile.EmployeeId = user.EmployeeId;
+            profile.userSkills = _db.UserSkills.Where(x=>x.UserId == user.UserId).ToList();
 
           if(country == 0)
             {
@@ -93,7 +96,8 @@ namespace CIPlatform.Repository.Repository
                 user.Department = userdetail.Department;
                 user.CityId = userdetail.CityId;
                 user.CountryId = userdetail.CountryId;
-               
+                user.Availablity = userdetail.Availability;
+                user.EmployeeId = userdetail.EmployeeId;
                 user.UpdatedAt= DateTime.Now;
 
                 if(userdetail.profile is not null)

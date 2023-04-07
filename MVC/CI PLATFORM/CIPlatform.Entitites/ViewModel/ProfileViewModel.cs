@@ -17,6 +17,8 @@ namespace CIPlatform.Entitites.ViewModel
 
         public List<Skill>? skill { get; set; }
 
+        public List<UserSkill>? userSkills { get; set; }
+
         public IFormFile? profile { get; set; }
         public string? selected_skills { get; set; }
 

@@ -265,11 +265,24 @@
                         </button>
                     }
                     else{
-                    <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                        if(DateTime.Now < @Model.mission.Deadline)
+                        {
+                             <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
                                 class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
                             Apply now
                             <img src="/images/right-arrow.png" class="ms-2" />
-                        </button>
+                            </button>
+                        }
+                        else
+                        {
+                         <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                                class="applyButton-cls bg-white" @*style="border: 2px solid #F88634; border-radius: 24px"*@ id="volunteer-status" disabled>
+                            closed
+                            
+                            </button>
+
+                        }
+
                     }
                     </div>
 
@@ -371,7 +384,7 @@
                                     <div class="bg-white card ms-3 me-3 mt-1 ScrollStyle " data-spy="scroll"  >
                                         @if (@Model.mission.Comments != null)
                                         {
-                                            @foreach (var item in @Model.mission.Comments)
+                                            @foreach (var item in @Model.comments)
                                             {
                                                 <div class="card-body">
                                                     <div class="d-flex">
@@ -520,7 +533,7 @@
                                             }
                                             else
                                             {
-                                                <img src="~/images/user-img.png" alt="" class="rounded-circle" >
+                                                <img src="~/images/volunteer1.png" alt="" class="rounded-circle" >
 
                                             }
                                             

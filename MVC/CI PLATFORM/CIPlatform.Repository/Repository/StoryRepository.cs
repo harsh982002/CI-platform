@@ -48,7 +48,7 @@ namespace CIPlatform.Repository.Repository
 
                 if (id != 0)
                 {
-                    CIPlatform.Entitites.Models.Story edit_story = _db.Stories.FirstOrDefault(c => c.StoryId.Equals(id));
+                    CIPlatform.Entitites.Models.Story? edit_story = _db.Stories.FirstOrDefault(c => c.StoryId.Equals(id));
                     edit_story.Title = title;
                    
                     edit_story.Description = mystory;
@@ -57,14 +57,37 @@ namespace CIPlatform.Repository.Repository
                                                     where m.StoryId == id
                                                     select m).ToList();
                     _db.StoryMedia.RemoveRange(storymedias);
-                    foreach (var item in media)
+                    if (media.ElementAt(0).Length > 300)
                     {
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedium
+                            {
+                                StoryId = id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
+                    }
+                    else
+                    {
+
                         _db.StoryMedia.Add(new StoryMedium
                         {
                             StoryId = id,
-                            Type = "images",
-                            Path = item
+                            Type = "video",
+                            Path = media.ElementAt(0)
                         });
+                        media.RemoveAt(0);
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedium
+                            {
+                                StoryId = id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
                     }
                     _db.SaveChanges();
                 }
@@ -82,15 +105,39 @@ namespace CIPlatform.Repository.Repository
                     _db.Stories.Add(story);
                     _db.SaveChanges();
                     long story_id = story.StoryId;
-                    foreach (var item in media)
+                    if (media.ElementAt(0).Length > 300)
                     {
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedium
+                            {
+                                StoryId = story_id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
+                    }
+                    else
+                    {
+
                         _db.StoryMedia.Add(new StoryMedium
                         {
                             StoryId = story_id,
-                            Type = "images",
-                            Path = item
+                            Type = "video",
+                            Path = media.ElementAt(0)
                         });
+                        media.RemoveAt(0);
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedium
+                            {
+                                StoryId = story_id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
                     }
+
                 }
             }
 
@@ -170,11 +217,11 @@ namespace CIPlatform.Repository.Repository
         public bool Recommend(string[] emailList, long story_id, long user_id)
         {
          
-            User fromUser = _db.Users.FirstOrDefault(u => u.UserId == user_id);
+            User? fromUser = _db.Users.FirstOrDefault(u => u.UserId == user_id);
             foreach (var item in emailList)
             {
-                User toUser = _db.Users.FirstOrDefault(u => u.Email == item);
-                StoryInvite storyInvite = new StoryInvite();
+                User? toUser = _db.Users.FirstOrDefault(u => u.Email == item);
+                StoryInvite? storyInvite = new StoryInvite();
                 storyInvite.FromUserId = user_id;
                 storyInvite.ToUserId = toUser.UserId;
                 storyInvite.StoryId = story_id;

@@ -44,6 +44,7 @@ const addskill = (skill_id, skill_name) => {
         skills_name.splice(skills_name.indexOf(skill_name),1)
     }
     document.getElementById('selected_skills').value = skills
+    $("#selected_skills").val = skills
 }
 
 const saveskills = () => {
@@ -51,6 +52,7 @@ const saveskills = () => {
     skills_name.forEach((item, i) => {
         $('.saved-skills').append(`<span class="mt-1 ms-3">` + item + '</span>')
     })
+   
 }
 
 const upload_profile_image = () => {

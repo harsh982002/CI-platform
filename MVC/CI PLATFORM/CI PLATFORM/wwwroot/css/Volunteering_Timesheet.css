@@ -1,0 +1,86 @@
+﻿.main-div{
+ width:48%;
+}
+.edbutton{
+    height:15px;
+    cursor:pointer;
+}
+.applybutton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.time-table {
+    overflow-y: auto;
+    overflow-x:hidden;
+}
+.time-table::-webkit-scrollbar {
+        width: 2px;
+        background-color: white;
+    }
+.time-table::-webkit-scrollbar-thumb {
+        background-color: lightgray;
+    }
+.goal-table {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+    .goal-table::-webkit-scrollbar {
+        width: 2px;
+        background-color: white;
+    }
+
+    .goal-table::-webkit-scrollbar-thumb {
+        background-color: lightgray;
+    }
+    .mobile-navigation{
+        display:none;
+    }
+  
+@media (max-width:768px) {
+    .main-div {
+        width: 100%;
+        margin-top:20px;
+    }
+    .edbutton {
+        height: 10px;
+    }
+}
+@media(max-width:576px){
+    .edbutton {
+        height: 15px;
+    }
+    .main-div span{
+        font-size:13px;
+    }
+    .main-header{
+        display:none;
+    }
+    .navigation {
+        display:none;
+    }
+    .mobile-navigation {
+        display: block;
+    }
+}
+/*for cms*/
+.page-link {
+    color: gray;
+}
+
+.pagination li {
+    margin-right: 10px;
+}
+
+.page-link:hover {
+    background-color: #F88634;
+    color: white;
+}
+
+.page-active {
+    background-color: #F88634;
+    color: white
+}

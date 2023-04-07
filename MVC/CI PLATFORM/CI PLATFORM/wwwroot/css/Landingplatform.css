@@ -76,6 +76,13 @@
     opacity: 1;
 }
 
+.applyButton-cls {
+    border: 2px solid black;
+    border-radius: 100px;
+    color: black;
+    padding-left: 20px;
+    padding-right: 20px;
+}
 
 .applyButton {
     border: 2px solid #F88634;

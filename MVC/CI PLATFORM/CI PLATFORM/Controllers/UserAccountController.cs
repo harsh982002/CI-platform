@@ -25,6 +25,12 @@ namespace CI_PLATFORM.Controllers
             configuration = _configuration;
         }
 
+        [Route("/logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "UserAccount");
+        }
 
         [HttpGet]
         public IActionResult Login()

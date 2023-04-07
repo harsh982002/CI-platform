@@ -12,8 +12,8 @@
         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                 src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+                    <a asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId" ><img class="group list-group-image w-100 h-100"
+                 src='@item.MissionMedia.ElementAt(0).MediaPath' alt=""  id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" /></a>
                     <div class="location-img">
    
                         <img class="text-light" src="/images/pin.png" alt="">
@@ -136,12 +136,28 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
+
+                        @{
+                            @if (DateTime.Now > @item.Deadline)
+                            {
+                                 <button class="applyButton-cls btn" disabled    >
                     
-                     <a class="applyButton btn"  asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId" >    
+                                    Closed 
+                       
+                                </button>
+                            }
+                            else
+                            {
+                             <a class="applyButton btn"  asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId" >    
                     
                             Apply <img src="/images/right-arrow.png" alt="">
                        
                         </a>
+
+                            }
+                        }
+
+                    
                     </div>
                 </div>
             </div>

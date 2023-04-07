@@ -114,7 +114,7 @@ namespace CIPlatform.Repository.Repository
         {
             try
             {
-                User user = _context.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+                User? user = _context.Users.Where(x => x.Email == model.Email).FirstOrDefault();
                 if (user == null)
                 {
                     _Message += " Entered email is not registered";
@@ -138,7 +138,7 @@ namespace CIPlatform.Repository.Repository
         {
             try
             {
-                User user = _context.Users.Where(x => x.Email == Email).FirstOrDefault();
+                User? user = _context.Users.Where(x => x.Email == Email).FirstOrDefault();
                 if (user == null)
                 {
                     _Message += " Invalid Email";
@@ -159,7 +159,7 @@ namespace CIPlatform.Repository.Repository
         {
             try
             {
-                User user = _context.Users.Where(x => x.UserId == userID).FirstOrDefault();
+                User? user = _context.Users.Where(x => x.UserId == userID).FirstOrDefault();
                 if (user != null)
                 {
                     return user;

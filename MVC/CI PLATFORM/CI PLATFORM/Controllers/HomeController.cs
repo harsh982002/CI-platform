@@ -178,6 +178,7 @@ namespace CI_PLATFORM.Controllers
         public IActionResult ProfilePage()
         {
             var userId = long.Parse(HttpContext.Session.GetString("UserId"));
+
             CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
             return View(details);
         }
@@ -186,7 +187,8 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Profile")]
         public IActionResult ProfilePage(CIPlatform.Entitites.ViewModel.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
-            
+            HttpContext.Session.SetString("Country",country.ToString());
+           
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             if (oldpassword is not null && newpassword is not null)
             {
@@ -197,8 +199,9 @@ namespace CI_PLATFORM.Controllers
             {
                 if(country != 0)
                 {
+                   
                     CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(country, userId);
-                    var cities = this.RenderViewAsync("profilecity_partial", details, true);
+                    var cities = this.RenderViewAsync("Profilecity_partial", details, true);
                     return Json(new {cities = cities});
                 }
 

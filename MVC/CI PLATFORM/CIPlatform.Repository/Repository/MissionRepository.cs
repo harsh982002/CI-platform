@@ -101,7 +101,7 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.Mission GetAllMission()
         {
-            
+         
             int total_missions = missions.Count;
             missions = missions.Take(6).ToList();
             var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions,  };
@@ -275,7 +275,7 @@ namespace CIPlatform.Repository.Repository
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "APPROVE").ToList();
-            /*var comment = _db.Comments.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "PUBLISHED").ToList();*/
+            var com = _db.Comments.Where(x => x.MissionId == id && x.ApprovalStatus == "PUBLISHED").ToList();
             var user = _db.Users.ToList();
             if(_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {
@@ -347,11 +347,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications=recentvol};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications=recentvol,comments=com};
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate , missionApplications=recentvol};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate , missionApplications=recentvol,comments=com};
             }
 
         }
