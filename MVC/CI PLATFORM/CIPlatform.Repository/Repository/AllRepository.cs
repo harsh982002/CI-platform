@@ -16,17 +16,17 @@ namespace CIPlatform.Repository.Repository
 
         public AllRepository(CiplatformContext db)
         {
-            _db= db;
-            missionRepository=new MissionRepository(_db);
-         
+            _db = db;
+            missionRepository = new MissionRepository(_db);
+
             storyRepository = new StoryRepository(_db);
 
-            profileRepository=new ProfileRepository(_db);
+            profileRepository = new ProfileRepository(_db);
         }
         public IMissionRepository missionRepository { get; set; }
-        
-        public IStoryRepository storyRepository { get; set ; }
-        public IProfileRepository profileRepository { get; set ; }
+
+        public IStoryRepository storyRepository { get; set; }
+        public IProfileRepository profileRepository { get; set; }
 
         public bool AddFavouriteMission(long MissionId, long UserId)
         {

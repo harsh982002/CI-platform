@@ -33,8 +33,6 @@ public partial class User
 
     public string? LinkedInUrl { get; set; }
 
-    public string? Availablity { get; set; }
-
     public string? Title { get; set; }
 
     public string? Status { get; set; }
@@ -45,9 +43,13 @@ public partial class User
 
     public DateTime? DeletedAt { get; set; }
 
+    public string? Availability { get; set; }
+
     public virtual City? City { get; set; }
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
+
+    public virtual ICollection<ContactU> ContactUs { get; } = new List<ContactU>();
 
     public virtual Country? Country { get; set; }
 

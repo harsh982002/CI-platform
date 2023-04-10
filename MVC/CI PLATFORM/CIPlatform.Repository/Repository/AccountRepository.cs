@@ -192,6 +192,6 @@ namespace CIPlatform.Repository.Repository
             return validToken;
         }
 
-        
+
     }
 }

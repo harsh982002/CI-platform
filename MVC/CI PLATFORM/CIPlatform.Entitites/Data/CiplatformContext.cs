@@ -26,6 +26,8 @@ public partial class CiplatformContext : DbContext
 
     public virtual DbSet<Comment> Comments { get; set; }
 
+    public virtual DbSet<ContactU> ContactUs { get; set; }
+
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<FavoriteMission> FavoriteMissions { get; set; }
@@ -235,6 +237,37 @@ public partial class CiplatformContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__comment__user_id__05D8E0BE");
+        });
+
+        modelBuilder.Entity<ContactU>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__contact___3213E83F2A734A42");
+
+            entity.ToTable("contact_us");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(256)
+                .IsUnicode(false)
+                .HasColumnName("email");
+            entity.Property(e => e.Message)
+                .HasMaxLength(2056)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.Name)
+                .HasMaxLength(32)
+                .IsUnicode(false)
+                .HasColumnName("name");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(256)
+                .IsUnicode(false)
+                .HasColumnName("subject");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ContactUs)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__contact_u__user___3429BB53");
         });
 
         modelBuilder.Entity<Country>(entity =>
@@ -839,14 +872,13 @@ public partial class CiplatformContext : DbContext
             entity.ToTable("user");
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.Avatar)
-                .HasMaxLength(2048)
-                .IsUnicode(false)
-                .HasColumnName("avatar");
-            entity.Property(e => e.Availablity)
+            entity.Property(e => e.Availability)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("availability");
+            entity.Property(e => e.Avatar)
+                .HasColumnType("text")
+                .HasColumnName("avatar");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)

@@ -13,16 +13,16 @@
         </div>
         <div class="collapse mt-3" id="country">
             @{
-                     foreach (var item in Model.Country)
-                     {
-                         <span class="dropdown-item">
-                         <input class="form-check-input @item.Name" type="checkbox" value="" onchange="addcountries('@item.Name','mobile')">
-                         <label class="form-check-label" for="flexCheckDefault">
-                         @item.Name
-                            </label>
-                           </span>
-                     }
-                 }
+                foreach (var item in Model.Country)
+                {
+                                 <span class="dropdown-item">
+                                 <input class="form-check-input @item.Name" type="checkbox" value="" onchange="addcountries('@item.Name','mobile')">
+                                 <label class="form-check-label" for="flexCheckDefault">
+                            @item.Name
+                                    </label>
+                                   </span>
+                }
+            }
         </div>
         @*--2*@
         <div id="city" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#city" role="button" aria-expanded="false" aria-controls="city">
@@ -30,20 +30,20 @@
             <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
         </div>
         <div class="collapse mt-3" id="city">
-           @{
-               foreach (var item in Model.Country)
-                     {
-                         foreach (var city in item.Cities)
-                         {
-                              <span class="dropdown-item">
-                         <input class="form-check-input @city.Name" type="checkbox" value="" onchange="addcities('@city.Name','mobile')">
-                         <label class="form-check-label" for="flexCheckDefault">
-                         @city.Name
-                            </label>
-                           </span>
-                         }
-                     }
-                     }
+            @{
+                foreach (var item in Model.Country)
+                {
+                    foreach (var city in item.Cities)
+                    {
+                                          <span class="dropdown-item">
+                                     <input class="form-check-input @city.Name" type="checkbox" value="" onchange="addcities('@city.Name','mobile')">
+                                     <label class="form-check-label" for="flexCheckDefault">
+                                @city.Name
+                                        </label>
+                                       </span>
+                    }
+                }
+            }
         </div>
         @*--3*@
         <div id="theme" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#theme" role="button" aria-expanded="false" aria-controls="theme">
@@ -51,17 +51,17 @@
             <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
         </div>
         <div class="collapse mt-3" id="theme">
-             @{
-                        foreach (var item in Model.themes)
-                        {
-                            <span class="dropdown-item">
-                 <input class="form-check-input @item.Title" type="checkbox" onchange="addthemes('@item.Title','mobile')" value="">
-                 <label class="form-check-label" for="flexCheckDefault">
-                 @item.Title
-                </label>
-                </span>
-                        }
+            @{
+                foreach (var item in Model.themes)
+                {
+                                    <span class="dropdown-item">
+                         <input class="form-check-input @item.Title" type="checkbox" onchange="addthemes('@item.Title','mobile')" value="">
+                         <label class="form-check-label" for="flexCheckDefault">
+                            @item.Title
+                        </label>
+                        </span>
                 }
+            }
         </div>
         @*---4*@
         <div id="skill" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#skill" role="button" aria-expanded="false" aria-controls="skill">
@@ -70,16 +70,16 @@
         </div>
         <div class="collapse mt-3" id="skill">
             @{
-                        foreach (var item in Model.skills)
-                        {
-                            <span class="dropdown-item">
-                                <input class="form-check-input @item.SkillName" type="checkbox" onchange="addskills('@item.SkillName','mobile')" value="" >
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    @item.SkillName
-                                </label>
-                            </span>
-                        }
-                    }
+                foreach (var item in Model.skills)
+                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input @item.SkillName" type="checkbox" onchange="addskills('@item.SkillName','mobile')" value="" >
+                                        <label class="form-check-label" for="flexCheckDefault">
+                            @item.SkillName
+                                        </label>
+                                    </span>
+                }
+            }
         </div>
   </div>
 </div>
@@ -101,18 +101,18 @@
             <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load"/>
             </div>
              <span class="dropdown-menu" aria-labelledby="country">
-                 @{
-                     foreach (var item in Model.Country)
-                     {
-                         <span class="dropdown-item">
-                         <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
-                         <label class="form-check-label" for="flexCheckDefault">
-                         @item.Name
-                            </label>
-                           </span>
-                     }
-                 }
-                 
+                    @{
+                        foreach (var item in Model.Country)
+                        {
+                                 <span class="dropdown-item">
+                                 <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
+                                 <label class="form-check-label" for="flexCheckDefault">
+                                    @item.Name
+                                    </label>
+                                   </span>
+                        }
+                    }
+
             </span>
         </div>
             <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
@@ -123,7 +123,7 @@
                  <span class="dropdown-menu city" aria-labelledby="city">
                     <partial name="City_partial" />
             </span>
-          
+
         </div>
             <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
                 <div id="theme" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -134,14 +134,14 @@
                     @{
                         foreach (var item in Model.themes)
                         {
-                            <span class="dropdown-item">
-                 <input class="form-check-input" type="checkbox" onchange="addthemes('@item.Title')" value="" id="@item.Title">
-                 <label class="form-check-label" for="flexCheckDefault">
-                 @item.Title
-                </label>
-                </span>
+                                    <span class="dropdown-item">
+                         <input class="form-check-input" type="checkbox" onchange="addthemes('@item.Title')" value="" id="@item.Title">
+                         <label class="form-check-label" for="flexCheckDefault">
+                                    @item.Title
+                        </label>
+                        </span>
                         }
-                }
+                    }
             </span>
         </div>
             <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
@@ -153,12 +153,12 @@
                     @{
                         foreach (var item in Model.skills)
                         {
-                            <span class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
-                                <label class="form-check-label" for="flexCheckDefault">
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input" type="checkbox" onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
+                                        <label class="form-check-label" for="flexCheckDefault">
                                     @item.SkillName
-                                </label>
-                            </span>
+                                        </label>
+                                    </span>
                         }
                     }
             </span>

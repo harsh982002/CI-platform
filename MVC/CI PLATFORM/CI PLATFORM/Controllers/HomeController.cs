@@ -180,6 +180,18 @@ namespace CI_PLATFORM.Controllers
             var userId = long.Parse(HttpContext.Session.GetString("UserId"));
 
             CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
+            if(details?.CountryId is not null)
+            {
+                HttpContext.Session.SetString("Country", details?.CountryId.ToString());
+            }
+            if (details?.Avatar is not null)
+            {
+                HttpContext.Session.SetString("Avtar", details?.Avatar);
+            }
+            if(details?.FirstName is not null && details?.LastName is not null)
+            {
+                HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
+            }
             return View(details);
         }
 
@@ -187,7 +199,7 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Profile")]
         public IActionResult ProfilePage(CIPlatform.Entitites.ViewModel.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
-            HttpContext.Session.SetString("Country",country.ToString());
+            
            
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             if (oldpassword is not null && newpassword is not null)
@@ -222,12 +234,21 @@ namespace CI_PLATFORM.Controllers
                 }
                 else
                 {
-                    CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
-                    return View(details);
+                    bool success = _allRepository.profileRepository.profile_update(model, userId);
+                    return RedirectToAction("ProfilePage");
                 }
             }
         }
-
+        [HttpPost]
+        [Route("/Home/contact")]
+        public IActionResult Contact(string subject , string message)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            var uname = HttpContext.Session.GetString("Name");
+            var uemail = HttpContext.Session.GetString("Email");
+            bool success = _allRepository.profileRepository.contact_us(userId, uname, uemail, subject, message);
+            return Json(new {success});
+        }
         public IActionResult Volunteertimesheet()
         {
             return View();

@@ -1,0 +1,60 @@
+﻿.policy-page-title {
+    margin-top: 49px;
+}
+
+.policy-container {
+    display: flex;
+    margin-top: 41px;
+    /*align-items:center;*/
+}
+
+.policy-tab-container {
+    max-width: 300px;
+}
+
+.policy-tab-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding-bottom: 7px;
+}
+
+    .policy-tab-items:active {
+        font-weight: bold;
+    }
+
+    .policy-tab-items [class*="bi-chevron"] {
+        font-size: 20px;
+        font-weight: unset;
+    }
+
+.policy-tab-items-title {
+    max-width: 205px;
+    margin-right: 65.98px;
+}
+
+.policy-main-container {
+    margin-left: 48px;
+    max-width: 840.5px;
+}
+
+.policy-main-tab {
+}
+
+.policy-hr {
+    max-width: 840.5px;
+}
+
+.policy-main-title {
+    margin: 40px 0 18.4px 0;
+}
+
+#policy-introduction .policy-main-title {
+    margin-top: 0;
+}
+
+.policy-h1 {
+    font-size: 26px;
+    line-height: 40px;
+}

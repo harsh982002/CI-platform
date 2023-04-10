@@ -101,10 +101,10 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.Mission GetAllMission()
         {
-         
+
             int total_missions = missions.Count;
             missions = missions.Take(6).ToList();
-            var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions,  };
+            var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, };
             return Missions;
         }
 
@@ -274,14 +274,14 @@ namespace CIPlatform.Repository.Repository
             int avg_rating = 0;
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
-            var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id && x.ApprovalStatus == "APPROVE").ToList();
+            var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.ApprovalStatus == "APPROVE").ToList();
             var com = _db.Comments.Where(x => x.MissionId == id && x.ApprovalStatus == "PUBLISHED").ToList();
             var user = _db.Users.ToList();
-            if(_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
+            if (_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {
                 rate = _db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id).Rating;
             }
-            
+
             Entitites.Models.Mission? mission = _db.Missions.Find(id);
             if (mission is not null)
             {
@@ -290,7 +290,7 @@ namespace CIPlatform.Repository.Repository
                 bool applied_or_not = false;
                 int rating_count = 0;
                 int rating = 0;
-                
+
 
                 List<User> users = new List<User>();
 
@@ -311,7 +311,7 @@ namespace CIPlatform.Repository.Repository
                     rating = Rating.ElementAt(0).Rating;
                 }
 
-                
+
 
                 //get mission
 
@@ -347,11 +347,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user,Favorite_mission= fav, applyuser= application, Rating= rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications=recentvol,comments=com};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications = recentvol, comments = com };
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application , Rating = rate , missionApplications=recentvol,comments=com};
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, missionApplications = recentvol, comments = com };
             }
 
         }
@@ -382,7 +382,7 @@ namespace CIPlatform.Repository.Repository
         }
 
 
-            public bool sendMail(string[] emailList, long mission_id, long user_id)
+        public bool sendMail(string[] emailList, long mission_id, long user_id)
         {
 
             User fromUser = _db.Users.FirstOrDefault(u => u.UserId == user_id);
@@ -401,7 +401,7 @@ namespace CIPlatform.Repository.Repository
 
 
             var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/?returnedUrl=Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
-           
+
             foreach (var item in emailList)
             {
 
@@ -453,7 +453,7 @@ namespace CIPlatform.Repository.Repository
                 missionRating.MissionId = mission_id;
                 missionRating.Rating = rating;
                 missionRating.UserId = userId;
-                missionRating.CreatedAt= DateTime.Now;  
+                missionRating.CreatedAt = DateTime.Now;
                 _db.MissionRatings.Add(missionRating);
             }
             else

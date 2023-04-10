@@ -5,49 +5,50 @@
 }
 @model CIPlatform.Entitites.ViewModel.Mission
 
-<partial name="SecondHeader_partial"  />
+<partial name="SecondHeader_partial" />
 @*main body*@
-    <div class="container body pt-3">
-        <div class="d-flex justify-content-between">
-            <h3 class="explore">Explore : <b>@Model.Missions.Count Missions</b></h3>
-            <div class="d-flex sort">
-        <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort">
-  <option disabled  selected>Sort By</option>
-  <option value="newest">Newest</option>
-  <option value="oldest">Oldest</option>
-  <option value="lowest available seats">Lowest available seats</option>
-  <option value="highest available seats">Highest available seats</option>
-  <option value="my favourites">My favourites</option>
-  <option value="registration deadline">Registration deadline</option>
+<div class="container body pt-3">
+    <div class="d-flex justify-content-between">
+        <h3 class="explore">Explore : <b>@Model.Missions.Count Missions</b></h3>
+        <div class="d-flex sort">
+            <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort">
+                <option disabled selected>Sort By</option>
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="lowest available seats">Lowest available seats</option>
+                <option value="highest available seats">Highest available seats</option>
+                <option value="my favourites">My favourites</option>
+                <option value="registration deadline">Registration deadline</option>
 
 
-</select>
+            </select>
             <img src="~/images/grid.png" class="view rounded-circle" id="grid" onclick="gridview()" alt="not load" style="object-fit:scale-down;" />
             <img src="~/images/list.png" alt="not load" class="rounded-circle" id="list" onclick="listview()" style="object-fit:scale-down;" />
         </div>
-            </div> 
-            @*missions*@
-            <div class="row missions">
+    </div>
+    @*missions*@
+    <div class="row missions">
         <partial name="mission_partial" />
-            </div>
-            <div class='container d-none justify-content-center align-items-center mt-5 mb-5 w-50 text-muted no-mission-found'>
-                <span>No Mission Found</span>
-                 <button class="applyButton w-75 mt-3 btn">Submit New Mission <img src="images/right-arrow.png" alt="">
-                            </button>
-            </div>
-            </div>
-            @*pagination*@
+    </div>
+    <div class='container d-none justify-content-center align-items-center mt-5 mb-5 w-50 text-muted no-mission-found'>
+        <span>No Mission Found</span>
+        <button class="applyButton w-75 mt-3 btn">
+            Submit New Mission <img src="images/right-arrow.png" alt="">
+        </button>
+    </div>
+</div>
+@*pagination*@
 
 <nav aria-label="Page navigation example" class="mt-5">
     <ul class="pagination justify-content-center">
-                <li class="page-item">
+        <li class="page-item">
             <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
-        </li> 
-         <li class="page-item">
+        </li>
+        <li class="page-item">
             <span class="page-link" onclick="prev()"><img src="~/images/left.png" alt="not load" /></span>
         </li>
         @{
-            int pages=(int)Math.Ceiling((double)@Model?.total_missions/6);
+            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 6);
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)
@@ -56,7 +57,7 @@
                 }
                 else
                 {
-                     <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
                 }
             }
         }
@@ -68,8 +69,8 @@
         </li>
     </ul>
 </nav>
-<script src="~/js/index.js"  asp-append-version="true"></script>
-      
+<script src="~/js/index.js" asp-append-version="true"></script>
 
-        
-      
+
+
+

@@ -25,7 +25,7 @@ namespace CIPlatform.Repository.Repository
             User? user = _db.Users.FirstOrDefault(c => c.UserId == user_id);
             if (user is not null)
             {
-               
+
                 bool verify = BCrypt.Net.BCrypt.Verify(oldpassword, user.Password);
                 if (verify)
                 {
@@ -45,23 +45,32 @@ namespace CIPlatform.Repository.Repository
 
         }
 
+        public bool contact_us(long user_id, string name, string email, string subject, string message)
+        {
+            _db.ContactUs.Add(new ContactU { UserId = user_id, Name = name, Email = email, Subject = subject, Message = message });
+
+            _db.SaveChanges();
+            return true;
+        }
+
         public ProfileViewModel Get_details(int country, long user_Id)
         {
-            
+
             User? user = _db.Users.Find(user_Id);
             ProfileViewModel profile = new ProfileViewModel();
             profile.FirstName = user.FirstName;
             profile.LastName = user.LastName;
             profile.WhyIVolunteer = user.WhyIVolunteer;
-            profile.ProfileText= user.ProfileText;
+            profile.ProfileText = user.ProfileText;
             profile.CountryId = user.CountryId;
             profile.CityId = user.CityId;
             profile.Avatar = user.Avatar;
-            profile.Availability = user.Availablity;
+            profile.Availability = user.Availability;
             profile.EmployeeId = user.EmployeeId;
-            profile.userSkills = _db.UserSkills.Where(x=>x.UserId == user.UserId).ToList();
+            profile.Department = user.Department;
+            profile.userSkills = _db.UserSkills.Where(x => x.UserId == user.UserId).ToList();
 
-          if(country == 0)
+            if (country == 0)
             {
                 List<Country> countries = _db.Countries.ToList();
                 List<Skill> skills = _db.Skills.ToList();
@@ -73,7 +82,7 @@ namespace CIPlatform.Repository.Repository
             }
             else
             {
-                List<City> cities = _db.Cities.Where(x=> x.CountryId == country).ToList();
+                List<City> cities = _db.Cities.Where(x => x.CountryId == country).ToList();
                 profile.cities = cities;
                 return profile;
 
@@ -82,25 +91,25 @@ namespace CIPlatform.Repository.Repository
 
         public bool profile_update(ProfileViewModel userdetail, long user_id)
         {
-            User? user = _db.Users.FirstOrDefault(x=> x.UserId == user_id);
+            User? user = _db.Users.FirstOrDefault(x => x.UserId == user_id);
 
-            if(user is not null)
+            if (user is not null)
             {
                 user.FirstName = userdetail.FirstName;
                 user.LastName = userdetail.LastName;
                 user.Title = userdetail.Title;
                 user.WhyIVolunteer = userdetail.WhyIVolunteer;
                 user.ProfileText = userdetail.ProfileText;
-                user.Availablity = userdetail.Availability;
+                user.Availability = userdetail.Availability;
                 user.LinkedInUrl = userdetail.LinkedInUrl;
                 user.Department = userdetail.Department;
                 user.CityId = userdetail.CityId;
                 user.CountryId = userdetail.CountryId;
-                user.Availablity = userdetail.Availability;
+                user.Availability = userdetail.Availability;
                 user.EmployeeId = userdetail.EmployeeId;
-                user.UpdatedAt= DateTime.Now;
+                user.UpdatedAt = DateTime.Now;
 
-                if(userdetail.profile is not null)
+                if (userdetail.profile is not null)
                 {
                     using (var stream = userdetail.profile?.OpenReadStream())
                     {
@@ -110,14 +119,14 @@ namespace CIPlatform.Repository.Repository
                         user.Avatar = "data:image/png;base64," + base64string;
                     }
                 }
-                if(userdetail.selected_skills is not null)
+                if (userdetail.selected_skills is not null)
                 {
                     List<UserSkill> userSkills = _db.UserSkills.Where(x => x.UserId == user_id).ToList();
-                    if(userSkills.Count > 0)
+                    if (userSkills.Count > 0)
                     {
                         _db.RemoveRange(userSkills);
                         string[] skills = userdetail.selected_skills.Split(',');
-                        foreach(var skill in skills)
+                        foreach (var skill in skills)
                         {
                             _db.UserSkills.Add(new UserSkill { SkillId = int.Parse(skill), UserId = user_id });
                         }
@@ -130,7 +139,7 @@ namespace CIPlatform.Repository.Repository
                             _db.UserSkills.Add(new UserSkill { SkillId = int.Parse(skill), UserId = user_id });
                         }
                     }
-                    
+
                 }
                 _db.SaveChanges();
                 return true;
@@ -142,6 +151,6 @@ namespace CIPlatform.Repository.Repository
             }
 
         }
-        
+
     }
 }

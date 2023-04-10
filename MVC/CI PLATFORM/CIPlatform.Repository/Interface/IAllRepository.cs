@@ -13,10 +13,10 @@ namespace CIPlatform.Repository.Interface
 
         public IMissionRepository missionRepository { get; set; }
 
-       
+
         public IProfileRepository profileRepository { get; set; }
         public IStoryRepository storyRepository { get; set; }
-       
+
 
         bool AddFavouriteMission(long MissionId, long UserId);
         bool ApplyMission(long MissionId, long UserId);

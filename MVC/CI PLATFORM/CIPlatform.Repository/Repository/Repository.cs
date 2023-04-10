@@ -35,7 +35,7 @@ namespace CIPlatform.Repository.Repository
             return dbset;
         }
 
-       
+
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {

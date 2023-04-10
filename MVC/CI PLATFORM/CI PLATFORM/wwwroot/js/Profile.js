@@ -109,3 +109,42 @@ const change_password = () => {
         })
     }
 }
+
+const contact = () => {
+    var subject = document.getElementById("subject").value
+    var message = document.getElementById("message").value
+
+    if (subject.length < 3 || subject.length > 255) {
+        $("#subject-alert").addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $("#subject-alert").addClass('d-none').removeClass('d-block')
+    }
+
+    if (message.length < 20 || message.length > 60000) {
+        $("#msg-alert").addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $("#msg-alert").addClass('d-none').removeClass('d-block')
+    }
+
+    if (subject.length > 3 && subject.length < 255 && message.length > 20 && message.length < 60000) {
+        $.ajax({
+            url: '/Home/contact',
+            type: 'POST',
+            data: { subject: subject, message: message },
+            success: function (result) {
+                if (result.success) {
+                    $("#contactus").modal('hide')
+                    document.getElementById("subject").value = ""
+                    document.getElementById("message").value = ""
+                  
+                }
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+
+}

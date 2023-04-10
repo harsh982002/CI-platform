@@ -6,48 +6,51 @@
 @using System.Security.Claims;
 @model CIPlatform.Entitites.ViewModel.Mission
 @{
-                    foreach (var item in Model.Stories.Where(c=>c.UserId== long.Parse(@Accesor.HttpContext.Session.GetString("UserId")) || (c.Status=="PUBLISHED")).ToList())
-                    {
+    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(@Accesor.HttpContext.Session.GetString("UserId")) || (c.Status == "PUBLISHED")).ToList())
+    {
 
-                        <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card d-flex">
-                    <div class="img-event">
-                        <a href="/Story/StoryDetails/@item.StoryId"> <img class="group  list-group-image w-100 h-100" 
-                            src="@item.StoryMedia.ElementAt(1).Path" id="image-@item.StoryId" alt="" /> </a>
-                    
+        <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
+            <div class="thumbnail card d-flex">
+                <div class="img-event">
+                    <a href="/Story/StoryDetails/@item.StoryId">
+                        <img class="group  list-group-image w-100 h-100"
+                         src="@item.StoryMedia.ElementAt(1).Path" id="image-@item.StoryId" alt="" />
+                    </a>
 
-                            <div class="view-detail position-absolute" style="display:none;">
-                            <a class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt=""></a>
-                  </div>
-                        <button class="mission-theme border-0">
-                            <span class="p-2">@item.Mission.Theme.Title</span>
-                        </button>
+
+                    <div class="view-detail position-absolute" style="display:none;">
+                        <a class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt=""></a>
                     </div>
-                    <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            @item.Title.ToString().Substring(0,20)....</h4>
-                        <span class="group inner list-group-item-text">
+                    <button class="mission-theme border-0">
+                        <span class="p-2">@item.Mission.Theme.Title</span>
+                    </button>
+                </div>
+                <div class="caption card-body">
+                    <h4 class="group card-title inner list-group-item-heading">
+                        @item.Title.ToString().Substring(0,20)....
+                    </h4>
+                    <span class="group inner list-group-item-text">
                         @{
                             string content = System.Text.RegularExpressions.Regex.Replace(@item.Description, "<.*?>", string.Empty);
                             <span>
-                           @content.ToString().Substring(0,100)...
+                                @content.ToString().Substring(0,100)...
                             </span>
                         }
-                           </span>
-                        <div class="d-flex list-view justify-content-between mt-3 align-items-center">
+                    </span>
+                    <div class="d-flex list-view justify-content-between mt-3 align-items-center">
                         <div class="w-100">
-                        <img class="rounded-circle" src="@item.User.Avatar" alt="" style="width:13%;" />
-                           <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
-                           </div>
-                                @{
-                                    if(@item.Status=="DRAFT" && @item.UserId== long.Parse(@Accesor.HttpContext.Session.GetString("UserId")))
-                                    {
-                                        <button data-bs-toggle="modal" id="edit-story" onclick="editor(@item.StoryId)" data-bs-target="#edit-@item.StoryId" class="applyButton btn">Edit</button>
-                                    }   
-                            }
+                            <img class="rounded-circle" src="@item.User.Avatar" alt="" style="width:13%;" />
+                            <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
                         </div>
+                        @{
+                            if (@item.Status == "DRAFT" && @item.UserId == long.Parse(@Accesor.HttpContext.Session.GetString("UserId")))
+                            {
+                                <button data-bs-toggle="modal" id="edit-story" onclick="editor(@item.StoryId)" data-bs-target="#edit-@item.StoryId" class="applyButton btn">Edit</button>
+                            }
+                        }
                     </div>
                 </div>
             </div>
-                    }
-                }
+        </div>
+    }
+}

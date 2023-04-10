@@ -51,5 +51,13 @@ namespace CIPlatform.Entitites.ViewModel
 
         public string? Availability { get; set; }
 
+        [Required]
+        [MaxLength(255)]
+        public string Subject { get; set; } = null!;
+
+        [Required]
+        [MaxLength(60000)]
+        public string Message { get; set; } = null!;
+
     }
 }

@@ -15,7 +15,7 @@ using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace CIPlatform.Repository.Repository
 {
-    public class StoryRepository: Repository<CIPlatform.Entitites.Models.Story>, IStoryRepository
+    public class StoryRepository : Repository<CIPlatform.Entitites.Models.Story>, IStoryRepository
     {
         private readonly CiplatformContext _db;
         List<MissionApplication> missionApplications = new List<MissionApplication>();
@@ -23,7 +23,7 @@ namespace CIPlatform.Repository.Repository
         List<Entitites.Models.Story> stories = new List<Story>();
         List<User> users = new List<User>();
         List<StoryInvite> already_recommended_users = new List<StoryInvite>();
-       
+
         public StoryRepository(CiplatformContext db) : base(db)
         {
             _db = db;
@@ -37,7 +37,7 @@ namespace CIPlatform.Repository.Repository
             stories = _db.Stories.ToList();
             users = _db.Users.ToList();
             already_recommended_users = _db.StoryInvites.ToList();
-            
+
         }
         public bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type)
         {
@@ -50,12 +50,12 @@ namespace CIPlatform.Repository.Repository
                 {
                     CIPlatform.Entitites.Models.Story? edit_story = _db.Stories.FirstOrDefault(c => c.StoryId.Equals(id));
                     edit_story.Title = title;
-                   
+
                     edit_story.Description = mystory;
                     edit_story.Status = "PUBLISHED";
                     List<StoryMedium> storymedias = (from m in medias
-                                                    where m.StoryId == id
-                                                    select m).ToList();
+                                                     where m.StoryId == id
+                                                     select m).ToList();
                     _db.StoryMedia.RemoveRange(storymedias);
                     if (media.ElementAt(0).Length > 300)
                     {
@@ -100,7 +100,7 @@ namespace CIPlatform.Repository.Repository
                     story.MissionId = mission_id;
                     story.Title = title;
                     story.Description = mystory;
-                   
+
                     story.Status = "PUBLISHED";
                     _db.Stories.Add(story);
                     _db.SaveChanges();
@@ -148,7 +148,7 @@ namespace CIPlatform.Repository.Repository
                 story.MissionId = mission_id;
                 story.Title = title;
                 story.Description = mystory;
-              
+
                 _db.Stories.Add(story);
                 _db.SaveChanges();
                 long story_id = story.StoryId;
@@ -200,13 +200,13 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.StoryViewModel GetStory(long user_id, long Storyid)
         {
-            var viewer = _db.StoryViews.Where(x=>x.StoryId.Equals(Storyid)).ToList().Count;
+            var viewer = _db.StoryViews.Where(x => x.StoryId.Equals(Storyid)).ToList().Count;
             List<User> users = _db.Users.ToList();
             var story = _db.Stories.FirstOrDefault(c => c.StoryId == Storyid);
             if (story is not null)
             {
                 List<User> already_recommended = new List<User>();
-                return new Entitites.ViewModel.StoryViewModel { story = story, Users = users,  StoryViews= viewer};
+                return new Entitites.ViewModel.StoryViewModel { story = story, Users = users, StoryViews = viewer };
             }
             else
             {
@@ -216,7 +216,7 @@ namespace CIPlatform.Repository.Repository
 
         public bool Recommend(string[] emailList, long story_id, long user_id)
         {
-         
+
             User? fromUser = _db.Users.FirstOrDefault(u => u.UserId == user_id);
             foreach (var item in emailList)
             {
@@ -257,9 +257,9 @@ namespace CIPlatform.Repository.Repository
         {
             var viewer = _db.StoryViews.FirstOrDefault(x => x.UserId.Equals(user_id) && x.StoryId.Equals(Storyid));
 
-            if(viewer is null)
+            if (viewer is null)
             {
-                _db.StoryViews.Add(new StoryView { StoryId = Storyid, UserId = user_id});
+                _db.StoryViews.Add(new StoryView { StoryId = Storyid, UserId = user_id });
                 _db.SaveChanges();
             }
         }

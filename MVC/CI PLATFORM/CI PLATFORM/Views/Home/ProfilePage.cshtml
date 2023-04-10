@@ -11,188 +11,261 @@
 
 <div class="container mt-5">
     <form asp-action="Profile" id="form" asp-controller="Home" method="post" enctype="multipart/form-data">
-    <div class="row main w-100">
-        <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column justify-content-center position-relative align-items-center" >
-            <input type="file" asp-for="profile" value="@Model.Avatar" onchange="upload_profile_image()" class="h-50 w-50" accept="/images/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;"/>
-            @{
-                @if(@Model.Avatar is not null)
+        <div class="row main w-100">
+            <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column justify-content-center position-relative align-items-center">
+                <input type="file" asp-for="profile" value="@Model.Avatar" onchange="upload_profile_image()" class="h-50 w-50" accept="/images/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;" />
+                @{
+                    @if (@Model.Avatar is not null)
                     {
-                         <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="@Model.Avatar" alt="" />
+                        <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="@Model.Avatar" alt="" />
                     }
                     else
                     {
-                         <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
+                        <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
                     }
                 }
-           
-            <h5 class="mt-4">@Accesor?.HttpContext?.Session.GetString("Name")</h5>
-            <span style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</span>
-        </div>
-        <div class="col-lg-8 col-md-7 profile-details">
-            <div class="w-100 border-bottom">
-                <h5>Basic Information</h5>
+
+                <h5 class="mt-4">@Accesor?.HttpContext?.Session.GetString("Name")</h5>
+                <span style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</span>
             </div>
-            <div class="row mt-2">
-                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Name</label><input asp-for=FirstName placeholder="Enter Your Name" value="@Model.FirstName" type="text" class="form-control" id='first-name' />
-                    <span asp-validation-for=FirstName class="text-danger d-block" ></span>    
+            <div class="col-lg-8 col-md-7 profile-details">
+                <div class="w-100 border-bottom">
+                    <h5>Basic Information</h5>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">Name</label><input asp-for=FirstName placeholder="Enter Your Name" value="@Model.FirstName" type="text" class="form-control" id='first-name' />
+                        <span asp-validation-for=FirstName class="text-danger d-block"></span>
                     </div>
-                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">SurName</label><input asp-for=LastName placeholder="Enter Your SurName" value="@Model.LastName" type="text" class="form-control" id='last-name' />
-                        <span asp-validation-for=LastName class="text-danger d-block" ></span> 
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">SurName</label><input asp-for=LastName placeholder="Enter Your SurName" value="@Model.LastName" type="text" class="form-control" id='last-name' />
+                        <span asp-validation-for=LastName class="text-danger d-block"></span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Employee ID</label><input asp-for=EmployeeId value="@Model.EmployeeId" placeholder="Enter Your Employee ID" type="text" class="form-control" id='e_id' /></div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Manager</label><input placeholder="Enter Your Manager Details" type="text" class="form-control" id='m_details' /></div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Title</label><input asp-for=Title placeholder="Enter Your Title" type="text" class="form-control" id='title' /></div>
-                   @* <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label><input asp-for=Department placeholder="Enter Your Department" value="@Model.Department" type="text" class="form-control" id='department' /></div>*@
-                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label>
+                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label><input asp-for=Department placeholder="Enter Your Department" value="@Model.Department" type="text" class="form-control" id='department' /></div>
+                    @*   <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label>
                         <select  id='department' asp-for=Department class="form-select me-3" aria-label="Select Mission">
                         <option value=0 disabled  selected>Select Your Department</option>
-                        <option value='DotNet'>DotNet</option>    
-                        <option value='Php'>Php</option>    
-                        <option value='java'>java</option>  
-                        <option value='hr'>hr</option> 
+                        <option value='DotNet'>DotNet</option>
+                        <option value='Php'>Php</option>
+                        <option value='java'>java</option>
+                        <option value='hr'>hr</option>
                         </select>
-                    </div>
+                        </div>*@
                 </div>
 
                 <div class="row mt-5">
-                    <div class="col-lg-12"><label class="form-label">My Profile</label><textarea asp-for=ProfileText placeholder="Enter Your Bio..." rows=5 class="form-control" id='bio'>@Model.ProfileText</textarea>
-                    <span asp-validation-for=ProfileText  class="text-danger d-block" ></span>     
+                    <div class="col-lg-12">
+                        <label class="form-label">My Profile</label><textarea asp-for=ProfileText placeholder="Enter Your Bio..." rows=5 class="form-control" id='bio'>@Model.ProfileText</textarea>
+                        <span asp-validation-for=ProfileText class="text-danger d-block"></span>
                     </div>
-                 <div class="col-lg-12 mt-4"><label class="form-label">Why I Volunteer?</label><textarea asp-for=WhyIVolunteer placeholder="Enter Your Volunteering Reason..." id='reason_volunteering' rows=5 class="form-control">@Model.WhyIVolunteer</textarea></div>
+                    <div class="col-lg-12 mt-4"><label class="form-label">Why I Volunteer?</label><textarea asp-for=WhyIVolunteer placeholder="Enter Your Volunteering Reason..." id='reason_volunteering' rows=5 class="form-control">@Model.WhyIVolunteer</textarea></div>
                 </div>
 
                 <div class="w-100 mt-5 border-bottom">
-                <h5>Address Information</h5>
-            </div>
-            <div class="mt-2 row">
-               <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">City</label><select id='city' asp-for=CityId class="form-select city me-3" aria-label="Select Mission">
-               <option  disabled  selected>Select Your City</option>
-               </select>
-               <span asp-validation-for=CityId  class="text-danger d-block" ></span> 
-               </div>
-               <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Country</label><select id='country' asp-for=CountryId onchange="getcities()" class="form-select country me-3" aria-label="Select Mission">
-               <option  disabled  selected>Select Your Country</option>
-               @{
-                   foreach (var item in Model.countries)
-                   {
-                       <option value=@item.CountryId>@item.Name</option>
-                   }
-               }
-                   
-               </select>
-               <span asp-validation-for=CountryId class="text-danger d-block" ></span> 
-               </div>
-            </div>
+                    <h5>Address Information</h5>
+                </div>
+                <div class="mt-2 row">
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">City</label><select id='city' asp-for=CityId class="form-select city me-3" aria-label="Select Mission">
+                            <option disabled selected>Select Your City</option>
+                            @{
+                                if (Model.cities is not null)
+                                {
+                                    foreach (var item in Model.cities)
+                                    {
+                                        if (item.CityId == Model.CityId)
+                                        {
+                                            <option value=@item.CityId selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@item.CityId>@item.Name</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for=CityId class="text-danger d-block"></span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">Country</label><select id='country' asp-for=CountryId onchange="getcities()" class="form-select country me-3" aria-label="Select Mission">
+                            <option disabled selected>Select Your Country</option>
+                            @{
+                                foreach (var item in Model.countries)
+                                {
+                                    if (item.CountryId == Model.CountryId)
+                                    {
+                                        <option value=@item.CountryId selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@item.CountryId>@item.Name</option>
+                                    }
 
-             <div class="w-100 mt-5 border-bottom">
-                <h5>Professional Information</h5>
-            </div>
+                                }
+                            }
 
-            <div class="mt-2 row">
-               <div class="col-lg-6 mt-2 col-md-6 "><label class="form-label">Availablity</label><select id='avilablity' asp-for=Availability class="form-select me-3" aria-label="Select Mission">
-               <option value=0 disabled  selected>Select Your Availablity</option>
-               <option value='Daily'>Daily</option>    
-               <option value='Weekly'>Weekly</option>    
-               <option value='Weekend'>Weekend</option>    
-               </select>
-               </div>
-                <div class="col-lg-6 mt-2 col-md-6 "><label class="form-label">LinkedIn</label><input asp-for=LinkedInUrl id='linked_in' placeholder="Enter Your LinkedIn URL" type="url" class="form-control" /></div>
-            </div>
+                        </select>
+                        <span asp-validation-for=CountryId class="text-danger d-block"></span>
+                    </div>
+                </div>
 
-            <div class="w-100 mt-5 border-bottom">
-                <h5>My Skills</h5>
-            </div>
-            <div class="mt-4 w-100 saved-skills d-flex flex-column border border-1 ScrollStyle" style="height:200px;">
+                <div class="w-100 mt-5 border-bottom">
+                    <h5>Professional Information</h5>
+                </div>
+
+                <div class="mt-2 row">
+                    <div class="col-lg-6 mt-2 col-md-6 ">
+                        <label class="form-label">Availablity</label><select id='avilablity' asp-for=Availability class="form-select me-3" aria-label="Select Mission">
+                            <option value=0 disabled selected>Select Your Availablity</option>
+                            <option value='Daily'>Daily</option>
+                            <option value='Weekly'>Weekly</option>
+                            <option value='Weekend'>Weekend</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mt-2 col-md-6 "><label class="form-label">LinkedIn</label><input asp-for=LinkedInUrl id='linked_in' placeholder="Enter Your LinkedIn URL" type="url" class="form-control" /></div>
+                </div>
+
+                <div class="w-100 mt-5 border-bottom">
+                    <h5>My Skills</h5>
+                </div>
+                <div class="mt-4 w-100 saved-skills d-flex flex-column border border-1 ScrollStyle" style="height:200px;">
                     @{
-                        foreach(var skill in @Model.userSkills)
+                        foreach (var skill in @Model?.userSkills)
                         {
                             <span class="mt-2 ms-2" id="@skill.SkillId">  @skill.Skill.SkillName </span>
                         }
                     }
 
-            </div>
-             <div data-bs-toggle="modal" data-bs-target="#addskills"  style="cursor:pointer;" class=" mt-3 col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                                <span class="p-1 text-muted" style="white-space:nowrap;">Add Skills</span>
-                                <input asp-for=selected_skills type="hidden" id="selected_skills"/>
-        </div>
+                </div>
+                <div data-bs-toggle="modal" data-bs-target="#addskills" style="cursor:pointer;" class=" mt-3 col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Add Skills</span>
+                    <input asp-for=selected_skills type="hidden" id="selected_skills" />
+                </div>
 
-        <div class="d-flex justify-content-end">
-        <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Save</button>
-    </div>    
-    
-    </div>
-    </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Save</button>
+                </div>
+
+            </div>
+        </div>
     </form>
 </div>
 
 @*modal of skills*@
 <div class="modal fade" id="addskills" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Your Skills</h5>
-      </div>
-      <div class="modal-body d-flex justufy-content-center">
-          <div class="all-skills d-flex flex-column text-muted border border-1">
-              @{
-                  foreach (var item in Model?.skill)
-                  {
-                       <span onclick="addskill('skill-@item.SkillId','@item.SkillName')" class="mt-1" style="cursor:pointer;" id="skill-@item.SkillId">@item.SkillName</span>
-                  }
-              }
-             
-          </div>
-          <div class="d-flex flex-column justify-content-center align-items-center buttons">
-              <img style="cursor:pointer;" onclick="addallskill()" src="~/images/right-arrow1.png"/>
-              <img class="mt-3" src="~/images/left.png" />
-          </div>
-          <div class="selected-skills d-flex flex-column text-muted border border-1">
-          </div>
-      </div>
-      <div class="modal-footer">
-          <div  data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                                <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add Your Skills</h5>
+            </div>
+            <div class="modal-body d-flex justufy-content-center">
+                <div class="all-skills d-flex flex-column text-muted border border-1">
+                    @{
+                        foreach (var item in Model?.skill)
+                        {
+                            <span onclick="addskill('skill-@item.SkillId','@item.SkillName')" class="mt-1" style="cursor:pointer;" id="skill-@item.SkillId">@item.SkillName</span>
+                        }
+                    }
+
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center buttons">
+                    <img style="cursor:pointer;" onclick="addallskill()" src="~/images/right-arrow1.png" />
+                    <img class="mt-3" src="~/images/left.png" />
+                </div>
+                <div class="selected-skills d-flex flex-column text-muted border border-1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" onclick="saveskills()" class="btn applyButton" data-bs-dismiss="modal">Save</button>
+            </div>
         </div>
-        <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" onclick="saveskills()" class="btn applyButton" data-bs-dismiss="modal">Save</button>
-      </div>
     </div>
-  </div>
 </div>
 
 
 @*modal of change password*@
 <div class="modal fade" id="changepassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Change Your Password</h5>
-      </div>
-      <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
-          <div class="w-100">
-          <label class="form-label mt-2">Old Password</label>
-            <input type="password" id="oldpassword" class="form-control" />
-            <span class="d-none text-danger oldpassword">Old Password Is Too Short</span>
-            <span class="d-none text-danger wrong-oldpassword">Enter Correct Password</span>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Change Your Password</h5>
             </div>
-            <div class="w-100">
-          <label class="form-label mt-2">New Password</label>
-            <input type="password" id="newpassword" class="form-control" />
-            <span class="d-none text-danger newpassword">New Password Is Too Short</span>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="w-100">
+                    <label class="form-label mt-2">Old Password</label>
+                    <input type="password" id="oldpassword" class="form-control" />
+                    <span class="d-none text-danger oldpassword">Old Password Is Too Short</span>
+                    <span class="d-none text-danger wrong-oldpassword">Enter Correct Password</span>
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">New Password</label>
+                    <input type="password" id="newpassword" class="form-control" />
+                    <span class="d-none text-danger newpassword">New Password Is Too Short</span>
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Confirm Password</label>
+                    <input type="password" id="confirmpassword" class="form-control" />
+                    <span class="d-none text-danger confirmpassword">Passwords Not Match</span>
+                </div>
             </div>
-            <div class="w-100">
-           <label class="form-label mt-2">Confirm Password</label>
-            <input type="password" id="confirmpassword" class="form-control" />
-            <span class="d-none text-danger confirmpassword">Passwords Not Match</span>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="change_password()">Change</button>
             </div>
-          </div>
-      <div class="modal-footer">
-          <div  data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                                <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
         </div>
-        <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="change_password()">Change</button>
-      </div>
     </div>
-  </div>
+</div>
+
+
+
+@*modal of contact us*@
+
+
+<div class="modal fade" id="ContactUs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="w-100">
+                    <label class="form-label mt-2">Name</label>
+                    <input type="text" value="@Accesor?.HttpContext?.Session.GetString("Name")" disabled class="form-control" required />
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Email Address</label>
+                    <input type="email" class="form-control" value="@Accesor?.HttpContext?.Session.GetString("Email")" disabled required />
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Subject</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Enter Your Subject" required />
+                    <span class="text-danger d-none" id="subject-alert">Enter Valid Subject</span>
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Message</label>
+                    <textarea type="text" class="form-control" rows="5" id="message" placeholder="Enter Your Message" required></textarea>
+                    <span class="text-danger d-none" id="msg-alert">Enter Valid Message</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="contact()" data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

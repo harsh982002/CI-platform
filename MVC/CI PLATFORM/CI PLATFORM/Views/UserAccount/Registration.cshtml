@@ -15,9 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <environment include="Development">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <script src="/js/bootstrap.bundle.min.js"></script>
     </environment>
 </head>
 <body>
@@ -66,28 +66,28 @@
         <div class="login col-md-4 col-sm-5">
             <div class="login-details">
                 <form asp-action="Registration" method="post">
-                <label asp-for="FirstName" class="form-label mt-2">First Name</label>
-                <input asp-for="FirstName" type="text" class="form-control" id="f-name" />
-                <span asp-validation-for="FirstName" class="text-danger d-block"></span>
-                <label asp-for="LastName" class="form-label mt-2">Last Name</label>
-                <input  asp-for="LastName" type="text" class="form-control" id="l-name" />
-                 <span asp-validation-for="LastName" class="text-danger d-block"></span>
-                <label asp-for="PhoneNumber" class="form-label mt-2">Phone Number</label>
-                <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" />
-                 <span asp-validation-for="PhoneNumber" class="text-danger d-block"></span>
-                <label asp-for="Email" class="form-label mt-2">Email address</label>
-                <input asp-for="Email" type="email"
-                       class="form-control"
-                       id="email"
-                       aria-describedby="emailHelp" />
-                <span asp-validation-for="Email" class="text-danger d-block"></span>
-                <label asp-for="Password" class="form-label mt-2">Password</label>
-                <input  asp-for="Password" type="password" class="form-control" id="password" />
-                 <span asp-validation-for="Password" class="text-danger d-block"></span>
-                <label asp-for="ConfirmPassword" class="form-label mt-2">Confirm Password</label>
-                <input asp-for="ConfirmPassword"  type="password" class="form-control" id="c-password" />
-                 <span asp-validation-for="ConfirmPassword" class="text-danger d-block"></span>
-                <button type="submit" class="btn mt-4">Register</button>
+                    <label asp-for="FirstName" class="form-label mt-2">First Name</label>
+                    <input asp-for="FirstName" type="text" class="form-control" id="f-name" />
+                    <span asp-validation-for="FirstName" class="text-danger d-block"></span>
+                    <label asp-for="LastName" class="form-label mt-2">Last Name</label>
+                    <input asp-for="LastName" type="text" class="form-control" id="l-name" />
+                    <span asp-validation-for="LastName" class="text-danger d-block"></span>
+                    <label asp-for="PhoneNumber" class="form-label mt-2">Phone Number</label>
+                    <input asp-for="PhoneNumber" type="tel" class="form-control" id="phone" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger d-block"></span>
+                    <label asp-for="Email" class="form-label mt-2">Email address</label>
+                    <input asp-for="Email" type="email"
+                           class="form-control"
+                           id="email"
+                           aria-describedby="emailHelp" />
+                    <span asp-validation-for="Email" class="text-danger d-block"></span>
+                    <label asp-for="Password" class="form-label mt-2">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" id="password" />
+                    <span asp-validation-for="Password" class="text-danger d-block"></span>
+                    <label asp-for="ConfirmPassword" class="form-label mt-2">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" id="c-password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger d-block"></span>
+                    <button type="submit" class="btn mt-4">Register</button>
                 </form>
                 <div class="toregister text-center mt-2">
                     <a class="l-password" asp-action="Forgotpassword">Lost Your Password?</a>
@@ -102,9 +102,9 @@
         </div>
     </div>
     @section scripts{
-        @{
-            <partial name="_ValidationScriptsPartial"/>
-        }
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
     }
 </body>
 </html>
