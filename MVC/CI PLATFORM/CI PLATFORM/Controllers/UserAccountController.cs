@@ -47,10 +47,19 @@ namespace CI_PLATFORM.Controllers
                 if (ModelState.IsValid)
                 {
                     User user = _registerInterface.LoginViewModel(model);
-                   
+                    
                     if (user == null)
                     {
-                        return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User not found or invalid password ");
+                        ViewBag.Message = String.Format("User Does Not Exist, Please Register Yourself.");
+                        return View();
+                       /* return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User doesn't exist please Register yourself.");*/
+                    }
+                   
+                    else if (BCrypt.Net.BCrypt.Verify(model.Password, user.Password) == false)
+                    {
+                      
+                        ViewBag.Message = String.Format("Password is incorrect");
+                        return View();
                     }
                     else
                     {
@@ -170,7 +179,6 @@ namespace CI_PLATFORM.Controllers
         }
 
 
-
         [HttpGet]
         public IActionResult Resetpassword()
         {
@@ -198,11 +206,6 @@ namespace CI_PLATFORM.Controllers
         }
 
 
-       
-       
-        
-
-        
 
     }
 }

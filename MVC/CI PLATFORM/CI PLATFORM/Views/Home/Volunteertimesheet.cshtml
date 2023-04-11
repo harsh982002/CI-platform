@@ -1,10 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@*@model CI.Models.ViewModels.TimesheetViewModel*@
+@model CIPlatform.Entitites.ViewModel.TimeSheetViewModel
 @{
     ViewData["title"] = "Volunteering_Timesheet";
-    ViewData["css"]="Volunteering_Timesheet.css";
+    ViewData["css"] = "Volunteering_Timesheet.css";
 }
 <div class="container" style="margin-top:8%;">
     <h2 class="mt-5">
@@ -15,64 +15,64 @@
         <div class="border border-1 h-100 main-div">
             <div class="d-flex justify-content-between  align-items-center  mt-4">
                 <span>Volunteering Hours</span>
-                <button data-bs-toggle="modal" data-bs-target="#time" class="btn applybutton d-flex justify-content-between align-items-center" ><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
+                <button data-bs-toggle="modal" data-bs-target="#time" class="btn applybutton d-flex justify-content-between align-items-center"><img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span></button>
             </div>
             <div class="mt-4 row time-table h-75">
-                 <table class="ms-2 time-timesheets">
+                <table class="ms-2 time-timesheets">
                     <tr><th>Mission</th><th>Date</th><th>Hours</th><th>Minutes</th><th> </th></tr>
-                   @* @{
-                        foreach(var item in Model.Timesheets)
+                    @{
+                        foreach (var item in Model.timesheets)
                         {
                             if (item.Action is null)
                             {
-                                <tr id='timesheet-@item.TimesheetId'><td>@item.Mission.Title.ToString().Substring(0,20)...</td><td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td><td>@item.Time.ToString().Substring(0,2)</td><td>@item.Time.ToString().Substring(3,5)</td><td> <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@item.TimesheetId,@item.MissionId,'@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time')" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" /></td></tr>
+                                <tr id='timesheet-@item.TimesheetId'>
+                                    <td>@item.Mission.Title.ToString().Substring(0,20)...</td>
+                                    <td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.Time.ToString().Substring(0,2)</td>
+                                    <td>@item.Time.ToString().Substring(3,5)</td>
+                                    <td>
+                                        <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@item.TimesheetId,@item.MissionId,'@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time')" src="~/images/edit.png" class="edbutton" alt="" />
+                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                </tr>
                             }
                         }
-                        }*@
-
-                        <tr ><td>Environment Conservation</td><td>22/02/2022</td><td>1h</td><td>30min</td><td> <img  data-bs-toggle="modal" data-bs-target="#time" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>
-                                           <tr ><td>Environment Conservation</td><td>22/02/2022</td><td>1h</td><td>30min</td><td> <img  data-bs-toggle="modal" data-bs-target="#time" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>
-                                           <tr ><td>Environment Conservation</td><td>22/02/2022</td><td>1h</td><td>30min</td><td> <img  data-bs-toggle="modal" data-bs-target="#time" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>
-                                           <tr ><td>Environment Conservation</td><td>22/02/2022</td><td>1h</td><td>30min</td><td> <img  data-bs-toggle="modal" data-bs-target="#time" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>
+                    }
                 </table>
             </div>
 
 
         </div>
         <div class="border border-1 h-100 main-div">
-             <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="d-flex justify-content-between align-items-center mt-4">
                 <span>Volunteering Goals</span>
-                <button data-bs-toggle="modal" data-bs-target="#goal" class="btn d-flex applybutton justify-content-between align-items-center"><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
+                <button data-bs-toggle="modal" data-bs-target="#goal" class="btn d-flex applybutton justify-content-between align-items-center"><img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span></button>
             </div>
             <div class="mt-4 row goal-table h-75">
                 <table class="goal-timesheets ms-2">
                     <tr><th>Mission</th><th>Date</th><th>Action</th><th> </th></tr>
-                  @*  @{
-                        foreach(var item in Model.Timesheets)
+                    @{
+                        foreach (var item in Model.timesheets)
                         {
                             if (item.Action is not null)
                             {
-                                <tr id='timesheet-@item.TimesheetId'><td>@item.Mission.Title.ToString().Substring(0,20)...</td><td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td><td>@item.Action</td><td> <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action')" data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" /></td></tr>
+                                <tr id='timesheet-@item.TimesheetId'>
+                                    <td>@item.Mission.Title.ToString().Substring(0,20)...</td>
+                                    <td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.Action</td>
+                                    <td>
+                                        <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action')" data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt="" />
+                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                </tr>
                             }
                         }
-                        }*@
-
-                          <tr><td>Plantation Programme</td><td>22/02/2022</td><td>0</td><td> <img  data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr
-                                          <tr><td>Plantation Programme</td><td>22/02/2022</td><td>0</td><td> <img  data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>  <tr><td>Plantation Programme</td><td>22/02/2022</td><td>0</td><td> <img  data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt=""/>
-                                        <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td></tr>
+                    }
                 </table>
-                    
-</div>
-</div>
-</div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -80,111 +80,111 @@
 @*Modals*@
 
 <div class="modal fade" id="time" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Please Enter Below Volunteering Hours</h5>
-      </div>
-      <div class="modal-body">
-       <div class="mission">
-           <label class="form-label mt-3">Mission</label>
-           <select class="form-select time-mission me-3" aria-label="Select Mission">
-  <option value=0 disabled  selected>Select Your Mission</option>
-@*                        @{
-                            foreach (var item in Model.Missions)
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Please Enter Below Volunteering Hours</h5>
+            </div>
+            <div class="modal-body">
+                <div class="mission">
+                    <label class="form-label mt-3">Mission</label>
+                    <select class="form-select time-mission me-3" aria-label="Select Mission">
+                        <option value=0 disabled selected>Select Your Mission</option>
+                        @{
+                            foreach (var item in Model.mission)
                             {
-                                if (@item.Mission_type == "TIME")
+                                if (@item.missiontype == "TIME")
                                 {
-                                    <option value=@item.Mission_id id=@item.Mission_id>@item.Title.ToString().Substring(0,50)...</option>
+                                    <option value=@item.mission_id id=@item.mission_id>@item.Title.ToString().Substring(0,20)...</option>
                                 }
-      }
-  }*@
-  
-  </select>
-  <span class="text-danger d-none time-mission-empty">Mission Required</span>
-       </div>
-       <div>
-           <label class="form-label mt-3">Date Volunteered</label>
-            <input type="date" max=@DateTime.Now.ToString("dd/MM/yyyy") class="form-control time-date"/>
-            <span class="text-danger d-none time-date-empty">Date Required</span>
-       </div>
-       <div class="d-flex justify-content-between w-100">
-           <div style="width:48%;">
-           <label class="form-label mt-3">Hours</label>
-            <input type="number" placeholder="Enter Spent Hours"  class="form-control time-hours" />
-            <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            }
+                        }
+
+                    </select>
+                    <span class="text-danger d-none time-mission-empty">Mission Required</span>
+                </div>
+                <div>
+                    <label class="form-label mt-3">Date Volunteered</label>
+                    <input type="date" max=@DateTime.Now.ToString("dd/MM/yyyy") class="form-control time-date" />
+                    <span class="text-danger d-none time-date-empty">Date Required</span>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <div style="width:48%;">
+                        <label class="form-label mt-3">Hours</label>
+                        <input type="number" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                        <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                    </div>
+                    <div style="width:48%;">
+                        <label class="form-label mt-3">Minutes</label>
+                        <input type="number" placeholder="Enter Spent Minutes" class="form-control time-min" />
+                        <span class="text-danger d-none time-min-valid">Enter Valid mins</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label mt-3">Message</label>
+                    <textarea class="form-control time-message" rows=5 placeholder="Enter Your Message"></textarea>
+                    <span class="text-danger d-none time-message-empty">Message Required</span>
+                </div>
             </div>
-            <div style="width:48%;">
-           <label class="form-label mt-3">Minutes</label>
-            <input type="number" placeholder="Enter Spent Minutes" class="form-control time-min"/>
-            <span class="text-danger d-none time-min-valid">Enter Valid mins</span>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" onclick="clear_modal('time')" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" onclick="timedata()" class="btn applybutton">Submit</button>
             </div>
-       </div>
-       <div>
-           <label class="form-label mt-3">Message</label>
-            <textarea class="form-control time-message" rows=5 placeholder="Enter Your Message"></textarea>
-            <span class="text-danger d-none time-message-empty">Message Required</span>
-            </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn applybutton" onclick="clear_modal('time')" data-bs-dismiss="modal">Cancle</button>
-        <button type="button" onclick="timedata()" class="btn applybutton">Submit</button>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 @*for goal*@
 
 <div class="modal fade" id="goal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Please Enter Below Volunteering Goal</h5>
-      </div>
-      <div class="modal-body">
-       <div class="mission">
-           <label class="form-label mt-3">Mission</label>
-           <select class="form-select me-3" id="mission_goal" aria-label="Select Mission">
-  <option disabled value=0 selected>Select Your Mission</option>
-           @*             @{
-                             foreach (var item in Model.Missions)
-                            {
-                                if (@item.Mission_type == "GOAL")
-                                {
-                                    <option value='mission_id-@item.Mission_id goal_object-@item.Goal_object' id='mission-@item.Mission_id'>@item.Title.ToString().Substring(0,50)...</option>
-                                }
-      }
-  }*@
-  </select>
-  <span class="text-danger d-none goal-mission">Select Mission first</span>
-       </div>
-         <div>
-           <label class="form-label mt-3">Actions</label>
-            <input type="number" id="action" placeholder="Enter Actions"   class="form-control" />
-            <span class="text-danger d-none action-empty">Actions Required</span>
-            <span class="text-danger d-none action-notvalid">Enter Valid Action</span>
-       </div>
-       <div>
-           <label class="form-label mt-3">Date Volunteered</label>
-            <input type="date" id="goal-date" max=@DateTime.Now.ToString("dd/MM/yyyy")  class="form-control"/>
-            <span class="text-danger d-none date-empty">Date Required</span>
-       </div>
-       <div>
-           <label class="form-label mt-3">Message</label>
-            <textarea class="form-control" id="goal-message" rows=5  placeholder="Enter Your Message"></textarea>
-            <span class="text-danger d-none message-empty">Message Required</span>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Please Enter Below Volunteering Goal</h5>
             </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn applybutton" onclick="clear_modal('goal')" data-bs-dismiss="modal">Cancle</button>
-        <button type="button" onclick="goaldata()" class="btn applybutton">Submit</button>
-      </div>
+            <div class="modal-body">
+                <div class="mission">
+                    <label class="form-label mt-3">Mission</label>
+                    <select class="form-select me-3" id="mission_goal" aria-label="Select Mission">
+                        <option disabled value=0 selected>Select Your Mission</option>
+                        @{
+                            foreach (var item in Model.mission)
+                            {
+                                if (@item.missiontype == "GOAL")
+                                {
+                                    <option value='mission_id-@item.mission_id goal_object-@item.goalobject' id='mission-@item.mission_id'>@item.Title.ToString().Substring(0,20)...</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <span class="text-danger d-none goal-mission">Select Mission first</span>
+                </div>
+                <div>
+                    <label class="form-label mt-3">Actions</label>
+                    <input type="number" id="action" placeholder="Enter Actions" class="form-control" />
+                    <span class="text-danger d-none action-empty">Actions Required</span>
+                    <span class="text-danger d-none action-notvalid">Enter Valid Action</span>
+                </div>
+                <div>
+                    <label class="form-label mt-3">Date Volunteered</label>
+                    <input type="date" id="goal-date" max=@DateTime.Now.ToString("dd/MM/yyyy") class="form-control" />
+                    <span class="text-danger d-none date-empty">Date Required</span>
+                </div>
+                <div>
+                    <label class="form-label mt-3">Message</label>
+                    <textarea class="form-control" id="goal-message" rows=5 placeholder="Enter Your Message"></textarea>
+                    <span class="text-danger d-none message-empty">Message Required</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" onclick="clear_modal('goal')" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" onclick="goaldata()" class="btn applybutton">Submit</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <input id="timesheet-id" type="hidden" />
-<script src="~/js/VolunteerTimesheet.js"></script>
+<script src="~/js/Timesheet.js"></script>

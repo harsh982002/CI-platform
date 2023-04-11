@@ -41,6 +41,7 @@ namespace CIPlatform.Repository.Repository
         }
         public bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type)
         {
+            
             CIPlatform.Entitites.Models.Story story = new CIPlatform.Entitites.Models.Story();
             if (type == "PUBLISHED")
             {

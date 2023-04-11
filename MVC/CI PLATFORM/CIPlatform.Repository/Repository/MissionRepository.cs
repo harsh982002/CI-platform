@@ -33,6 +33,7 @@ namespace CIPlatform.Repository.Repository
         List<FavoriteMission> favoriteMissions = new List<FavoriteMission>();
         List<MissionRating> ratings = new List<MissionRating>();
         List<MissionInvite> already_recommended_users = new List<MissionInvite>();
+        List<Timesheet> timesheets = new List<Timesheet>();
         public MissionRepository(CiplatformContext db) : base(db)
         {
             _db = db;
@@ -55,6 +56,7 @@ namespace CIPlatform.Repository.Repository
             favoriteMissions = _db.FavoriteMissions.ToList();
             ratings = _db.MissionRatings.ToList();
             already_recommended_users = _db.MissionInvites.ToList();
+            timesheets = _db.Timesheets.ToList();
         }
 
         public bool add_to_favourite(long user_id, long mission_id)
@@ -103,7 +105,7 @@ namespace CIPlatform.Repository.Repository
         {
 
             int total_missions = missions.Count;
-            missions = missions.Take(6).ToList();
+            missions = missions.Take(9).ToList();
             var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, };
             return Missions;
         }
@@ -118,11 +120,11 @@ namespace CIPlatform.Repository.Repository
             //get missions as per page
             if (page_index != 0)
             {
-                missions = missions.Skip(6 * page_index).Take(6).ToList();
+                missions = missions.Skip(9 * page_index).Take(9).ToList();
             }
             else
             {
-                missions = missions.Take(6).ToList();
+                missions = missions.Take(9).ToList();
             }
 
             //get cities as per country
@@ -252,11 +254,11 @@ namespace CIPlatform.Repository.Repository
         {
             if (page_index != 0)
             {
-                missions = missions.Skip(6 * page_index).Take(6).ToList();
+                missions = missions.Skip(9 * page_index).Take(9).ToList();
             }
             else
             {
-                missions = missions.Take(6).ToList();
+                missions = missions.Take(9).ToList();
             }
             var mission = (from m in missions
                            where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)
@@ -468,7 +470,57 @@ namespace CIPlatform.Repository.Repository
             return true;
         }
 
+        public CIPlatform.Entitites.ViewModel.TimeSheetViewModel user_mission(long user_id)
+        {
+            List<Timesheet> timesheet = (from t in timesheets
+                                         where t.UserId == user_id
+                                         select t).ToList();
+            List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> missionofuser = (from m in missionApplications
+                                                                                         where m.UserId == user_id
+                                                                                         select new CIPlatform.Entitites.ViewModel.MissionSelectViewModel
+                                                                                         { mission_id = m.MissionId, missiontype = m.Mission.MissionType, goalobject = m.Mission.GoalObject, Title = m.Mission.Title }).ToList();
 
+            return new TimeSheetViewModel
+            {
+                timesheets = timesheet,
+                mission = missionofuser
+            };
+        }
 
+        public Timesheet AddSheet(long user_id, TimeSheetViewModel model, string type)
+        {
+            if (type == "goal")
+            {
+                Timesheet timesheet = new Timesheet();
+                {
+                    timesheet.MissionId = model.mission_id;
+                    timesheet.UserId = user_id;
+                    timesheet.Action = model.action;
+                    timesheet.DateVolunteered = DateTime.Parse(model.date);
+                    timesheet.Notes = model.message;
+                }
+                _db.Timesheets.Add(timesheet);
+                _db.SaveChanges();
+                return timesheet;
+            }
+            else
+            {
+                TimeSpan hours = TimeSpan.FromHours((double)model.Hours);
+                TimeSpan minutes = TimeSpan.FromMinutes((double)model.minutes);
+                TimeSpan time = hours.Add(minutes);
+                Timesheet timesheet = new Timesheet();
+                {
+                    timesheet.MissionId = model.mission_id;
+                    timesheet.UserId = user_id;
+                    timesheet.Time = time;
+                    timesheet.DateVolunteered = DateTime.Parse(model.date);
+                    timesheet.Notes = model.message;
+                }
+                _db.Timesheets.Add(timesheet);
+                _db.SaveChanges();
+                return timesheet;
+            }
+
+        }
     }
 }

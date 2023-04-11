@@ -132,7 +132,6 @@ function poststory(type, id, mission_id) {
 
 }
 
-
 let pageindex = 0;
 const loadstories = (stories) => {
     $('.stories').empty().append(stories)

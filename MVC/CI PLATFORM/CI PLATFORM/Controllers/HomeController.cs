@@ -1,6 +1,7 @@
 ﻿using CI_platform.Areas.User.Controllers;
 using CI_PLATFORM.Models;
 using CIPlatform.Entitites.Data;
+using CIPlatform.Entitites.Models;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,13 @@ namespace CI_PLATFORM.Controllers
     public class HomeController : Controller
     {
         private readonly IAllRepository _allRepository;
-       
+
 
 
         public HomeController(IAllRepository allRepository)
         {
             _allRepository = allRepository;
-          
+
 
         }
         public IActionResult Index()
@@ -28,21 +29,22 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Privacy()
         {
-            if(HttpContext.Session.GetString("Country") is not null)
+            if (HttpContext.Session.GetString("Country") is not null)
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("ProfilePage","Home");
+                return RedirectToAction("ProfilePage", "Home");
             }
-           
+
         }
 
         [Route("/Home/Landingplatform")]
         public IActionResult Landingplatform()
         {
-            if(HttpContext.Session.GetString("Country") is not null) {
+            if (HttpContext.Session.GetString("Country") is not null)
+            {
 
                 CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetAllMission();
                 return View(missions);
@@ -52,8 +54,8 @@ namespace CI_PLATFORM.Controllers
                 return RedirectToAction("ProfilePage", "Home");
             }
 
-
         }
+
         [HttpPost]
         [Route("/Home/Landingplatform")]
         public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index, long user_id, long mission_id)
@@ -64,8 +66,6 @@ namespace CI_PLATFORM.Controllers
                 var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
                 return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
             }
-
-
 
             else if (page_index != 0)
             {
@@ -83,10 +83,6 @@ namespace CI_PLATFORM.Controllers
         }
 
 
-
-
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -96,21 +92,15 @@ namespace CI_PLATFORM.Controllers
         [Route("Home/Volunteermission/{id}")]
         public IActionResult Volunteermission(long id, long UserId)
         {
-          
-            if(string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
                 return RedirectToAction("Login", "UserAccount");
             }
-            
-            
-                long userId = long.Parse(HttpContext.Session.GetString("UserId"));
-                CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id, userId);
 
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            CIPlatform.Entitites.ViewModel.VolunteerViewModel mission = _allRepository.missionRepository.Mission(id, userId);
 
-                return View(mission);
-           
-           
-
+            return View(mission);
 
         }
 
@@ -143,8 +133,6 @@ namespace CI_PLATFORM.Controllers
             }
             return Json(null);
         }
-
-     
 
         public JsonResult ApplyMission(long MissionId, long UserId)
         {
@@ -180,7 +168,7 @@ namespace CI_PLATFORM.Controllers
             var userId = long.Parse(HttpContext.Session.GetString("UserId"));
 
             CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
-            if(details?.CountryId is not null)
+            if (details?.CountryId is not null)
             {
                 HttpContext.Session.SetString("Country", details?.CountryId.ToString());
             }
@@ -188,7 +176,7 @@ namespace CI_PLATFORM.Controllers
             {
                 HttpContext.Session.SetString("Avtar", details?.Avatar);
             }
-            if(details?.FirstName is not null && details?.LastName is not null)
+            if (details?.FirstName is not null && details?.LastName is not null)
             {
                 HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
             }
@@ -199,8 +187,6 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Profile")]
         public IActionResult ProfilePage(CIPlatform.Entitites.ViewModel.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
-            
-           
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             if (oldpassword is not null && newpassword is not null)
             {
@@ -209,12 +195,12 @@ namespace CI_PLATFORM.Controllers
             }
             if (ModelState.IsValid)
             {
-                if(country != 0)
+                if (country != 0)
                 {
-                   
+
                     CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(country, userId);
                     var cities = this.RenderViewAsync("Profilecity_partial", details, true);
-                    return Json(new {cities = cities});
+                    return Json(new { cities = cities });
                 }
 
                 else
@@ -241,18 +227,57 @@ namespace CI_PLATFORM.Controllers
         }
         [HttpPost]
         [Route("/Home/contact")]
-        public IActionResult Contact(string subject , string message)
+        public IActionResult Contact(string subject, string message)
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             var uname = HttpContext.Session.GetString("Name");
             var uemail = HttpContext.Session.GetString("Email");
             bool success = _allRepository.profileRepository.contact_us(userId, uname, uemail, subject, message);
-            return Json(new {success});
-        }
-        public IActionResult Volunteertimesheet()
-        {
-            return View();
+            return Json(new { success });
         }
 
+        [Route("/Home/Timesheet")]
+        public IActionResult Volunteertimesheet()
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = _allRepository.missionRepository.user_mission(userId);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("/Home/Timesheet")]
+
+        public IActionResult Volunteertimesheet(long mission_id, string date, int actions, string message, string type, int hours, int minutes, int timesheet_id)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            if (type == "goal")
+            {
+                CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = new CIPlatform.Entitites.ViewModel.TimeSheetViewModel
+                {
+                    mission_id = mission_id,
+                    date = date,
+                    action = actions,
+                    message = message
+                };
+                Timesheet timesheet = _allRepository.missionRepository.AddSheet(userId, model, type);
+                var view = this.RenderViewAsync("Timesheet_partial", timesheet, true);
+                return Json(new { view });
+            }
+            else
+            {
+                CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = new CIPlatform.Entitites.ViewModel.TimeSheetViewModel
+                {
+                    mission_id = mission_id,
+                    date = date,
+                    Hours = hours,
+                    minutes = minutes,
+                    message = message
+                };
+                Timesheet timesheet = _allRepository.missionRepository.AddSheet(userId, model, type);
+                var view = this.RenderViewAsync("Timesheet_partial", timesheet, true);
+                return Json(new { view });
+            }
+
+        }
     }
 }

@@ -76,7 +76,14 @@
                     @{
                         @if (@Accesor?.HttpContext?.Session.GetString("Country") is not null)
                         {
-                            <a class="nav-link text-muted" asp-action="Privacy" asp-controller="Home">Policy</a>
+                            if (Context.Request.Path.Equals("/Home/Privacy"))
+                            {
+                                <a class="nav-link text-muted" style="pointer-events:none;" asp-action="Privacy" asp-controller="Home">Policy</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-muted" asp-action="Privacy" asp-controller="Home">Policy</a>
+                            }
                         }
                         else
                         {

@@ -35,7 +35,6 @@ function Add(MissionId,UserId) {
     })
 }
 
-
 function AddComments(missionId, UserId) {
 
     var comment = $("#user-comment").val();
@@ -66,8 +65,6 @@ function AddComments(missionId, UserId) {
         })
     }
 }
-
-
 
 function ApplyMission(MissionId, UserId) {
 
@@ -166,6 +163,7 @@ const prev_volunteers = (user_id, id) => {
         })
     }
 }
+
 const next_volunteers = (max_page, user_id, id) => {
     var one_page_volunteers = 9
     if (count < max_page) {
@@ -184,7 +182,6 @@ const next_volunteers = (max_page, user_id, id) => {
         })
     }
 }
-
 
 const rating = (rating, user_id, mission_id) => {
     if (rating == 1) {
