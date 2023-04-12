@@ -14,13 +14,9 @@ namespace CI_PLATFORM.Controllers
     {
         private readonly IAllRepository _allRepository;
 
-
-
         public HomeController(IAllRepository allRepository)
         {
             _allRepository = allRepository;
-
-
         }
         public IActionResult Index()
         {
@@ -157,6 +153,7 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Volunteermission/{mission_id}")]
         public JsonResult RateMission(long mission_id, int rating)
         {
+
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             var Rating = _allRepository.missionRepository.addRatings(rating, mission_id, userId);
             return Json(Rating);
@@ -239,6 +236,7 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Timesheet")]
         public IActionResult Volunteertimesheet()
         {
+
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = _allRepository.missionRepository.user_mission(userId);
             return View(model);
@@ -260,6 +258,38 @@ namespace CI_PLATFORM.Controllers
                     message = message
                 };
                 Timesheet timesheet = _allRepository.missionRepository.AddSheet(userId, model, type);
+                var view = this.RenderViewAsync("Timesheet_partial", timesheet, true);
+                return Json(new { view });
+            }
+            else if (type == "edit-timesheet")
+            {
+                CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = new CIPlatform.Entitites.ViewModel.TimeSheetViewModel
+                {
+                    mission_id = mission_id,
+                    date = date,
+                    Hours = hours,
+                    minutes = minutes,
+                    message = message
+                };
+                Timesheet timesheet = _allRepository.missionRepository.EditSheet(timesheet_id, model, type);
+                var view = this.RenderViewAsync("Timesheet_partial", timesheet, true);
+                return Json(new { view });
+            }
+            else if (type == "time-delete")
+            {
+                bool success = _allRepository.missionRepository.DeleteSheet(timesheet_id);
+                return Json(new { success });
+            }
+            else if (type == "goal-edit")
+            {
+                CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = new CIPlatform.Entitites.ViewModel.TimeSheetViewModel
+                {
+                    mission_id = mission_id,
+                    date = date,
+                    action = actions,
+                    message = message
+                };
+                Timesheet timesheet = _allRepository.missionRepository.EditSheet(timesheet_id, model, type);
                 var view = this.RenderViewAsync("Timesheet_partial", timesheet, true);
                 return Json(new { view });
             }

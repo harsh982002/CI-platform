@@ -23,6 +23,11 @@ namespace CIPlatform.Repository.Interface
         bool addRatings(int rate, long missionId, long userId);
 
         CIPlatform.Entitites.Models.Timesheet AddSheet(long user_id, CIPlatform.Entitites.ViewModel.TimeSheetViewModel model, string type);
+
+        CIPlatform.Entitites.Models.Timesheet EditSheet(long timesheet_id, CIPlatform.Entitites.ViewModel.TimeSheetViewModel model, string type);
+
+        bool DeleteSheet(long timesheet_id);
+
         CIPlatform.Entitites.ViewModel.TimeSheetViewModel user_mission(long user_id);
 
     }

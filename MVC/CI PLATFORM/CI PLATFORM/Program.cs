@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
-
+/*builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();*/
 builder.Services.AddDbContext<CiplatformContext>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

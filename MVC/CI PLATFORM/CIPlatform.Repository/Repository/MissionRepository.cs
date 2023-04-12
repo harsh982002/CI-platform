@@ -489,38 +489,85 @@ namespace CIPlatform.Repository.Repository
 
         public Timesheet AddSheet(long user_id, TimeSheetViewModel model, string type)
         {
-            if (type == "goal")
-            {
-                Timesheet timesheet = new Timesheet();
+                if (type == "goal")
                 {
-                    timesheet.MissionId = model.mission_id;
-                    timesheet.UserId = user_id;
-                    timesheet.Action = model.action;
-                    timesheet.DateVolunteered = DateTime.Parse(model.date);
-                    timesheet.Notes = model.message;
+                    Timesheet timesheet = new Timesheet();
+                    {
+                        timesheet.MissionId = model.mission_id;
+                        timesheet.UserId = user_id;
+                        timesheet.Action = model.action;
+                        timesheet.DateVolunteered = DateTime.Parse(model.date);
+                        timesheet.Notes = model.message;
+                    }
+                    _db.Timesheets.Add(timesheet);
+                    _db.SaveChanges();
+                    return timesheet;
                 }
-                _db.Timesheets.Add(timesheet);
-                _db.SaveChanges();
-                return timesheet;
-            }
-            else
-            {
-                TimeSpan hours = TimeSpan.FromHours((double)model.Hours);
-                TimeSpan minutes = TimeSpan.FromMinutes((double)model.minutes);
-                TimeSpan time = hours.Add(minutes);
-                Timesheet timesheet = new Timesheet();
+                else
                 {
-                    timesheet.MissionId = model.mission_id;
-                    timesheet.UserId = user_id;
+                    TimeSpan hours = TimeSpan.FromHours((double)model.Hours);
+                    TimeSpan minutes = TimeSpan.FromMinutes((double)model.minutes);
+                    TimeSpan time = hours.Add(minutes);
+                    Timesheet timesheet = new Timesheet();
+                    {
+                        timesheet.MissionId = model.mission_id;
+                        timesheet.UserId = user_id;
+                        timesheet.Time = time;
+                        timesheet.DateVolunteered = DateTime.Parse(model.date);
+                        timesheet.Notes = model.message;
+                    }
+                    _db.Timesheets.Add(timesheet);
+                    _db.SaveChanges();
+                    return timesheet;
+                }
+            
+        }
+
+        public Timesheet EditSheet(long timesheet_id, TimeSheetViewModel model, string type)
+        {
+            Timesheet timesheet = _db.Timesheets.FirstOrDefault(x=> x.TimesheetId == timesheet_id);
+            if (timesheet is not null)
+            {
+                if (type == "edit-timesheet")
+                {
+                    TimeSpan hours = TimeSpan.FromHours((double)model.Hours);
+                    TimeSpan minutes = TimeSpan.FromMinutes((double)model.minutes);
+                    TimeSpan time = hours.Add(minutes);
                     timesheet.Time = time;
                     timesheet.DateVolunteered = DateTime.Parse(model.date);
                     timesheet.Notes = model.message;
+                    _db.SaveChanges();
+                    return timesheet;
                 }
-                _db.Timesheets.Add(timesheet);
-                _db.SaveChanges();
-                return timesheet;
+                else
+                {
+                    timesheet.Action = model.action;
+                    timesheet.DateVolunteered = DateTime.Parse(model.date);
+                    timesheet.Notes = model.message;
+                    _db.SaveChanges();
+                    return timesheet;
+                }
             }
+            else
+            {
+                return null;
+            }
+          
+        }
 
+        public bool DeleteSheet(long timesheet_id)
+        {
+            Timesheet timesheet  = _db.Timesheets.FirstOrDefault(x=>x.TimesheetId==timesheet_id);
+            if(timesheet is not null)
+            {
+                _db.Timesheets.Remove(timesheet);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

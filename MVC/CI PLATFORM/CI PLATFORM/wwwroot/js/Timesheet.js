@@ -1,4 +1,5 @@
-﻿var mission
+﻿
+var mission
 var mission_id
 var actions
 var date
@@ -60,7 +61,7 @@ const timedata = () => {
             $.ajax({
                 url: '/Home/Timesheet',
                 type: 'POST',
-                data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "time-edit", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },
+                data: { mission_id: time_mission, date: time_date.toString(), hours: hours, minutes: mins, message: time_message, type: "edit-timesheet", timesheet_id: parseInt(document.getElementById("timesheet-id").value) },
                 success: function (result) {
                     if (result.view) {
                         $(`#timesheet-${parseInt(document.getElementById("timesheet-id").value)}`).replaceWith(result.view.result)
@@ -182,4 +183,36 @@ const clear_modal = (type) => {
         document.getElementById('action').value = ""
         document.getElementById('goal-message').value = ""
     }
+}
+
+const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
+    if (type == "time") {
+        $(`.time-mission option[value=${mission}]`).attr("selected", "selected")
+        $(`.time-mission`).attr("disabled", "disabled")
+        document.getElementsByClassName('time-hours')[0].value = parseInt(hours)
+        document.getElementsByClassName('time-min')[0].value = parseInt(minutes.slice(0, 2))
+        document.getElementsByClassName('time-message')[0].value = message
+        document.getElementById("timesheet-id").value = id
+    }
+    else {
+        $(`#mission-${mission}`).attr("selected", "selected")
+        $(`#mission_goal`).attr("disabled", "disabled")
+        document.getElementById('action').value = parseInt(action)
+        document.getElementById('goal-message').value = message
+        document.getElementById("timesheet-id").value = id
+    }
+}
+
+const deletetimesheet = (id) => {
+    $(`#timesheet-${id}`).remove()
+    $.ajax({
+        url: '/Home/Timesheet',
+        type: 'POST',
+        data: { timesheet_id: parseInt(id), type: "time-delete" },
+        success: function (result) {
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
 }

@@ -97,17 +97,17 @@
                 <div class=" d-flex justify-content-center ">
                     <span class="rounded-pill border p-2  bg-white"
                           style="z-index: 5;">
-                           @{
-                                if (@Model?.mission?.MissionType == "GOAL")
-                                {
-                                     <span >@Model?.mission?.GoalObject</span>
-                                }
-                                else
-                                {
-                                     <span> @Model.mission.StartDate.Value.Day/@Model.mission.StartDate.Value.Month/@Model.mission.StartDate.Value.Year until @Model.mission.EndDate.Value.Day/@Model.mission.EndDate.Value.Month/@Model.mission.EndDate.Value.Year </span>
-                                }
+                        @{
+                            if (@Model?.mission?.MissionType == "GOAL")
+                            {
+                                <span>@Model?.mission?.GoalObject</span>
                             }
-                       
+                            else
+                            {
+                                <span> @Model.mission.StartDate.Value.Day/@Model.mission.StartDate.Value.Month/@Model.mission.StartDate.Value.Year until @Model.mission.EndDate.Value.Day/@Model.mission.EndDate.Value.Month/@Model.mission.EndDate.Value.Year </span>
+                            }
+                        }
+
                     </span>
                 </div>
                 <hr style="margin-top:-20px" />
@@ -121,48 +121,51 @@
                             <span class="light-gray fs-fourteen">Seats Left</span>
                         </div>
                     </div>
-               @*     <div class="d-flex align-items-center">
+                    @*     <div class="d-flex align-items-center">
                         <img src="/images/mission.png" style="height:24px; width:24px" />
                         <div class="d-flex flex-column ms-2 ">
-                            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                 aria-valuemax="100" style="height:8px">
-                                <div class="progress-bar" style="width: 75%; background-color: orange;"></div>
-                            </div>
-                            <span class="light-gray fs-fourteen mt-2">@Model.mission.TotalSeats</span>
+                        <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                        aria-valuemax="100" style="height:8px">
+                        <div class="progress-bar" style="width: 75%; background-color: orange;"></div>
                         </div>
-                    </div>*@
-                     <div class="deadline d-flex align-items-center">
-                                @{
-                                        if (@Model?.mission?.MissionType == "GOAL")
-                                        {
-                                            string? str1 =@Model?.mission?.GoalObject;
-                                            string str2 = string.Empty;
-                                            int goal = 0;
-                                            for (int i = 0; i<=str1.Length-1; i++){
-                                                if (Char.IsDigit(str1[i]))
-                                                    str2 += str1[i];
-                                            }
-                                            if (str2.Length > 0)
-                                            {
-                                                goal = int.Parse(str2);
-                                            }
-                                            double? percent = (@Model?.mission?.Achieved / (double)goal)*100;
-                                            <img src="~/images/achieved.png" alt="">
-                                            <div class="w-100">
-                                                <div class="progress" style="width:90%;margin-left:10px;">
-                                                    <div class="progress-bar" role="progressbar" style="width:@percent%;  background-color:orange;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <p class="text-muted">@Model?.mission.Achieved achieved</p>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <img src="~/images/deadline.png" alt="">
-                                             <span>@Model?.mission?.Deadline?.ToString().Substring(0,10)
-                                             <p>Deadline</p></span>
-                                        }
-                                    }
-                            </div>
+                        <span class="light-gray fs-fourteen mt-2">@Model.mission.TotalSeats</span>
+                        </div>
+                        </div>*@
+                    <div class="deadline d-flex align-items-center">
+                        @{
+                            if (@Model?.mission?.MissionType == "GOAL")
+                            {
+                                string? str1 = @Model?.mission?.GoalObject;
+                                string str2 = string.Empty;
+                                int goal = 0;
+                                for (int i = 0; i <= str1.Length - 1; i++)
+                                {
+                                    if (Char.IsDigit(str1[i]))
+                                        str2 += str1[i];
+                                }
+                                if (str2.Length > 0)
+                                {
+                                    goal = int.Parse(str2);
+                                }
+                                double? percent = (@Model?.mission?.Achieved / (double)goal) * 100;
+                                <img src="~/images/achieved.png" alt="">
+                                <div class="w-100">
+                                    <div class="progress" style="width:90%;margin-left:10px;">
+                                        <div class="progress-bar" role="progressbar" style="width:@percent%;  background-color:orange;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <p class="text-muted">@Model?.mission.Achieved achieved</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <img src="~/images/deadline.png" alt="">
+                                <span>
+                                    @Model?.mission?.Deadline?.ToString().Substring(0,10)
+                                    <p>Deadline</p>
+                                </span>
+                            }
+                        }
+                    </div>
                 </div>
 
                 <hr>
@@ -177,13 +180,21 @@
                         <button type="submit" onclick="Add(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%;">Add to favourite</button>
                     }
 
+                    @if (@Model.applyuser == 1 && DateTime.Now < @Model.mission.Deadline)
+                    {
+                        <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;">
 
-                    <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;">
 
+                            <i class="fa fa-square px-2"></i> Recommend To Co-Worker
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;" disabled>
 
-                        <i class="fa fa-square px-2"></i> Recommend To Co-Worker
-                    </button>
-
+                            <i class="fa fa-square px-2"></i> Recommend To Co-Worker
+                        </button>
+                    }
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
@@ -225,30 +236,42 @@
 
 
                 <div class="duration-seats-info mt-4">
-                    <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
+                    <div style="cursor:pointer;flex-direction: row;" class="d-flex stars justify-content-center rating" >
                         @{
-                            if (@Model.Rating == 0)
+                            if (@Model.applyuser == 1)
                             {
-                                <img style="height:30px" id='1-star-empty' onclick="rating(1,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='2-star-empty' onclick="rating(2,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='3-star-empty' onclick="rating(3,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='4-star-empty' onclick="rating(4,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
-                                <img style="height:30px" id='5-star-empty' onclick="rating(5,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
-                            }
-                            else
-                            {
-                                for (var i = 1; i <= 5; i++)
+                                if (@Model.Rating == 0)
                                 {
-                                    if (i <= @Model.Rating)
+                                    <img style="height:30px" id='1-star-empty' onclick="rating(1,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                    <img style="height:30px" id='2-star-empty' onclick="rating(2,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                    <img style="height:30px" id='3-star-empty' onclick="rating(3,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                    <img style="height:30px" id='4-star-empty' onclick="rating(4,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                    <img style="height:30px" id='5-star-empty' onclick="rating(5,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                }
+                                else
+                                {
+                                    for (var i = 1; i <= 5; i++)
                                     {
-                                        <img style="height:30px" id='@i-star' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/selected-star.png" alt="" />
-                                    }
-                                    else
-                                    {
-                                        <img style="height:30px" id='@i-star-empty' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                        if (i <= @Model.Rating)
+                                        {
+                                            <img style="height:30px" id='@i-star' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/selected-star.png" alt="" />
+                                        }
+                                        else
+                                        {
+                                            <img style="height:30px" id='@i-star-empty' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/star-empty.png" alt="" />
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                <img style="height:30px; pointer-events:none;" src="~/images/star-empty.png" alt="" />
+                                <img style="height:30px; pointer-events:none;" src="~/images/star-empty.png" alt="" />
+                                <img style="height:30px; pointer-events:none;" src="~/images/star-empty.png" alt="" />
+                                <img style="height:30px; pointer-events:none;" src="~/images/star-empty.png" alt="" />
+                                <img style="height:30px; pointer-events:none;" src="~/images/star-empty.png" alt="" />
+                            }
+
                         }
                     </div>
                 </div>
@@ -277,11 +300,18 @@
                     </div>
                     <div class="border me-1 flex-fill">
                         <div class="ms-3">
-                            <!-- <img src="" alt="" class=""> -->
                             <img src="/images/calender.png" alt="" class="">
                             <div class="mt-3">
                                 <div>Date</div>
-                                <div>@Model.mission.Deadline.Value.Day/@Model.mission.Deadline.Value.Month/@Model.mission.Deadline.Value.Year</div>
+                                @if (DateTime.Now < @Model.mission.Deadline)
+                                {
+                                    <div>Ongoing Oppertunity</div>
+                                }
+                                else
+                                {
+                                    <div>Mission is closed.</div>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -639,9 +669,21 @@
                                 <img class="text-light" src="/images/pin.png" alt="">
                                 <span class="text-light">@item.City.Name</span>
                             </div>
-                            <button class="like-img border-0">
-                                <img class="text-light" src="/images/heart.png" alt="">
-                            </button>
+                            @{
+                                if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@Accesor?.HttpContext?.Session.GetString("UserId")))).ToList().Count > 0)
+                                {
+
+                                    <button onclick="Add(@Accesor?.HttpContext?.Session.GetString("UserId"),@item.MissionId)" class="like-img border-0">
+                                        <img class="text-light heart-@item.MissionId" style="height:24px;" src="/images/red-heart.png" alt="">
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button onclick="Add(@Accesor?.HttpContext?.Session.GetString("UserId"),@item.MissionId)" class="like-img border-0">
+                                        <img class="text-light heart-@item.MissionId" src="/images/heart.png" alt="">
+                                    </button>
+                                }
+                            }
                             <button class="stop-img border-0">
                                 <img class="text-light" src="/images/user.png" alt="">
                             </button>
@@ -658,12 +700,27 @@
                             </p>
                             <div class="d-flex justify-content-between">
                                 <span class="organization">@item.OrganizationName</span>
-                                <div class="rating">
-                                    <img src="/images/selected-star.png" alt="">
-                                    <img src="/images/selected-star.png" alt="">
-                                    <img src="/images/selected-star.png" alt="">
-                                    <img src="/images/star.png" alt="">
-                                    <img src="/images/star.png" alt="">
+                                <div style="flex-direction: row;" class="rating">
+                                    @{
+                                        double avg_rating = 0;
+                                        int total = @item.MissionRatings.Count;
+                                        foreach (var rating in @item.MissionRatings)
+                                        {
+                                            avg_rating = avg_rating + rating.Rating;
+                                        }
+                                        avg_rating = avg_rating / total;
+                                        for (var i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= @avg_rating)
+                                            {
+                                                <img style="height:30px" src="~/images/selected-star.png" alt="" />
+                                            }
+                                            else
+                                            {
+                                                <img style="height:30px" src="~/images/star-empty.png" alt="" />
+                                            }
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="duration-seats-info mt-4">
@@ -707,7 +764,7 @@
                                             <img src="~/images/achieved.png" alt="">
                                             <div class="w-100">
                                                 <div class="progress" style="width:90%;margin-left:10px;">
-                                                    <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width:@percent%; background-color:orange;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                                 <p class="text-muted">@item.Achieved achieved</p>
                                             </div>
@@ -724,11 +781,24 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center my-3">
-                                <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+                                @{
+                                    if (@Model.applyuser == 1)
+                                    {
+                                        <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
 
-                                    Apply <img src="/images/right-arrow.png" alt="">
+                                            View Details <img src="/images/right-arrow.png" alt="">
 
-                                </a>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+
+                                            Apply <img src="/images/right-arrow.png" alt="">
+
+                                        </a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
