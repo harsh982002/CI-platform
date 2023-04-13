@@ -20,7 +20,7 @@ namespace CIPlatform.Entitites.ViewModel
 
         public List<MissionApplication>? missionApplications { get; set; }
 
-        public int? applyuser { get; set; }
+        public string? applyuser { get; set; }
         public List<User>? All_volunteers { get; set; }
         public int? Total_volunteers { get; set; }
         public int? Favorite_mission { get; set; }

@@ -15,6 +15,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Admin/CMS.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ01TLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Admin/Mission_Theme_CMS.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWlzc2lvbl9UaGVtZV9DTVMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Admin/User_CMS.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcl9DTVMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,6 +61,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/mission_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXG1pc3Npb25fcGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/Mobile_Navigation_partial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE1vYmlsZV9OYXZpZ2F0aW9uX3BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/Navigation_partial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5hdmlnYXRpb25fcGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/Pagination_partial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFBhZ2luYXRpb25fcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/CI/CI platform/MVC/CI PLATFORM/CI PLATFORM/Views/Shared/ProfileCity_partial.cshtml]

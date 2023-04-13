@@ -116,7 +116,7 @@ namespace CIPlatform.Repository.Repository
             CIPlatform.Entitites.ViewModel.Mission Missions = new Entitites.ViewModel.Mission();
             List<City> city = new List<City>();
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
-
+            List<CIPlatform.Entitites.Models.FavoriteMission> favoriteMissions = new List<FavoriteMission>();
             //get missions as per page
             if (page_index != 0)
             {
@@ -224,18 +224,6 @@ namespace CIPlatform.Repository.Repository
                     Cities = city
                 };
             }
-            else if (sort_by == "my favourites")
-            {
-                Missions = new Entitites.ViewModel.Mission
-                {
-                    Missions = (from m in favoriteMissions
-                                where m.UserId == user_id && mission.Contains(m.Mission)
-                                select m.Mission).ToList(),
-                    Country = countries,
-                    Cities = city
-                };
-            }
-
             //if no filter apply
             else
             {
@@ -275,7 +263,7 @@ namespace CIPlatform.Repository.Repository
             int rate = 0;
             int avg_rating = 0;
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
-            var application = _db.MissionApplications.Where(x => x.MissionId == id && x.UserId == user_id).Count();
+            var application = _db.MissionApplications.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id)?.ApprovalStatus;
             var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.ApprovalStatus == "APPROVE").ToList();
             var com = _db.Comments.Where(x => x.MissionId == id && x.ApprovalStatus == "PUBLISHED").ToList();
             var user = _db.Users.ToList();
@@ -401,8 +389,8 @@ namespace CIPlatform.Repository.Repository
             }
             _db.SaveChanges();
 
-
-            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/?returnedUrl=Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
+            
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/?returnedUrl=/Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
 
             foreach (var item in emailList)
             {

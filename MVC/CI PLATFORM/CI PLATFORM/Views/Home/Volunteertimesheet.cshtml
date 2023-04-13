@@ -62,7 +62,7 @@
                                     <td>@item.Action</td>
                                     <td>
                                         <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action')" data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt="" />
-                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" />
+                                        <img data-bs-toggle="modal" data-bs-target="#delete" src="~/images/bin.png"  class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                             }
@@ -185,6 +185,26 @@
     </div>
 </div>
 
+@*for delete*@
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Timesheet</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to delete the timesheet?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="deletetimesheet(@Model.timesheets.ElementAt(0).TimesheetId)" class="btn applybutton">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
 
 <input id="timesheet-id" type="hidden" />
 <script src="~/js/Timesheet.js"></script>

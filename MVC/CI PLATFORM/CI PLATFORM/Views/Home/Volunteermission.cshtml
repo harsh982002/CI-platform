@@ -180,7 +180,7 @@
                         <button type="submit" onclick="Add(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%;">Add to favourite</button>
                     }
 
-                    @if (@Model.applyuser == 1 && DateTime.Now < @Model.mission.Deadline)
+                    @if (@Model.applyuser == "APPROVE" && DateTime.Now < @Model.mission.Deadline)
                     {
                         <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;">
 
@@ -236,9 +236,9 @@
 
 
                 <div class="duration-seats-info mt-4">
-                    <div style="cursor:pointer;flex-direction: row;" class="d-flex stars justify-content-center rating" >
+                    <div style="cursor:pointer;flex-direction: row;" class="d-flex stars justify-content-center rating">
                         @{
-                            if (@Model.applyuser == 1)
+                            if (@Model.applyuser == "APPROVE")
                             {
                                 if (@Model.Rating == 0)
                                 {
@@ -331,34 +331,45 @@
 
 
                 <div class="d-flex justify-content-center mt-5 " id="apply-btn">
-                    @if (@Model.applyuser == 1)
-                    {
-                        <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
-                            class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status" disabled>
-                            Already applied
+                    @{
 
-                        </button>
-                    }
-                    else
-                    {
-                        if (DateTime.Now < @Model.mission.Deadline)
+                        @if (Model.applyuser is null)
                         {
-                            <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
-                            class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
-                                Apply now
-                                <img src="/images/right-arrow.png" class="ms-2" />
-                            </button>
+                            if (DateTime.Now < @Model.mission.Deadline)
+                            {
+                                <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                                class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
+                                    Apply now
+                                    <img src="/images/right-arrow.png" class="ms-2" />
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                                class="applyButton-cls bg-white" @*style="border: 2px solid #F88634; border-radius: 24px"*@ id="volunteer-status" disabled>
+                                    closed
+
+                                </button>
+                            }
                         }
                         else
                         {
-                            <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
-                            class="applyButton-cls bg-white" @*style="border: 2px solid #F88634; border-radius: 24px"*@ id="volunteer-status" disabled>
-                                closed
+                            if (@Model.applyuser == "PENDING")
+                            {
+                                <button type="submit" value="Apply"
+                                class="applyButton-pending bg-white" id="volunteer-status" disabled>
+                                    Request Pending
 
-                            </button>
-
+                                </button>
+                            }
+                            else if (@Model.applyuser == "APPROVE")
+                            {
+                                <button type="submit" value="Apply"
+                                class="applyButton-apply bg-white" id="volunteer-status" disabled>
+                                    Already Applied
+                                </button>
+                            }
                         }
-
                     }
                 </div>
 
@@ -782,21 +793,35 @@
                             </div>
                             <div class="d-flex justify-content-center my-3">
                                 @{
-                                    if (@Model.applyuser == 1)
-                                    {
-                                        <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
 
-                                            View Details <img src="/images/right-arrow.png" alt="">
-
-                                        </a>
-                                    }
-                                    else
+                                    if (@Model.applyuser is null)
                                     {
                                         <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
 
                                             Apply <img src="/images/right-arrow.png" alt="">
 
                                         </a>
+                                    }
+                                    else
+                                    {
+
+                                        if (@Model.applyuser == "APPROVE")
+                                        {
+                                            <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+
+                                                View Details<img src="/images/right-arrow.png" alt="">
+
+                                            </a>
+                                        }
+                                        else if(@Model.applyuser =="PENDING")
+                                        {
+                                            <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+
+                                                Pending <img src="/images/right-arrow.png" alt="">
+
+                                            </a>
+
+                                        }
                                     }
                                 }
                             </div>

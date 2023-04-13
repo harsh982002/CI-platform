@@ -32,12 +32,14 @@ namespace CI_PLATFORM.Controllers
             return RedirectToAction("Login", "UserAccount");
         }
 
+       
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        
         [HttpPost]
         public IActionResult Login(LoginViewModel model,string? returnedUrl)
         {

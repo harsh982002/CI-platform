@@ -79,6 +79,28 @@ function getdetails(type) {
             type: 'POST',
             data: { mission_id: mission, title: title, mystory: mystory, media: media, type: type },
             success: function (result) {
+                window.location.reload();
+                alert("Your story has been published.");
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+
+    }
+}
+
+function savestory() {
+    validate()
+    if (mission != 0 && title.trim().length > 50 && title.trim().length < 255
+        && mystory.trim().length > 70 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
+        $.ajax({
+            url: '/Story/ShareStory',
+            type: 'POST',
+            data: { mission_id: mission, title: title, mystory: mystory, media: media},
+            success: function (result) {
+                window.location.reload();
+                alert("Your story has been saved as draft");
             },
             error: function () {
                 console.log("Error updating variable");
