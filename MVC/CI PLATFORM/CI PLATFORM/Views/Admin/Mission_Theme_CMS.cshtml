@@ -5,7 +5,7 @@
     ViewData["title"] = "Admin";
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
-@*@model  List<CI.Models.ViewModels.Theme_ViewModel>*@
+@model List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel>
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -37,12 +37,12 @@
     </tr>
   </thead>
   <tbody>
-  @*    @{
+      @{
           foreach (var item in Model)
           {
               <tr>
-      <td>@item.Theme</td>
-       @if (item.Status is true)
+      <td>@item.theme_name</td>
+       @if (item.status is 1)
         {
       <td><span style="color:#02f702">Approved</span></td>
           }
@@ -54,7 +54,7 @@
     </tr>
           }
       }
-        *@      
+              
   </tbody>
 </table>
 </div>

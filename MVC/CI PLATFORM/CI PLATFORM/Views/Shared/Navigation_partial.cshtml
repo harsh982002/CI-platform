@@ -5,77 +5,114 @@
     <div class="d-flex flex-column w-100  h-100" style="background-color:orange">
         <h4 class="ms-4 mt-5" style="color:white">NAVIGATION</h4>
         @{
-            if (Context.Request.Path.Equals("/Admin/User_CMS"))
+            if (Context.Request.Path.Equals("/Admin"))
             {
-                <a href="/Admin/User_CMS" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <a href="/Admin" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/user-orange.png" />
-            <span class="ms-3" style="color:orange">User</span>
+                    <span class="ms-3" style="color:orange">User</span>
                 </a>
             }
             else
             {
-                  <a href="/Admin/User_CMS" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <a href="/Admin" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/user-white.png" />
-            <span class="ms-3" style="color:white">User</span>
+                    <span class="ms-3" style="color:white">User</span>
                 </a>
 
             }
             if (Context.Request.Path.Equals("/Admin/CMS"))
             {
-                <a href="/Admin/CMS" style="text-decoration:none;;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <a href="/Admin/CMS" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/cms-orange.png" />
-            <span class="ms-3" style="color:orange">CMS Page</span>
+                    <span class="ms-3" style="color:orange">CMS Page</span>
                 </a>
             }
             else
             {
                 <a href="/Admin/CMS" style="text-decoration:none" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/cms-white.png" />
-            <span class="ms-3" style="color:white">CMS Page</span>
+                    <span class="ms-3" style="color:white">CMS Page</span>
                 </a>
             }
-         
-        
-        <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
-            <img class="ms-2" src="~/images/mission-white.png" />
-            <span class="ms-3" style="color:white">Mission</span>
-        </a>
 
-        
+            if (Context.Request.Path.Equals("/Admin/Mission"))
+            {
+                <a href="/Admin/Mission" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/mission-orange.png" />
+                    <span class="ms-3" style="color:orange">Mission</span>
+                </a>
+            }
+            else
+            {
+                   <a href="/Admin/Mission" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/mission-white.png" />
+                    <span class="ms-3" style="color:white">Mission</span>
+                </a>
+            }
+
             if (Context.Request.Path.Equals("/Admin/Theme"))
             {
                 <a href="/Admin/Theme" style="text-decoration:none;;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/theme-orange.png" />
-            <span class="ms-3" style="color:orange">Mission Theme</span>
+                    <span class="ms-3" style="color:orange">Mission Theme</span>
                 </a>
             }
             else
             {
                 <a href="/Admin/Theme" style="text-decoration:none" class="d-flex align-items-center ms-4 mt-3 w-75">
                     <img class="ms-2" src="~/images/theme-white.png" />
-            <span class="ms-3" style="color:white">Mission Theme</span>
+                    <span class="ms-3" style="color:white">Mission Theme</span>
                 </a>
             }
 
-        <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
-            <img class="ms-2" src="~/images/skill-white.png" />
-            <span class="ms-3" style="color:white">Mission Skill</span>
-        </a>
+            if (Context.Request.Path.Equals("/Admin/Skill"))
+            {
+                <a href="/Admin/Skill" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/skill-orange.png" />
+                    <span class="ms-3" style="color:orange">Mission Skill</span>
+                </a>
+            }
+            else
+            {
+                 <a href="/Admin/Skill" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/skill-white.png" />
+                    <span class="ms-3" style="color:white">Mission Skill</span>
+                </a>
+            }
+            if (Context.Request.Path.Equals("/Admin/App"))
+            {
+                <a href="/Admin/App" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/ma-orange.png" />
+                <span class="ms-3" style="color:orange">Mission Applications</span>
+                </a>
+            }
+            else
+            {
+                 <a href="/Admin/App" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                    <img class="ms-2" src="~/images/ma-white.png" />
+                <span class="ms-3" style="color:white">Mission Applications</span>
+                </a>
+            }
+            if (Context.Request.Path.Equals("/Admin/Story"))
+            {
+                 <a href="/Admin/Story" style="text-decoration:none;background-color:white;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <img class="ms-2" src="~/images/story-orange.png" />
+                <span class="ms-3" style="color:orange">Story</span>
+                </a>
+            }
+            else
+            {
+                 <a href="/Admin/Story" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <img class="ms-2" src="~/images/story-white.png" />
+                <span class="ms-3" style="color:white">Story</span>
+            </a>
+            }
+           
 
-        <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
-            <img class="ms-2" src="~/images/ma-white.png" />
-            <span class="ms-3" style="color:white">Mission Applications</span>
-        </a>
-
-        <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
-            <img class="ms-2" src="~/images/story-white.png" />
-            <span class="ms-3" style="color:white">Story</span>
-        </a>
-
-        <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
-            <img class="ms-2" src="~/images/banner-white.png" />
-            <span class="ms-3" style="color:white">Baner Management</span>
-        </a>
-}
+            <a href="#" style="text-decoration:none;" class="d-flex align-items-center ms-4 mt-3 w-75">
+                <img class="ms-2" src="~/images/banner-white.png" />
+                <span class="ms-3" style="color:white">Baner Management</span>
+            </a>
+        }
     </div>
 </div>

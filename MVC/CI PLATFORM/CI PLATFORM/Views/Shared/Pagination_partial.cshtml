@@ -9,26 +9,26 @@
          <li class="page-item">
             <span class="page-link"><img src="~/images/left.png" alt="not load" /></span>
         </li>
-   @*     @{
-            int pages = 3;
+        @{
+            int pages = 5;
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)
                 {
-                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i'>@i</span></li>
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" onclick="pagination(@i)" id='page-@i' >@i</span></li>
                 }
                 else
                 {
-                     <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i'>@i</span></li>
+                     <li class="page-item" style="cursor:pointer;"><span class="page-link" onclick="pagination(@i)" id='page-@i'>@i</span></li>
                 }
             }
-        }*@
+        }
         <li class="page-item">
-            <span class="page-link"><img src="~/images/right-arrow1.png" alt="not load" /></span>
+            <span class="page-link" onclick="next(@pages)"><img src="~/images/right-arrow1.png" alt="not load" /></span>
         </li>
         <li class="page-item">
-            <span class="page-link"><img src="~/images/next.png" alt="not load" /></span>
+            <span class="page-link"  onclick="last_page(@pages)"><img src="~/images/next.png" alt="not load" /></span>
         </li>
     </ul>
 </nav>
-@*<script src="~/js/index.js"  asp-append-version="true"></script>*@
+<script src="~/js/index.js"  asp-append-version="true"></script>

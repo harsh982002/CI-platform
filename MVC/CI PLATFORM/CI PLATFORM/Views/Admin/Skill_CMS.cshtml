@@ -4,9 +4,8 @@
 @{
     ViewData["title"] = "Admin";
     ViewData["css"] = "Volunteering_Timesheet.css";
-    
 }
-
+@model  List<CIPlatform.Entitites.ViewModel.SkillViewModel>
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -14,14 +13,14 @@
     <div class="col-lg-9 col-md-9 col-sm-9">
         <div class="container mt-5 ">
             <div class="border-bottom">
-                <h5>CMS Page</h5>
+                <h5>Skill</h5>
             </div>
             <div class="d-flex mt-3 justify-content-between align-items-center">
                 <div class="d-flex search-div align-items-center">
                     <img class="search" src="~/images/search.png" alt="not load" />
                     <div class="form-floating w-75 d-flex">
-                        <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Users...." />
-                        <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
+                        <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Themes...." />
+                        <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
                     </div>
                 </div>
                 <button class="btn applybutton d-flex justify-content-between align-items-center">
@@ -30,39 +29,43 @@
             </div>
 
             <div class="w-100" style="overflow-x:auto;">
-                <table class="table border border-bottom-0 table-responsive mt-4">
+                <table class="table border border-bottom-0 h-100  table-responsive">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col">Title</th>
+                            <th scope="col">Skill</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
+
+
+
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Title will appear here</td>
-                            <td>Active</td>
-                            <td>
-                                <img src="~/images/edit.png" class="edbutton" alt="" />
-                                <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Title will appear here</td>
-                            <td>Active</td>
-                            <td>
-                                <img src="~/images/edit.png" class="edbutton" alt="" />
-                                <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
-                            </td>
-                        </tr>
+                            @{
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                            <td>@item.SkillName</td>
+                            @if (item.Status is 1)
+                            {
+                            <td><span style="color:#02f702">Approved</span></td>
+                            }
+                            else{
+                            <td><span style="color:red">Not Approved</span></td>
+                            }
+                            <td><img  src="~/images/edit.png" class="edbutton" alt=""/>
+                            <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td>
+                            </tr>
+                            }
+                            }
+                        
                     </tbody>
                 </table>
-                <partial name="Pagination_partial" />
             </div>
+            <partial name="Pagination_partial" />
         </div>
     </div>
     <div class="mobile-navigation">
         <partial name="Mobile_Navigation_partial" />
     </div>
 </div>
-

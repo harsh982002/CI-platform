@@ -6,6 +6,7 @@
     ViewData["title"] = "Admin";
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
+@model List<CIPlatform.Entitites.ViewModel.UserViewModel>
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -41,16 +42,16 @@
     </tr>
   </thead>
   <tbody>
-@*      @{
+      @{
           foreach (var item in Model)
           {
               <tr>
       <td>@item.FirstName</td>
       <td>@item.LastName</td>
       <td>@item.Email</td>
-      <td>@item.Employee_id</td>
+      <td>@item.EmpId</td>
       <td>@item.Department</td>
-        @if (item.Status == 1)
+        @if (item.status == "1")
         {
       <td><span style="color:#02f702">Active</span></td>
           }
@@ -61,7 +62,7 @@
                                         <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td>
     </tr>
           }
-      }*@
+      }
   </tbody>
 </table>
 </div>

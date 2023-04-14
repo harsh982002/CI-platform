@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "38EAVJr+/KDKpGtZaaScgs/C8rvBWirndcLrLTu8io8=",
+  "Hash": "pxdV5roFUJsb0dThDzrkBLzEugMgZ8sLx+4FedstgAo=",
   "Source": "CI PLATFORM",
   "BasePath": "_content/CI PLATFORM",
   "Mode": "Default",
@@ -527,6 +527,23 @@
       "OriginalItemSpec": "wwwroot\\images\\cancel1.png"
     },
     {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\cancled-red.png",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "images/cancled-red.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\cancled-red.png"
+    },
+    {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\checked.png",
       "SourceId": "CI PLATFORM",
       "SourceType": "Discovered",
@@ -542,6 +559,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\checked.png"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\checked-green.png",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "images/checked-green.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\checked-green.png"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\images\\checkedimg.png",
@@ -2463,6 +2497,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\index.js"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\pagination.js",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "js/pagination.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\pagination.js"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\Profile.js",
