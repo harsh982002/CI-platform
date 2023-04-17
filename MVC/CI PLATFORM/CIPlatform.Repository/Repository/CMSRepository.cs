@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Data;
+using CIPlatform.Entitites.Models;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using System;
@@ -13,10 +14,50 @@ namespace CIPlatform.Repository.Repository
     {
         private readonly CiplatformContext _db;
 
+
+        List<CIPlatform.Entitites.Models.Mission> missions = new List<Entitites.Models.Mission>();
+        List<CIPlatform.Entitites.Models.MissionMedium> image = new List<Entitites.Models.MissionMedium>();
+        List<MissionTheme> theme = new List<MissionTheme>();
+        List<Country> countries = new List<Country>();
+        List<City> cities = new List<City>();
+        List<Skill> skills = new List<Skill>();
+        List<MissionSkill> missionskills = new List<MissionSkill>();
+        List<MissionDocument> mission_documents = new List<MissionDocument>();
+        List<Comment> comments = new List<Comment>();
+        List<User> users = new List<User>();
+        List<MissionApplication> missionApplications = new List<MissionApplication>();
+        List<FavoriteMission> favoriteMissions = new List<FavoriteMission>();
+        List<MissionRating> ratings = new List<MissionRating>();
+        List<MissionInvite> already_recommended_users = new List<MissionInvite>();
+        List<Timesheet> timesheets = new List<Timesheet>();
+
         public CMSRepository(CiplatformContext db)
         {
             _db = db;
+            getAllDetails();
         }
+
+        private void getAllDetails()
+        {
+
+            missions = _db.Missions.ToList();
+            image = _db.MissionMedia.ToList();
+            theme = _db.MissionThemes.ToList();
+            countries = _db.Countries.ToList();
+            cities = _db.Cities.ToList();
+            skills = _db.Skills.ToList();
+            missionskills = _db.MissionSkills.ToList();
+            mission_documents = _db.MissionDocuments.ToList();
+            comments = _db.Comments.ToList();
+            users = _db.Users.ToList();
+            missionApplications = _db.MissionApplications.ToList();
+            favoriteMissions = _db.FavoriteMissions.ToList();
+            ratings = _db.MissionRatings.ToList();
+            already_recommended_users = _db.MissionInvites.ToList();
+            timesheets = _db.Timesheets.ToList();
+        }
+
+
 
         public List<MissionAppViewModel> GetApp()
         {
@@ -109,6 +150,76 @@ namespace CIPlatform.Repository.Repository
                                                                                status = u.Status,
                                                                            }).ToList();
             return allusers;
+        }
+
+        public Skill AddSkill(long user_id, SkillViewModel model)
+        {
+           Skill skill = new Skill();
+            {
+                skill.SkillName = model.SkillName;
+                skill.Status = model.Status;
+            }
+            _db.Skills.Add(skill);
+            _db.SaveChanges();
+            return skill;
+        }
+
+        public Skill EditSkill(int skill_id, SkillViewModel model, string type)
+        {
+            Skill skill = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
+            if(skill is not null)
+            {
+                if(type == "edit-skill")
+                {
+                    skill.Status = model.Status;
+                    skill.SkillName = model.SkillName;
+                    _db.SaveChanges();
+                    return skill;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool DeleteSkills(int skill_id)
+        {
+           Skill skills = _db.Skills.FirstOrDefault(x=>x.SkillId == skill_id);
+            if(skills is null)
+            {
+                return false;
+            }
+            else
+            {
+                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x=>x.SkillId == skills.SkillId));
+                _db.UserSkills.RemoveRange(_db.UserSkills.Where(x=>x.SkillId ==skills.SkillId));
+                _db.Skills.Remove(skills);
+                _db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool deleteStory(long story_id)
+        {
+            Story story = _db.Stories.FirstOrDefault(x => x.StoryId == story_id);
+            if(story is not null)
+            {
+                _db.StoryViews.RemoveRange(_db.StoryViews.Where(x => x.StoryId == story.StoryId));
+                _db.StoryMedia.RemoveRange(_db.StoryMedia.Where(x => x.StoryId == story.StoryId));
+                _db.StoryInvites.RemoveRange(_db.StoryInvites.Where(x => x.StoryId == story.StoryId));
+                _db.Stories.Remove(story);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

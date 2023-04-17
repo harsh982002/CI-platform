@@ -23,7 +23,7 @@
                         <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
                     </div>
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center">
+                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#Add">
                     <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
                 </button>
             </div>
@@ -44,17 +44,17 @@
                             @{
                             foreach (var item in Model)
                             {
-                            <tr>
-                            <td>@item.SkillName</td>
+                            <tr id='skill-@item.SkillId'>
+                            <td >@item.SkillName</td>
                             @if (item.Status is 1)
                             {
-                            <td><span style="color:#02f702">Approved</span></td>
+                            <td   ><span style="color:#02f702">Approved</span></td>
                             }
                             else{
-                            <td><span style="color:red">Not Approved</span></td>
+                            <td  ><span style="color:red">Not Approved</span></td>
                             }
-                            <td><img  src="~/images/edit.png" class="edbutton" alt=""/>
-                            <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td>
+                            <td><img data-bs-toggle="modal" onclick="EditSkill('@item.SkillId','@item.SkillName','@item.Status','edit-skill')" data-bs-target="#Add" src="~/images/edit.png" class="edbutton" alt=""/>
+                            <img data-bs-toggle="modal" onclick="getskill(@item.SkillId)" data-bs-target="#delete" src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td>
                             </tr>
                             }
                             }
@@ -69,3 +69,90 @@
         <partial name="Mobile_Navigation_partial" />
     </div>
 </div>
+
+@*for delete*@
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to delete the Skill?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="deleteskill()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+@*for Edit*@
+@*
+<div class="modal fade" id="edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Skill</h5>
+            </div>
+            <div class="modal-body">
+                <div>
+                      <label class="form-label">Skill</label>
+                      <input id='skillname'  placeholder="SkillName"  type="text" class="form-control"  />
+
+                </div>
+
+                <div>
+                      <label class="form-label">Status</label>
+                       <input  id='status-edit'  placeholder="Status"   type="text" class="form-control"/>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">Cancle</button>
+                <button type="button"  data-bs-dismiss="modal" class="btn applybutton">Save</button>    
+            </div>
+        </div>
+    </div>
+</div>
+*@
+<div class="modal fade" id="Add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add Skill</h5>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="w-100">
+                    <label class="form-label mt-2">Skill</label>
+                    <input type="text" class="form-control" id="sname" placeholder="Enter Skill Name" required />
+                    <span class="text-danger d-none" id="skill-alert">Enter Valid Skillname</span>
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Status</label>
+                    <select id='Status' class="form-select me-3" aria-label="Select Mission">
+                            
+                           <option value=0>Not Approve</option>
+                            <option value=1>Approve</option>
+                        </select>
+                    <span class="text-danger d-none" id="status-alert">Enter Valid status</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="addskill('edit-skill')" data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<input id="skill-id" type="hidden" />
+<script src="~/js/cms.js"></script>

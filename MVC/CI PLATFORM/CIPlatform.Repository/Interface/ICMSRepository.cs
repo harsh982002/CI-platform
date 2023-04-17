@@ -19,6 +19,11 @@ namespace CIPlatform.Repository.Interface
         List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> GetStory();
 
         List<CIPlatform.Entitites.ViewModel.SkillViewModel> GetSkill();
+        CIPlatform.Entitites.Models.Skill AddSkill(long user_id, CIPlatform.Entitites.ViewModel.SkillViewModel model);
+        bool DeleteSkills(int skill_id);
+
+        bool deleteStory(long story_id);
+        CIPlatform.Entitites.Models.Skill EditSkill(int skill_id, CIPlatform.Entitites.ViewModel.SkillViewModel model, string type);
 
     }
 }

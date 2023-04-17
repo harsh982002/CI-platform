@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pxdV5roFUJsb0dThDzrkBLzEugMgZ8sLx+4FedstgAo=",
+  "Hash": "dHwjpVB+rltdhLPLS94aOWdV0E2kilYECFlMdvi7S7M=",
   "Source": "CI PLATFORM",
   "BasePath": "_content/CI PLATFORM",
   "Mode": "Default",
@@ -2480,6 +2480,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\cms.js",
+      "SourceId": "CI PLATFORM",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\",
+      "BasePath": "_content/CI PLATFORM",
+      "RelativePath": "js/cms.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\cms.js"
     },
     {
       "Identity": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CI PLATFORM\\wwwroot\\js\\index.js",

@@ -1,5 +1,4 @@
-﻿
-var mission
+﻿var mission
 var mission_id
 var actions
 var date

@@ -5,11 +5,11 @@ namespace CIPlatform.Entitites.Models;
 
 public partial class Skill
 {
-    public int SkillId { get; set; }
+    public int? SkillId { get; set; }
 
     public string? SkillName { get; set; }
 
-    public byte Status { get; set; }
+    public byte? Status { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
