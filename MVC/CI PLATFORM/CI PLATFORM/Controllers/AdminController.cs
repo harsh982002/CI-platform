@@ -37,7 +37,37 @@ namespace CI_PLATFORM.Controllers
             List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> themes = _allRepository.cmsRepository.GetTheme();
             return View(themes);
         }
+        [HttpPost]
+        [Route("/Admin/Theme")]
+        public IActionResult Mission_Theme_CMS(long theme_id, string type, string? theme, byte? themestatus)
+        {
+           if(type == "theme-delete")
+            {
+                bool success = _allRepository.cmsRepository.deletetheme(theme_id);
+                return Json(new { success });
+            }
+           else if(type == "edit-theme")
+            {
+                CIPlatform.Entitites.ViewModel.MissionThemeViewModel model = new CIPlatform.Entitites.ViewModel.MissionThemeViewModel
+                {
+                    status = themestatus,
+                    theme_name = theme,
+                };
+                MissionTheme themes = _allRepository.cmsRepository.EditTheme(theme_id, model, type);
+                return View(themes);
+            }
+            else
+            {
 
+                CIPlatform.Entitites.ViewModel.MissionThemeViewModel model = new CIPlatform.Entitites.ViewModel.MissionThemeViewModel
+                {
+                    status = themestatus,
+                    theme_name = theme,
+                };
+                MissionTheme themes = _allRepository.cmsRepository.AddTheme(theme_id, model);
+                return View(themes);
+            }
+        }
         [Route("/Admin/App")]
         public IActionResult Mission_Application_CMS()
         {
@@ -45,7 +75,14 @@ namespace CI_PLATFORM.Controllers
             return View(applications);
         }
 
-        
+        [Route("/Admin/MAValidate")]
+        public IActionResult Ma_Validate(long ma_id, string? status)
+        {
+            bool success = _allRepository.cmsRepository.updatestatus(ma_id, status);
+            return Json(new { success });
+        }
+
+
         [Route("/Admin/Mission")]
         public IActionResult Mission_CMS()
         {
@@ -59,6 +96,14 @@ namespace CI_PLATFORM.Controllers
             List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> stories = _allRepository.cmsRepository.GetStory();
             return View(stories);
         }
+
+        [Route("/Admin/storyvalidate")]
+        public IActionResult story_validate(long story_id,string? status)
+        {
+            bool success = _allRepository.cmsRepository.updatestorystatus(story_id, status);
+            return Json(new { success });
+        }
+
 
         [HttpPost]
         [Route("/Admin/Story")]

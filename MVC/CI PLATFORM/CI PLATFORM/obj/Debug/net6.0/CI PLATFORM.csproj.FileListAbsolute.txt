@@ -317,3 +317,15 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\win\lib\
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\obj\Debug\net6.0\CI PLATFORM.MvcApplicationPartsAssemblyInfo.cs
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\NPoco.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.Linq.Async.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.Private.ServiceModel.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.ServiceModel.Http.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.ServiceModel.NetTcp.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.ServiceModel.Primitives.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.ServiceModel.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\System.ServiceModel.Security.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Core.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Libs.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.MediaFramework.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Types.dll

@@ -39,9 +39,15 @@
                     <button class="stop-img border-0">
                         <img class="text-light" src="/images/user.png" alt="">
                     </button>
-                    <button class="mission-theme border-0">
-                        <span class="p-2">@item.Theme.Title</span>
-                    </button>
+                    @{
+                        if (@item.Theme is not null)
+                        {
+                            <button class="mission-theme border-0">
+                                <span class="p-2">@item.Theme.Title</span>
+                            </button>
+                        }
+                       
+                    }
                     <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
                         <a href='/volunteering_mission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
                             View Details <img class="ms-2" src="images/right-arrow.png" alt="">

@@ -82,7 +82,7 @@ namespace CI_PLATFORM.Controllers
                                 if (!string.IsNullOrEmpty(returnedUrl))
                                 {
 
-                                    return LocalRedirect(returnedUrl);
+                                    return Redirect(returnedUrl);
 
 
                                 }

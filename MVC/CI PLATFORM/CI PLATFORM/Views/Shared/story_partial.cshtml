@@ -21,9 +21,16 @@
                     <div class="view-detail position-absolute" style="display:none;">
                         <a class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt=""></a>
                     </div>
-                    <button class="mission-theme border-0">
+                    @{
+                        if(@item.Mission.Theme is not null)
+                        {
+                            
+                        <button class="mission-theme border-0">
                         <span class="p-2">@item.Mission.Theme.Title</span>
-                    </button>
+                            </button>
+                        }
+                        
+                    }
                 </div>
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">

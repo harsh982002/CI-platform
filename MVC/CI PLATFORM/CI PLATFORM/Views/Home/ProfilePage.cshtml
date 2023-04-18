@@ -41,7 +41,7 @@
                         <label class="form-label">SurName</label><input asp-for=LastName placeholder="Enter Your SurName" value="@Model.LastName" type="text" class="form-control" id='last-name' />
                         <span asp-validation-for=LastName class="text-danger d-block"></span>
                     </div>
-                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Employee ID</label><input asp-for=EmployeeId value="@Model.EmployeeId" placeholder="Enter Your Employee ID" type="text" class="form-control" id='e_id' /></div>
+                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Employee ID</label><input asp-for=EmployeeId  value="@Model.EmployeeId" placeholder="Enter Your Employee ID" type="number" class="form-control" id='e_id' /></div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Manager</label><input placeholder="Enter Your Manager Details" type="text" class="form-control" id='m_details' /></div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Title</label><input asp-for=Title placeholder="Enter Your Title" type="text" class="form-control" id='title' /></div>
                     <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label><input asp-for=Department placeholder="Enter Your Department" value="@Model.Department" type="text" class="form-control" id='department' /></div>

@@ -57,14 +57,14 @@ namespace CIPlatform.Repository.Repository
             timesheets = _db.Timesheets.ToList();
         }
 
-
-
+        /*MissionApplication*/
         public List<MissionAppViewModel> GetApp()
         {
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
                                                                                         select new MissionAppViewModel
                                                                                         {
+                                                                                            id = ma.MissionApplicationId,
                                                                                             mission_id = ma.MissionId,
                                                                                             user_id = ma.UserId,
                                                                                             name = ma.User.FirstName + " " + ma.User.LastName,
@@ -73,38 +73,50 @@ namespace CIPlatform.Repository.Repository
                                                                                         }).ToList();
             return allapplications;
         }
+        public bool updatestatus(long id, string? status)
+        {
+            MissionApplication ma = _db.MissionApplications.FirstOrDefault(x => x.MissionApplicationId == id);
+            if (ma != null)
+            {
+                if (status == "APPROVE")
+                {
+                    if (ma.Mission.AvbSeat > 0)
+                    {
+                        ma.Mission.AvbSeat = ma.Mission.AvbSeat - 1;
+                    }
+                }
+                ma.ApprovalStatus = status;
+                _db.SaveChanges();
+                return true;
 
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        /*Mission*/
         public List<MissionSelectViewModel> GetMission()
         {
             List<CIPlatform.Entitites.Models.Mission> missions = _db.Missions.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> allmission = (from m in missions
                                                                                       select new MissionSelectViewModel
                                                                                       {
-                                                                                            mission_id = m.MissionId,
-                                                                                            missiontype = m.MissionType,
-                                                                                            Title = m.Title,
-                                                                                            StartDate = m.StartDate,
-                                                                                            EndDate = m.EndDate,
+                                                                                          mission_id = m.MissionId,
+                                                                                          missiontype = m.MissionType,
+                                                                                          Title = m.Title,
+                                                                                          StartDate = m.StartDate,
+                                                                                          EndDate = m.EndDate,
 
                                                                                       }).ToList();
-         
+
 
             return allmission;
         }
 
-        public List<SkillViewModel> GetSkill()
-        {
-            List<CIPlatform.Entitites.Models.Skill> skills = _db.Skills.ToList();
-            List<CIPlatform.Entitites.ViewModel.SkillViewModel> allskills = (from s in skills
-                                                                             select new SkillViewModel
-                                                                             {
-                                                                                 SkillId = s.SkillId,
-                                                                                 SkillName = s.SkillName,
-                                                                                 Status = s.Status,
-                                                                             }).ToList();
-            return allskills;
-        }
-
+        /*Story*/
         public List<StorySelectViewModel> GetStory()
         {
             List<CIPlatform.Entitites.Models.Story> stories = _db.Stories.ToList();
@@ -120,6 +132,48 @@ namespace CIPlatform.Repository.Repository
             return allstory;
         }
 
+        public bool deleteStory(long story_id)
+        {
+            Story story = _db.Stories.FirstOrDefault(x => x.StoryId == story_id);
+            if (story is not null)
+            {
+                _db.StoryViews.RemoveRange(_db.StoryViews.Where(x => x.StoryId == story.StoryId));
+                _db.StoryMedia.RemoveRange(_db.StoryMedia.Where(x => x.StoryId == story.StoryId));
+                _db.StoryInvites.RemoveRange(_db.StoryInvites.Where(x => x.StoryId == story.StoryId));
+                _db.Stories.Remove(story);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool updatestorystatus(long story_id, string? status)
+        {
+            Story story = _db.Stories.FirstOrDefault(x=>x.StoryId == story_id);
+            if(story is not null)
+            {
+                if(status == "DECLINED")
+                {
+                    story.Status = "DECLINED";
+                }
+                else
+                {
+                    story.Status = story.StatusUserwant;
+                }
+              
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /*Themes*/
         public List<MissionThemeViewModel> GetTheme()
         {
             List<CIPlatform.Entitites.Models.MissionTheme> themes = _db.MissionThemes.ToList();
@@ -129,32 +183,80 @@ namespace CIPlatform.Repository.Repository
                                                                                         theme_id = t.MissionThemeId,
                                                                                         theme_name = t.Title,
                                                                                         status = t.Status,
-                                                                                        
-                                                                                        
+
+
                                                                                     }).ToList();
             return allthemes;
         }
 
-        public List<UserViewModel> GetUser()
+        public bool deletetheme(long theme_id)
         {
-            List<CIPlatform.Entitites.Models.User> users = _db.Users.ToList();
-            List<CIPlatform.Entitites.ViewModel.UserViewModel> allusers = (from u in users
-                                                                           select new UserViewModel
-                                                                           {
-                                                                               user_id = u.UserId,
-                                                                               FirstName = u.FirstName,
-                                                                               LastName = u.LastName,
-                                                                               Email = u.Email,
-                                                                               EmpId = u.EmployeeId,
-                                                                               Department = u.Department,
-                                                                               status = u.Status,
-                                                                           }).ToList();
-            return allusers;
+            MissionTheme themes = _db.MissionThemes.FirstOrDefault(x => x.MissionThemeId == theme_id);
+            if (themes is not null)
+            {
+                _db.MissionThemes.Remove(themes);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public MissionTheme EditTheme(long theme_id, MissionThemeViewModel model, string type)
+        {
+            MissionTheme missionTheme = _db.MissionThemes.FirstOrDefault(x => x.MissionThemeId == theme_id);
+            if (type == "edit-theme")
+            {
+                if (missionTheme != null)
+                {
+                    missionTheme.Title = model.theme_name;
+                    missionTheme.Status = model.status;
+                    _db.SaveChanges();
+                    return missionTheme;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public MissionTheme AddTheme(long user_id, MissionThemeViewModel model)
+        {
+            MissionTheme theme = new MissionTheme();
+            {
+                theme.Title = model.theme_name;
+                theme.Status = model.status;
+            };
+            _db.MissionThemes.Add(theme);
+            _db.SaveChanges();
+            return theme;
+        }
+
+        /*Skills*/
+
+        public List<SkillViewModel> GetSkill()
+        {
+            List<CIPlatform.Entitites.Models.Skill> skills = _db.Skills.ToList();
+            List<CIPlatform.Entitites.ViewModel.SkillViewModel> allskills = (from s in skills
+                                                                             select new SkillViewModel
+                                                                             {
+                                                                                 SkillId = s.SkillId,
+                                                                                 SkillName = s.SkillName,
+                                                                                 Status = s.Status,
+                                                                             }).ToList();
+            return allskills;
         }
 
         public Skill AddSkill(long user_id, SkillViewModel model)
         {
-           Skill skill = new Skill();
+            Skill skill = new Skill();
             {
                 skill.SkillName = model.SkillName;
                 skill.Status = model.Status;
@@ -167,9 +269,9 @@ namespace CIPlatform.Repository.Repository
         public Skill EditSkill(int skill_id, SkillViewModel model, string type)
         {
             Skill skill = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
-            if(skill is not null)
+            if (skill is not null)
             {
-                if(type == "edit-skill")
+                if (type == "edit-skill")
                 {
                     skill.Status = model.Status;
                     skill.SkillName = model.SkillName;
@@ -189,37 +291,39 @@ namespace CIPlatform.Repository.Repository
 
         public bool DeleteSkills(int skill_id)
         {
-           Skill skills = _db.Skills.FirstOrDefault(x=>x.SkillId == skill_id);
-            if(skills is null)
+            Skill skills = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
+            if (skills is null)
             {
                 return false;
             }
             else
             {
-                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x=>x.SkillId == skills.SkillId));
-                _db.UserSkills.RemoveRange(_db.UserSkills.Where(x=>x.SkillId ==skills.SkillId));
+                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x => x.SkillId == skills.SkillId));
+                _db.UserSkills.RemoveRange(_db.UserSkills.Where(x => x.SkillId == skills.SkillId));
                 _db.Skills.Remove(skills);
                 _db.SaveChanges();
                 return true;
             }
         }
 
-        public bool deleteStory(long story_id)
+        /*User*/
+        public List<UserViewModel> GetUser()
         {
-            Story story = _db.Stories.FirstOrDefault(x => x.StoryId == story_id);
-            if(story is not null)
-            {
-                _db.StoryViews.RemoveRange(_db.StoryViews.Where(x => x.StoryId == story.StoryId));
-                _db.StoryMedia.RemoveRange(_db.StoryMedia.Where(x => x.StoryId == story.StoryId));
-                _db.StoryInvites.RemoveRange(_db.StoryInvites.Where(x => x.StoryId == story.StoryId));
-                _db.Stories.Remove(story);
-                _db.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            List<CIPlatform.Entitites.Models.User> users = _db.Users.ToList();
+            List<CIPlatform.Entitites.ViewModel.UserViewModel> allusers = (from u in users
+                                                                           select new UserViewModel
+                                                                           {
+                                                                               user_id = u.UserId,
+                                                                               FirstName = u.FirstName,
+                                                                               LastName = u.LastName,
+                                                                               Email = u.Email,
+                                                                               EmpId = u.EmployeeId,
+                                                                               Department = u.Department,
+                                                                               status = u.Status,
+                                                                           }).ToList();
+            return allusers;
         }
+
+        
     }
 }

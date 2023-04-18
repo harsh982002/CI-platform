@@ -8,6 +8,7 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class MissionAppViewModel
     {
+        public long? id { get; set; }
         public long? mission_id { get; set; }
 
         public long? user_id { get; set; }

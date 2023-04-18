@@ -23,9 +23,7 @@
                         <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
                     </div>
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center">
-                    <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
-                </button>
+               
             </div>
 
             <div class="w-100" style="overflow-x:auto;">
@@ -47,14 +45,14 @@
                             @{
                             foreach (var item in Model)
                             {
-                            <tr>
+                            <tr >
                             <td>@item.Title</td>
                             <td>@item.mission_id</td>
                             <td>@item.user_id</td>
                             <td>@item.name</td>
                             <td>@item.AppliedAt.ToString().Substring(0,11)</td>
-                            <td><img  src="~/images/checked-green.png" class="edbutton" alt=""/>
-                            <img src="~/images/cancled-red.png"  class="ms-2 edbutton" alt="" /></td>
+                            <td><img  src="~/images/checked-green.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#approve" class="edbutton" alt=""/>
+                            <img src="~/images/cancled-red.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#notapprove" class="ms-2 edbutton" alt="" /></td>
                             </tr>
                             }
                             }
@@ -69,3 +67,40 @@
         <partial name="Mobile_Navigation_partial" />
     </div>
 </div>
+
+<div class="modal fade" id="approve">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to approve the application?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="validation('APPROVE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="notapprove">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to decline the application?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="validation('DECLINE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="ma_id" type="hidden" />
+<script src="~/js/cms.js"></script>

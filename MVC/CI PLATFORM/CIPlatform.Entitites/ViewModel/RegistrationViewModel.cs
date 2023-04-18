@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPoco.Expressions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace CIPlatform.Entities.ViewModel
         [Required(ErrorMessage = "Please enter your Last name.")]
         public string? LastName { get; set; }
 
+        [Phone]
         [Required(ErrorMessage = "Please enter your Phonenumber.")]
         public int PhoneNumber { get; set; }
 

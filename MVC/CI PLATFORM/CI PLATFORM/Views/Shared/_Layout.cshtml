@@ -34,6 +34,11 @@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
+                  
+                        
+                             <a class="nav-link text-muted" asp-action="User_CMS" asp-controller="Admin">Admin</a>
+                        
+                    
                     @{
                         @if (@Accesor?.HttpContext?.Session.GetString("Country") is not null)
                         {

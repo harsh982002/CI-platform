@@ -419,17 +419,16 @@ public partial class CiplatformContext : DbContext
             entity.HasOne(d => d.City).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.CityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__city_id__778AC167");
+                .HasConstraintName("FK__mission__city_id__4CF5691D");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__country__787EE5A0");
+                .HasConstraintName("FK__mission__country__4DE98D56");
 
             entity.HasOne(d => d.Theme).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.ThemeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__mission__theme_i__76969D2E");
+                .HasConstraintName("FK__mission__theme_i__4EDDB18F");
         });
 
         modelBuilder.Entity<MissionApplication>(entity =>
@@ -733,6 +732,10 @@ public partial class CiplatformContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('DRAFT')")
                 .HasColumnName("status");
+            entity.Property(e => e.StatusUserwant)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("status_userwant");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)

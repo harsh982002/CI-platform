@@ -25,6 +25,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MimeKit" Version="3.6.0" />
+    <PackageReference Include="NPoco" Version="5.7.1" />
+    <PackageReference Include="VisioForge.DotNet.Core.TRIAL" Version="15.1.12" />
   </ItemGroup>
 
 </Project>

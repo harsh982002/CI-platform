@@ -15,7 +15,7 @@ public partial class ContactU
 
     public string Message { get; set; } = null!;
 
-    public virtual User User { get; set; } = null!;
-
     public string Name { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
 }

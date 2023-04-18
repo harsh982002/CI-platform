@@ -48,13 +48,12 @@
                             <td>@item.UserName</td>
                             <td>@item.MissionName.Substring(0,20)...</td>
                             <td><a href="/Story/StoryDetails/@item.StoryId" class="btn applybutton">View</a>
-                            <img  src="~/images/checked-green.png" class="edbutton" alt=""/>
-                            <img  src="~/images/cancled-red.png" class="edbutton" alt=""/>
+                            <img  src="~/images/checked-green.png" onclick="getstory('@item.StoryId')"  data-bs-toggle="modal" data-bs-target="#approve" class="edbutton" alt=""/>
+                            <img  src="~/images/cancled-red.png" onclick="getstory('@item.StoryId')" data-bs-toggle="modal" data-bs-target="#notapprove"  class="edbutton" alt=""/>
                             <img src="~/images/bin.png" data-bs-toggle="modal" data-bs-target="#delete" onclick="getstory('@item.StoryId')" class="ms-2 edbutton" alt="" /></td>
                             </tr>
                             }
                             }
-                        
                     </tbody>
                 </table>
             </div>
@@ -77,6 +76,40 @@
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
                 <button type="button" onclick="deletestory()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="approve">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to approve the Story?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="storyvalidate('APPROVE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="notapprove">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to decline the Story?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="storyvalidate('DECLINED')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
             </div>
         </div>
     </div>

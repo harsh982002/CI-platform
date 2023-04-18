@@ -51,9 +51,9 @@ namespace CIPlatform.Repository.Repository
                 {
                     CIPlatform.Entitites.Models.Story? edit_story = _db.Stories.FirstOrDefault(c => c.StoryId.Equals(id));
                     edit_story.Title = title;
-
+                    edit_story.StatusUserwant = type;
                     edit_story.Description = mystory;
-                    edit_story.Status = "PUBLISHED";
+                    edit_story.Status = "PENDING";
                     List<StoryMedium> storymedias = (from m in medias
                                                      where m.StoryId == id
                                                      select m).ToList();
@@ -100,9 +100,10 @@ namespace CIPlatform.Repository.Repository
                     story.UserId = user_id;
                     story.MissionId = mission_id;
                     story.Title = title;
+                    story.StatusUserwant = type;
                     story.Description = mystory;
 
-                    story.Status = "PUBLISHED";
+                    story.Status = "PENDING";
                     _db.Stories.Add(story);
                     _db.SaveChanges();
                     long story_id = story.StoryId;
@@ -148,6 +149,7 @@ namespace CIPlatform.Repository.Repository
                 story.UserId = user_id;
                 story.MissionId = mission_id;
                 story.Title = title;
+                story.StatusUserwant = "DRAFT";
                 story.Description = mystory;
 
                 _db.Stories.Add(story);
