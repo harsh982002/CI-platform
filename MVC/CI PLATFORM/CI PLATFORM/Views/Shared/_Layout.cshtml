@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
+    
     @* <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />*@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -35,8 +36,12 @@
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
                   
-                        
-                             <a class="nav-link text-muted" asp-action="User_CMS" asp-controller="Admin">Admin</a>
+                        @{
+                            if(@Accesor?.HttpContext?.Session.GetString("role") is not null){
+                              <a class="nav-link text-muted" asp-action="User_CMS" asp-controller="Admin">Admin</a>
+                            }
+                           
+                        }
                         
                     
                     @{

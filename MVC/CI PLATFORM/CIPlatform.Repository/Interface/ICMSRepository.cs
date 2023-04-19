@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIPlatform.Entitites.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,14 @@ namespace CIPlatform.Repository.Interface
         bool DeleteSkills(int skill_id);
         List<CIPlatform.Entitites.ViewModel.UserViewModel> GetUser();
 
+        bool deleteuser(long user_id);
 
-        
-        
+        List<CIPlatform.Entitites.ViewModel.CmsViewModel> GetCms();
+        Entitites.ViewModel.CmsViewModel GetAllCMS();
 
+        bool deletecms(long cms_id);
+        CIPlatform.Entitites.Models.CmsPage AddCms(long user_id, CIPlatform.Entitites.ViewModel.CmsViewModel model);
+
+        CIPlatform.Entitites.Models.CmsPage EditCms(long cms_id, CIPlatform.Entitites.ViewModel.CmsViewModel model, string type);
     }
 }

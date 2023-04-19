@@ -2,104 +2,30 @@
     ViewData["Title"] = "Privacy Policy";
 
 }
+@model CIPlatform.Entitites.ViewModel.CmsViewModel
 <div class="container">
     <div class="heading mt-5">
         <h1>Privacy and Cookies Policy</h1>
     </div>
     <div class="main-content row mt-5">
         <div class="col-12 col-sm-12 col-md-12 col-lg-3 ">
-            <a style="text-decoration:none; color: black;" href="#introduction">Introduction</a><hr />
-            <a style="text-decoration:none; color: black;" href="#cookies">How does use Cookies?</a><hr />
-            <a style="text-decoration:none; color: black;" href="#manage-cookies">how to manage your cookie</a><hr />
-            <a style="text-decoration:none; color: black;" href="#manage-cookies">Preferences?</a><hr />
+            @{
+                foreach (var item in Model.cmsPages)
+                {
+                    <a style="text-decoration:none; color: black;" id="@item.CmsPageId" href="#@item.Slug">@item.Title</a><hr />
+                }
+            }
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-9" >
-            <h3  id="introduction">Introduction</h3>
+            @{
+                foreach(var item in Model.cmsPages){
+            <h3  id="@item.Slug">@item.Title</h3>
             <p class="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus<br /><br />
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus<br /><br />
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus<br /><br />
-
+               @Html.Raw(@item.Description)
             </p>
             <hr />
-            <h3  id="cookies">How does use Cookies?</h3>
-            <p class="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus<br /><br />
-            </p>
-            <h5>Why optimy uses these Technologies?</h5>
-            <p >We use these technologies for multiple purposes.</p>
-            <ul>
-                <li>but I must explain to you how all these mistaken idea of</li>
-                <li> Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat</li>
-                <li>
-                    enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                    soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                </li>
-                <li> placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi</li>
-                <li>cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur</li>
-            </ul>
-            <p class="mt-4">
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus
-            </p><br />
-            </p>
-            <hr />
-            <h3  id="manage-cookies">How to manage your cookie preferences?</h3>
-            <p class="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus<br /><br />
-            </p>
-            <h5>Subtitle goes here</h5>
-            <ul>
-                <li>but I must explain to you how all these mistaken idea of</li>
-                <li> Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat</li>
-                <li>
-                    enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                    soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                </li>
-                <li> placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi</li>
-                <li>cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur</li>
-            </ul>
-            <h1 class="mt-5">The first level heading - H1</h1>
-            <h2>The first level heading - H2</h2>
-            <h3>The first level heading - H3</h3>
-            <h4>The first level heading - H4</h4>
-            <h5>The first level heading - H5</h5>
-            <h6>The first level heading - H6</h6>
-            <p class="mt-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias placeat
-                cum unde maiores, aliquid nisi sapiente blanditiis, atque aut adipisci consequatur
-                enim expedita labore pariatur facere similique necessitatibus, quod corrupti quis
-                soluta illo aspernatur. Iure impedit at aut facere dolor vitae eaque natus aliquam
-                placeat praesentium quod esse nulla adipisci saepe quas minima nihil sit excepturi
-                vel provident debitis, quis molestias. Sint laboriosam in commodi, repellendus
-            </p>
+            }
+            }
 
         </div>
     </div>

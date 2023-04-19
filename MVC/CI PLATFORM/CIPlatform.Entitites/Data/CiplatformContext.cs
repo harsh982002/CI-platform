@@ -919,10 +919,17 @@ public partial class CiplatformContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("password");
-            entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("phone_number");
             entity.Property(e => e.ProfileText)
                 .HasColumnType("text")
                 .HasColumnName("profile_text");
+            entity.Property(e => e.Role)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasMaxLength(2)
                 .IsUnicode(false)

@@ -15,7 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     public string? Avatar { get; set; }
 
@@ -44,6 +44,8 @@ public partial class User
     public DateTime? DeletedAt { get; set; }
 
     public string? Availability { get; set; }
+
+    public string? Role { get; set; }
 
     public virtual City? City { get; set; }
 

@@ -21,21 +21,96 @@ namespace CI_PLATFORM.Controllers
         [Route("/Admin/CMS")]
         public IActionResult CMS()
         {
-            return View();
+            if(HttpContext.Session.GetString("role") is  null) {
+                return RedirectToAction("Landingplatform", "Home");
+              
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.CmsViewModel> cms = _allRepository.cmsRepository.GetCms();
+                return View(cms);
+            }
+       
+        }
+        [HttpPost]
+        [Route("/Admin/CMS")]
+        public IActionResult CMS(long cms_id,string? title, string? editor, string? slug, string? status,string? type)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            if(type == "cms-delete")
+            {
+                bool success = _allRepository.cmsRepository.deletecms(cms_id);
+                return Json(new { success });
+            }
+            else if(type == "edit-cms")
+            {
+                CIPlatform.Entitites.ViewModel.CmsViewModel model = new CIPlatform.Entitites.ViewModel.CmsViewModel
+                {
+                    Title = title,
+                    Description = editor,
+                    Slug = slug,
+                    Status = status,
+                };
+                CmsPage cms = _allRepository.cmsRepository.EditCms(cms_id, model, type);
+                return View(cms);
+            }
+            else
+            {
+                CIPlatform.Entitites.ViewModel.CmsViewModel model = new CIPlatform.Entitites.ViewModel.CmsViewModel
+                {
+                    Title = title,
+                    Description = editor,
+                    Slug = slug,
+                    Status = status,
+                };
+                CmsPage cms = _allRepository.cmsRepository.AddCms(userId, model);
+                return View(cms);
+            }
         }
 
         [Route("/Admin")]
         public IActionResult User_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.UserViewModel> users = _allRepository.cmsRepository.GetUser();
-            return View(users);
+            if (HttpContext.Session.GetString("role") is  null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+               
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.UserViewModel> users = _allRepository.cmsRepository.GetUser();
+                return View(users);
+            }
         }
 
+        [HttpPost]
+        [Route("/Admin")]
+        public IActionResult User_CMS(long user_id,string? type)
+        {
+            if (type == "user-delete")
+            {
+                bool success = _allRepository.cmsRepository.deleteuser(user_id);
+                return Json(new { success });
+            }
+            else
+            {
+                return null;
+            }
+        }
+     
         [Route("/Admin/Theme")]
         public IActionResult Mission_Theme_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> themes = _allRepository.cmsRepository.GetTheme();
-            return View(themes);
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> themes = _allRepository.cmsRepository.GetTheme();
+                return View(themes);
+            }
         }
         [HttpPost]
         [Route("/Admin/Theme")]
@@ -71,8 +146,17 @@ namespace CI_PLATFORM.Controllers
         [Route("/Admin/App")]
         public IActionResult Mission_Application_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> applications = _allRepository.cmsRepository.GetApp();
-            return View(applications);
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> applications = _allRepository.cmsRepository.GetApp();
+                return View(applications);
+            }
+           
         }
 
         [Route("/Admin/MAValidate")]
@@ -86,15 +170,33 @@ namespace CI_PLATFORM.Controllers
         [Route("/Admin/Mission")]
         public IActionResult Mission_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> missions = _allRepository.cmsRepository.GetMission();
-            return View(missions);
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> missions = _allRepository.cmsRepository.GetMission();
+                return View(missions);
+            }
         }
-        
+
+
         [Route("/Admin/Story")]
         public IActionResult Story_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> stories = _allRepository.cmsRepository.GetStory();
-            return View(stories);
+
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> stories = _allRepository.cmsRepository.GetStory();
+                return View(stories);
+            }
         }
 
         [Route("/Admin/storyvalidate")]
@@ -123,8 +225,17 @@ namespace CI_PLATFORM.Controllers
         [Route("/Admin/Skill")]
         public IActionResult Skill_CMS()
         {
-            List<CIPlatform.Entitites.ViewModel.SkillViewModel> skills = _allRepository.cmsRepository.GetSkill();
-            return View(skills);
+
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Landingplatform", "Home");
+
+            }
+            else
+            {
+                List<CIPlatform.Entitites.ViewModel.SkillViewModel> skills = _allRepository.cmsRepository.GetSkill();
+                return View(skills);
+            }
         }
 
         [HttpPost]

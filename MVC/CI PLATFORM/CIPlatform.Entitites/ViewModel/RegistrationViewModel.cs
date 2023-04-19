@@ -15,9 +15,9 @@ namespace CIPlatform.Entities.ViewModel
         [Required(ErrorMessage = "Please enter your Last name.")]
         public string? LastName { get; set; }
 
-        [Phone]
+        [MinLength(10)]
         [Required(ErrorMessage = "Please enter your Phonenumber.")]
-        public int PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter your email address.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]

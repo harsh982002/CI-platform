@@ -86,13 +86,17 @@ namespace CI_PLATFORM.Controllers
 
 
                                 }
+                                else if(user.Role == "Admin")
+                                {
+                                    HttpContext.Session.SetString("role",user.Role);
+                                    return RedirectToAction("CMS", "Admin");
+                                }
                                 else {
                                     return RedirectToAction("Landingplatform", "Home");
                                 }
                                
                             }
                     }
-                      
                         else
                         {
                             HttpContext.Session.SetString("Email", user.Email);
@@ -138,7 +142,9 @@ namespace CI_PLATFORM.Controllers
                     }
                     else
                     {
-                        return StatusCode(HttpStatusCode.BadRequest.GetHashCode(), "This Mail Account Already Register !! Please Check your mail or Login your Account...");
+                        ViewBag.Message = String.Format("This Mail Account Already Register !! Please Check your mail or Login your Account...");
+                        return View();
+                     
                     }
                 }
                 return View(model);

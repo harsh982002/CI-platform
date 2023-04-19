@@ -1,12 +1,13 @@
-﻿@*
+﻿
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     ViewData["title"] = "Admin";
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" asp-append-version="true" />
     ViewData["css"] = "Volunteering_Timesheet.css";
-    
 }
-
+@model List<CIPlatform.Entitites.ViewModel.CmsViewModel>
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -20,11 +21,11 @@
                 <div class="d-flex search-div align-items-center">
                     <img class="search" src="~/images/search.png" alt="not load" />
                     <div class="form-floating w-75 d-flex">
-                        <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Users...." />
-                        <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
+                        <input type="search" class="form-control search-input" id="floatingSearch" style="border:none;" placeholder="Search Users...." />
+                        <label for="floatingSearch" class="d-flex align-items-center" >Search Users....</label>
                     </div>
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center">
+                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-target="#Add" onclick="clearModal()" data-bs-toggle="modal" style="border: 1px solid #F88634; border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;font-size:smaller;" >
                     <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
                 </button>
             </div>
@@ -37,25 +38,27 @@
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Title will appear here</td>
-                            <td>Active</td>
-                            <td>
-                                <img src="~/images/edit.png" class="edbutton" alt="" />
-                                <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Title will appear here</td>
-                            <td>Active</td>
-                            <td>
-                                <img src="~/images/edit.png" class="edbutton" alt="" />
-                                <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
-                            </td>
-                        </tr>
-                    </tbody>
+                          <tbody>
+                              @{
+                                  foreach (var item in Model)
+                                  {
+                                      <tr id="cms-@item.CmsPageId">
+                              <td>@item.Title</td>
+
+                                @if (item.Status == "1")
+                                {
+                              <td><span style="color:#02f702">Active</span></td>
+                                  }
+                                else{
+                              <td><span style="color:red">Offline</span></td>
+                                 }
+                              <td><img  src="~/images/edit.png"  data-bs-target="#Add" data-bs-toggle="modal" class="edbutton" onclick="editcmspage('@item.CmsPageId','@item.Title','@item.Description','@item.Slug','@item.Status','edit-cms')" alt=""/>
+                                   <img src="~/images/bin.png"  data-bs-target="#delete" data-bs-toggle="modal" onclick="getcms('@item.CmsPageId')" class="ms-2 edbutton" alt="" /></td>
+                            </tr>
+                                  }
+                              }
+                          </tbody>
+                     </thead>   
                 </table>
                 <partial name="Pagination_partial" />
             </div>
@@ -66,3 +69,72 @@
     </div>
 </div>
 
+@*modal for add cms*@
+<div class="modal fade bd-example-modal-xl" id="Add" tabindex="-1" role="dialog" aria-bs-labelledby="myLargeModalLabel" aria-bs-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="w-100">
+                    <label class="form-label mt-2">Title</label>
+                    <input class="form-control title" id="title" value="" />
+
+                </div>
+                <div class="w-100 form-group">
+                    <label class="form-label mt-2">Description</label>
+                    <textarea id="editor"></textarea>
+                </div>
+
+                <div class="w-100">
+                    <label class="form-label mt-2">Slug</label>
+                    <input class="form-control slug" id="slug" value="" />
+                </div>
+                <div class="w-100">
+                    <label class="form-label mt-2">Status</label>
+                     <select id='status' class="form-select"  aria-label="Select Mission">
+                            
+                           <option value=0>0</option>
+                            <option value=1>1</option>
+                        </select>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+
+
+                </div>
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" data-bs-dismiss="modal" onclick="addcms()">Save</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to delete this Entry?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="deletecms()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <input id="cms-id" type="hidden" />
+    <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/6/tinymce.min.js"></script>
+    <script src="~/js/cmspage.js"></script>

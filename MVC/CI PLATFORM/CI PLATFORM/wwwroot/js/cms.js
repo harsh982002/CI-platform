@@ -1,11 +1,31 @@
 ﻿var type
 var skill_id
 var theme_id
+var user_id
+
+//user
+
+const getuser = (id) => {
+    user_id = id
+}
+const deleteuser = () => {
+    $(`#user-${user_id}`).remove()
+    $.ajax({
+        url: '/Admin',
+        type: 'POST',
+        data: { user_id: parseInt(user_id), type: "user-delete" },
+        success: function (result) {
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    });
+}
 
 //SkillCMS
 const getskill = (id) => {
-    skill_id=id
-    
+    skill_id = id
+
 }
 const deleteskill = () => {
     $(`#skill-${skill_id}`).remove()
@@ -27,7 +47,7 @@ const addskill = () => {
         $.ajax({
             url: '/Admin/Skill',
             type: 'POST',
-            data: { sname: sname, status: status, type: "edit-skill", skill_id: parseInt(document.getElementById("skill-id").value)},
+            data: { sname: sname, status: status, type: "edit-skill", skill_id: parseInt(document.getElementById("skill-id").value) },
             success: function (result) {
                 if (result.view) {
                     $(`#skill-${parseInt(document.getElementById("skill-id").value)}`).replaceWith(result.view.result)
@@ -39,8 +59,7 @@ const addskill = () => {
             }
         })
     }
-    else
-  {
+    else {
         $.ajax({
             url: '/Admin/Skill',
             type: 'POST',
@@ -70,6 +89,12 @@ const EditSkill = (id, skillname, status, typ) => {
         document.getElementById("skill-id").value = id
     }
 }
+const clearSkillModal = () => {
+
+    $('#sname').val('');
+    $('#skill').val('');
+}
+
 //StoryCMS
 const getstory = (id) => {
     story_id = id;
@@ -101,6 +126,7 @@ const storyvalidate = (status) => {
         }
     })
 }
+
 //ThemeCMS
 const gettheme = (id) => {
     theme_id = id
@@ -166,6 +192,11 @@ const addtheme = () => {
     }
 
 }
+const clearThemeModal = () => {
+
+    $('#theme').val('');
+    $('#themestatus').val('');
+}
 
 //missionapplicationCMS
 var ma_id = document.getElementById("ma_id").value
@@ -175,11 +206,11 @@ const getma = (id) => {
 }
 const validation = (status) => {
     console.log(ma_id)
-    
+
     $.ajax({
         url: '/Admin/MAValidate',
         type: 'POST',
-        data: {ma_id:parseInt(ma_id), status: status },
+        data: { ma_id: parseInt(ma_id), status: status },
         success: function (result) {
             window.location.reload();
         },
@@ -188,3 +219,4 @@ const validation = (status) => {
         }
     })
 }
+

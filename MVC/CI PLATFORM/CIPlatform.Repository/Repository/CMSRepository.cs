@@ -30,6 +30,7 @@ namespace CIPlatform.Repository.Repository
         List<MissionRating> ratings = new List<MissionRating>();
         List<MissionInvite> already_recommended_users = new List<MissionInvite>();
         List<Timesheet> timesheets = new List<Timesheet>();
+        List<CmsPage> cmsPages = new List<CmsPage>();
 
         public CMSRepository(CiplatformContext db)
         {
@@ -55,6 +56,7 @@ namespace CIPlatform.Repository.Repository
             ratings = _db.MissionRatings.ToList();
             already_recommended_users = _db.MissionInvites.ToList();
             timesheets = _db.Timesheets.ToList();
+            cmsPages = _db.CmsPages.ToList();
         }
 
         /*MissionApplication*/
@@ -324,6 +326,104 @@ namespace CIPlatform.Repository.Repository
             return allusers;
         }
 
-        
+        public List<CmsViewModel> GetCms()
+        {
+            List<CIPlatform.Entitites.Models.CmsPage> cmsPages = _db.CmsPages.ToList();
+            List<CIPlatform.Entitites.ViewModel.CmsViewModel> allCms = (from c in cmsPages
+                                                                        select new CmsViewModel
+                                                                        {
+                                                                            CmsPageId = c.CmsPageId,
+                                                                            Description = c.Description,
+                                                                            Slug = c.Slug,
+                                                                            Status = c.Status,
+                                                                            Title = c.Title,
+                                                                        }).ToList();
+            return allCms;
+        }
+
+        public CmsViewModel GetAllCMS()
+        {
+            cmsPages = _db.CmsPages.ToList();
+            var cms = new CmsViewModel { Title = cmsPages[0].Title , Slug = cmsPages.ElementAt(0).Slug,Description = cmsPages.ElementAt(0).Description,cmsPages = cmsPages};
+            return cms;
+           
+        }
+
+        public CmsPage AddCms(long user_id, CmsViewModel model)
+        {
+           CmsPage cmsPage = new CmsPage();
+            {
+                cmsPage.Title = model.Title;
+                cmsPage.Slug = model.Slug;
+                cmsPage.Status = model.Status;
+                cmsPage.Description = model.Description;
+            }
+            _db.CmsPages.Add(cmsPage);
+            _db.SaveChanges();
+            return cmsPage;
+        }
+
+        public bool deletecms(long cms_id)
+        {
+            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x=>x.CmsPageId == cms_id);
+            if(cmsPage is null)
+            {
+                return false;
+
+            }
+            else
+            {
+                _db.CmsPages.Remove(cmsPage);
+                _db.SaveChanges();
+                return true;
+            }
+        }
+
+        public CmsPage EditCms(long cms_id, CmsViewModel model, string type)
+        {
+            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
+            if(cmsPage != null)
+            {
+                if(type == "edit-cms")
+                {
+                    cmsPage.Title =model.Title;
+                    cmsPage.Description=model.Description;
+                    cmsPage.Status=model.Status;
+                    cmsPage.Slug=model.Slug;
+                    _db.SaveChanges();
+                    return cmsPage;
+                }
+                else { return null; }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool deleteuser(long user_id)
+        {
+            User user = _db.Users.FirstOrDefault(x=>x.UserId == user_id);
+            if(user is null)
+            {
+                return false;
+            }
+            else
+            {
+                _db.Comments.RemoveRange(_db.Comments.Where(x => x.UserId == user.UserId));
+                _db.FavoriteMissions.RemoveRange(_db.FavoriteMissions.Where(x => x.UserId == user.UserId));
+                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x=>x.UserId==user.UserId));
+                _db.MissionInvites.RemoveRange(_db.MissionInvites.Where(x=>x.FromUserId == user.UserId || x.FromUserId == user.UserId));
+                _db.MissionRatings.RemoveRange(_db.MissionRatings.Where(x => x.UserId == user.UserId));
+                _db.Stories.RemoveRange(_db.Stories.Where(x=>x.UserId == user.UserId));
+                _db.StoryViews.RemoveRange(_db.StoryViews.Where(x => x.UserId == user.UserId));
+                _db.StoryInvites.RemoveRange(_db.StoryInvites.Where(x => x.FromUserId == user.UserId || x.FromUserId == user.UserId));
+                _db.Timesheets.RemoveRange(_db.Timesheets.Where(x => x.UserId == user.UserId));
+                _db.UserSkills.RemoveRange(_db.UserSkills.Where(x => x.UserId == user.UserId));
+                _db.Users.Remove(user);
+                _db.SaveChanges();
+                return true;
+            }
+        }
     }
 }

@@ -20,6 +20,8 @@ namespace CIPlatform.Entitites.ViewModel
 
         public string? Department { get; set; }
 
+        public string? Password { get; set; }
+
         public string? status { get; set; }
     }
 }
