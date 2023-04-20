@@ -43,41 +43,48 @@ const deletecms = () => {
 }
 
 const addcms = () => {
+    
     var title = document.getElementById("title").value
     var editor = tinymce.get("editor").getContent();
     var slug = document.getElementById("slug").value
     var status = document.getElementById("status").value
     if (type == "edit-cms") {
-        $.ajax({
-            url: '/Admin/CMS',
-            type: 'POST',
-            data: { title: title, editor: editor, slug: slug, status: status, type: "edit-cms", cms_id: parseInt(document.getElementById("cms-id").value) },
-            success: function (result) {
-                deb
-                if (result.view) {
-                    $(`#cms-${parseInt(document.getElementById("cms-id").value)}`).replaceWith(result.view.result)
-                   
+       
+            $.ajax({
+                url: '/Admin/CMS',
+                type: 'POST',
+                data: { title: title, editor: editor, slug: slug, status: status, type: "edit-cms", cms_id: parseInt(document.getElementById("cms-id").value) },
+                success: function (result) {
+                    deb
+                    if (result.view) {
+                        $(`#cms-${parseInt(document.getElementById("cms-id").value)}`).replaceWith(result.view.result)
+                        location.reload()
+                    }
+                },
+                error: function () {
+                    console.log("Error updating variable");
                 }
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
+            })
+        
     }
-   else {
-    $.ajax({
-        url: '/Admin/CMS',
-        type: 'POST',
-        data: { title: title, editor: editor, status: status, slug: slug },
-        success: function (result) {
-            if (result.success) {
-                $("#Add").modal('hide')
-            }
-        },
-        error: function () {
-            console.log("Error updating variable");
+
+    else {
+        if (cms != "" && slugs != "") {
+            $.ajax({
+                url: '/Admin/CMS',
+                type: 'POST',
+                data: { title: title, editor: editor, status: status, slug: slug },
+                success: function (result) {
+                    if (result.success) {
+                        $("#Add").modal('hide')
+                        location.reload()
+                    }
+                },
+                error: function () {
+                    console.log("Error updating variable");
+                }
+            })
         }
-    })
 
 }
 }
@@ -103,3 +110,24 @@ function clearModal() {
     $('#status').val('');
     $('#slug').val('');
 }
+var cms = document.getElementById(`title`).value
+
+var slugs = document.getElementById(`slug`).value
+const validation = () => {
+
+    if (cms == "") {
+        $("#title-alert").addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $("#title-alert").addClass('d-none').removeClass('d-block')
+    }
+
+    if (slugs == "") {
+        $("#slug-alert").addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $("#slug-alert").addClass('d-none').removeClass('d-block')
+    }
+}
+
+

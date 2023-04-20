@@ -163,8 +163,9 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Profile")]
         public IActionResult ProfilePage()
         {
-          
-                var userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            var userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            if (ModelState.IsValid)
+            {
 
                 CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
                 if (details?.CountryId is not null)
@@ -180,7 +181,11 @@ namespace CI_PLATFORM.Controllers
                     HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
                 }
                 return View(details);
-            
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]

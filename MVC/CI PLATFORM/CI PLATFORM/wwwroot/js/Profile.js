@@ -148,3 +148,31 @@ const contact = () => {
     }
 
 }
+
+$('#left-side').click(function () {
+    $(this).toggleClass('active');
+});
+$('#right-side').click(function () {
+    $(this).toggleClass('active');
+});
+// on click of the move button
+$('#take-to-users-skills').click(function () {
+    // get the items to move
+    debugger
+    var $items = $('#left-side li.active');
+    // remove their active state
+    //$('#left-side li.active').hide();
+    $items.removeClass('active');
+    console.log("left-items", $items);
+    // append them to the right side list
+    $('#right-side').append($items);
+
+});
+$('#take-to-total-skills').click(function () {
+    // get the items to move
+    var $items = $('#right-side li.active');
+    // remove their active state
+    $items.removeClass('active');
+    // append them to the right side list
+    $('#left-side').append($items);
+});

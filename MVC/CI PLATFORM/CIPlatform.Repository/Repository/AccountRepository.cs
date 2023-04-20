@@ -108,8 +108,6 @@ namespace CIPlatform.Repository.Repository
 
 
 
-
-
         public Boolean IsValidUserEmail(RegistrationViewModel model)
         {
             try

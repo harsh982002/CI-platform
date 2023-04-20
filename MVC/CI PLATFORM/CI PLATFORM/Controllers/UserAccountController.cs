@@ -96,7 +96,7 @@ namespace CI_PLATFORM.Controllers
                                 }
                                
                             }
-                    }
+                        }
                         else
                         {
                             HttpContext.Session.SetString("Email", user.Email);
@@ -106,7 +106,7 @@ namespace CI_PLATFORM.Controllers
                             return RedirectToAction("ProfilePage", "Home");
                         }
 
-                }
+                    }
                 }
                 return View(model);
             }

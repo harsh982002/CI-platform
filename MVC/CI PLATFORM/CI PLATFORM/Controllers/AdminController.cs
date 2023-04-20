@@ -85,16 +85,40 @@ namespace CI_PLATFORM.Controllers
 
         [HttpPost]
         [Route("/Admin")]
-        public IActionResult User_CMS(long user_id,string? type)
+        public IActionResult User_CMS(long user_id,string? type,string? fname , string? lname, string? phone, string? email, string? pass , string? role,string? empid,string? department,string? status)
         {
+
             if (type == "user-delete")
             {
                 bool success = _allRepository.cmsRepository.deleteuser(user_id);
                 return Json(new { success });
             }
+            else if(type == "edit-user")
+            {
+                CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
+                {
+                    Role = role,
+                    EmpId = empid,
+                    Department = department,
+                    status = status
+                };
+                User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
+                return View(user);
+            }
             else
             {
-                return null;
+                CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
+                {
+                    FirstName = fname,
+                    LastName = lname,
+                    Email = email,
+                    Password = pass,
+                    Role = role,
+                    PhoneNumber = phone
+
+                };
+                User user = _allRepository.cmsRepository.AddUser(model);
+                return View(user);
             }
         }
      

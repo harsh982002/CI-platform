@@ -117,9 +117,6 @@
                         <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@Accesor?.HttpContext?.Session.GetString("Name")</span>
                         <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
-
                             <a class="dropdown-item" asp-action="ProfilePage" asp-controller="Home">Profile</a>
                             @{
                                 if (@Accesor?.HttpContext?.Session.GetString("Country") is not null)

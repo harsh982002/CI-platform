@@ -233,7 +233,7 @@ namespace CIPlatform.Repository.Repository
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id)?.ApprovalStatus;
             var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.ApprovalStatus == "APPROVE").ToList();
-            var com = _db.Comments.Where(x => x.MissionId == id && x.ApprovalStatus == "PUBLISHED").ToList();
+            var com = _db.Comments.Where(x => x.MissionId == id).ToList();
             var user = _db.Users.ToList();
             if (_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {

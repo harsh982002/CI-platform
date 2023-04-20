@@ -82,16 +82,18 @@
                 <div class="w-100">
                     <label class="form-label mt-2">Title</label>
                     <input class="form-control title" id="title" value="" />
-
+                    <span class="text-danger d-none" id="title-alert">Title can't be empty!</span>
                 </div>
                 <div class="w-100 form-group">
                     <label class="form-label mt-2">Description</label>
                     <textarea id="editor"></textarea>
+                    <span class="text-danger d-none" id="description-alert">Description can't be empty!</span>
                 </div>
 
                 <div class="w-100">
                     <label class="form-label mt-2">Slug</label>
                     <input class="form-control slug" id="slug" value="" />
+                    <span class="text-danger d-none" id="slug-alert">Slug can't be empty!</span>
                 </div>
                 <div class="w-100">
                     <label class="form-label mt-2">Status</label>
@@ -109,7 +111,7 @@
 
 
                 </div>
-                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" data-bs-dismiss="modal" onclick="addcms()">Save</button>
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="addcms()">Save</button>
             </div>
 
 

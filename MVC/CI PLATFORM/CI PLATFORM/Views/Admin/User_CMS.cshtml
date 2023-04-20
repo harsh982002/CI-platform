@@ -15,65 +15,70 @@
     </div>
     <div class="col-lg-9 col-md-9 col-sm-9">
         <div class="container mt-5 ">
-        <div class="border-bottom">
-            <h5>User</h5>
-        </div>
-        <div class="d-flex mt-3 justify-content-between align-items-center"> 
-            <div class="d-flex search-div align-items-center">
-    <img class="search" src="~/images/search.png" alt="not load" />
-        <div class="form-floating w-75 d-flex">
-            <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Users...." />
-            <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
-        </div>
-    </div>
-    <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#Add" >
-        <img src="~/images/plus.png"  class="me-2" style="height:13px;"/><span>Add</span></button>
-        </div>
+            <div class="border-bottom">
+                <h5>User</h5>
+            </div>
+            <div class="d-flex mt-3 justify-content-between align-items-center">
+                <div class="d-flex search-div align-items-center">
+                    <img class="search" src="~/images/search.png" alt="not load" />
+                    <div class="form-floating w-75 d-flex">
+                        <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Users...." />
+                        <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
+                    </div>
+                </div>
+                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#Add">
+                    <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
+                </button>
+            </div>
 
-        <div class="w-100" style="overflow-x:auto;">
-        <table class="table border border-bottom-0 h-100  table-responsive">
-  <thead class="table-light">
-    <tr>
-      <th scope="col">FirstName</th>
-      <th scope="col">LastName</th>
-      <th scope="col">Email</th>
-      <th scope="col">Employee Id</th>
-      <th scope="col">Department</th>
-      <th scope="col">Status</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-      @{
-          foreach (var item in Model)
-          {
-              <tr id="user-@item.user_id">
-      <td>@item.FirstName</td>
-      <td>@item.LastName</td>
-      <td>@item.Email</td>
-      <td>@item.EmpId</td>
-      <td>@item.Department</td>
-        @if (item.status == "1")
-        {
-      <td><span style="color:#02f702">Active</span></td>
-          }
-        else{
-      <td><span style="color:red">Offline</span></td>
-         }
-      <td><img  src="~/images/edit.png" class="edbutton" alt=""/>
-           <img src="~/images/bin.png" data-bs-target="#delete" onclick="getuser('@item.user_id')" data-bs-toggle="modal" class="ms-2 edbutton" alt="" /></td>
-    </tr>
-          }
-      }
-  </tbody>
-</table>
-</div>
-<partial name="Pagination_partial" />
+            <div class="w-100" style="overflow-x:auto;">
+                <table class="table border border-bottom-0 h-100  table-responsive">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Employee Id</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr id="user-@item.user_id">
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.EmpId</td>
+                                    <td>@item.Department</td>
+                                    @if (item.status == "1")
+                                    {
+                                        <td><span style="color:#02f702">Active</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span style="color:red">Offline</span></td>
+                                    }
+                                    <td>
+                                        <img src="~/images/edit.png" class="edbutton" data-bs-toggle="modal" data-bs-target="#Edit" onclick="Edituser('@item.user_id','@item.FirstName','@item.LastName'
+              ,'@item.Email','@item.Password','@item.PhoneNumber','@item.Role','@item.CityId','@item.CountryId','@item.EmpId','@item.Department','@item.status','@item.ProfileText','edit-user','@item.Avatar')" alt="" />
+                                        <img src="~/images/bin.png" data-bs-target="#delete" onclick="getuser('@item.user_id')" data-bs-toggle="modal" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <partial name="Pagination_partial" />
         </div>
     </div>
     <div class="mobile-navigation">
-    <partial name="Mobile_Navigation_partial" />
-</div>
+        <partial name="Mobile_Navigation_partial" />
+    </div>
 </div>
 @*modal for delete*@
 <div class="modal fade" id="delete">
@@ -87,11 +92,144 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button"  class="btn applybutton" onclick="deleteuser()" data-bs-dismiss="modal">Yes</button>    
+                <button type="button" class="btn applybutton" onclick="deleteuser()" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
 </div>
+@*modal for add*@
+<div class="modal fade" id="Add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add User</h5>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">FirstName</label>
+                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name" required />
+                        <span class="text-danger d-none" id="first-alert">Please Enter FirstName</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">LastName</label>
+                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" required />
+                        <span class="text-danger d-none" id="last-alert">Please Enter LastName</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter MailId" required />
+                        <span class="text-danger d-none" id="mail-alert">Please Enter Email</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Password</label>
+                        <input type="password" class="form-control" id="pass" placeholder="Enter Password" required />
+                        <span class="text-danger d-none" id="pass-alert">Please Enter Password</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">PhoneNumber</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter PhoneNumber" required />
+                        <span class="text-danger d-none" id="phone-alert">Please Enter PhoneNumber</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Role</label>
+                        <select id='role' class="form-select me-3" aria-label="Select Mission">
+                            <option selected>Select Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button type="submit" data-bs-dismiss="modal" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="adduser()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*modal for edit*@
+<div class="modal fade" id="Edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit User</h5>
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                <div class="col-lg-3 col-md-4 profile-photo  d-flex flex-column  position-relative align-items-center">
+                    <input type="file" class="h-50 w-50" accept="/images/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;" />
+                    <img style="cursor:pointer;" class="w-100 h-100 rounded-circle" id="img" src="~/images/volunteer1.png" alt="" />
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">FirstName</label>
+                        <input type="text" class="form-control" disabled id="firstname" placeholder="Enter First Name" required />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">LastName</label>
+                        <input type="text" class="form-control" id="lastname" disabled placeholder="Enter Last Name" required />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Email</label>
+                        <input type="email" class="form-control" id="emailadd" disabled placeholder="Enter MailId" required />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Password</label>
+                        <input type="password" class="form-control" id="password" disabled placeholder="Enter Password" required />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">PhoneNumber</label>
+                        <input type="tel" class="form-control" id="phonenumber" disabled placeholder="Enter PhoneNumber" required />
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label mt-2">Role</label>
+                        <select id="roles" class="form-select me-3" aria-label="Select Mission">
+
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Employee ID</label><input placeholder="Enter Your Employee ID" type="number" class="form-control" id='empid' /></div>
+
+                    <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label><input placeholder="Enter Your Department" type="text" class="form-control" id='department' /></div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">City</label><input id="city" placeholder="Enter City" disabled type="text" class="form-select city me-3" aria-label="Select Mission" />
+                        <span class="text-danger d-block"></span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">Country</label><input id="country" placeholder="Enter Country" disabled type="text" class="form-select city me-3" aria-label="Select Mission" />
+                        <span class="text-danger d-block"></span>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label">Status</label>
+                    <select id='ustatus' class="form-select me-3" aria-label="Select Mission">
+                        <option selected>select your status</option>
+                        <option value=1>Active</option>
+                        <option value=0>DeActive</option>
+                    </select>
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label">My Profile</label><textarea placeholder="Enter Your Bio..." disabled rows=5 class="form-control" id='bio'></textarea>
+                    <span class="text-danger d-block"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+                </div>
+                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="EditUserDetails()" data-bs-dismiss="modal" >Submit</button>
+            </div>
+        </div>
+    </div>
+
+</div>
 <input id="user-id" type="hidden" />
 <script src="~/js/cms.js"></script>

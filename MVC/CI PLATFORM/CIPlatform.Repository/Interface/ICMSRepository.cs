@@ -27,6 +27,9 @@ namespace CIPlatform.Repository.Interface
         List<CIPlatform.Entitites.ViewModel.UserViewModel> GetUser();
 
         bool deleteuser(long user_id);
+        CIPlatform.Entitites.Models.User AddUser(CIPlatform.Entitites.ViewModel.UserViewModel model);
+
+        CIPlatform.Entitites.Models.User EditUser(long user_id, CIPlatform.Entitites.ViewModel.UserViewModel model, string type);
 
         List<CIPlatform.Entitites.ViewModel.CmsViewModel> GetCms();
         Entitites.ViewModel.CmsViewModel GetAllCMS();

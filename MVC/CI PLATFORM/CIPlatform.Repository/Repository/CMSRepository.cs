@@ -154,10 +154,10 @@ namespace CIPlatform.Repository.Repository
 
         public bool updatestorystatus(long story_id, string? status)
         {
-            Story story = _db.Stories.FirstOrDefault(x=>x.StoryId == story_id);
-            if(story is not null)
+            Story story = _db.Stories.FirstOrDefault(x => x.StoryId == story_id);
+            if (story is not null)
             {
-                if(status == "DECLINED")
+                if (status == "DECLINED")
                 {
                     story.Status = "DECLINED";
                 }
@@ -165,7 +165,7 @@ namespace CIPlatform.Repository.Repository
                 {
                     story.Status = story.StatusUserwant;
                 }
-              
+
                 _db.SaveChanges();
                 return true;
             }
@@ -320,8 +320,15 @@ namespace CIPlatform.Repository.Repository
                                                                                LastName = u.LastName,
                                                                                Email = u.Email,
                                                                                EmpId = u.EmployeeId,
+                                                                               Password = u.Password,
+                                                                               PhoneNumber = u.PhoneNumber,
                                                                                Department = u.Department,
+                                                                               Role = u.Role,
                                                                                status = u.Status,
+                                                                               CityId = u.CityId,
+                                                                               CountryId = u.CountryId,
+                                                                               ProfileText = u.ProfileText,
+                                                                               Avatar = u.Avatar,
                                                                            }).ToList();
             return allusers;
         }
@@ -344,14 +351,14 @@ namespace CIPlatform.Repository.Repository
         public CmsViewModel GetAllCMS()
         {
             cmsPages = _db.CmsPages.ToList();
-            var cms = new CmsViewModel { Title = cmsPages[0].Title , Slug = cmsPages.ElementAt(0).Slug,Description = cmsPages.ElementAt(0).Description,cmsPages = cmsPages};
+            var cms = new CmsViewModel { Title = cmsPages[0].Title, Slug = cmsPages.ElementAt(0).Slug, Description = cmsPages.ElementAt(0).Description, cmsPages = cmsPages };
             return cms;
-           
+
         }
 
         public CmsPage AddCms(long user_id, CmsViewModel model)
         {
-           CmsPage cmsPage = new CmsPage();
+            CmsPage cmsPage = new CmsPage();
             {
                 cmsPage.Title = model.Title;
                 cmsPage.Slug = model.Slug;
@@ -365,8 +372,8 @@ namespace CIPlatform.Repository.Repository
 
         public bool deletecms(long cms_id)
         {
-            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x=>x.CmsPageId == cms_id);
-            if(cmsPage is null)
+            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
+            if (cmsPage is null)
             {
                 return false;
 
@@ -382,14 +389,14 @@ namespace CIPlatform.Repository.Repository
         public CmsPage EditCms(long cms_id, CmsViewModel model, string type)
         {
             CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
-            if(cmsPage != null)
+            if (cmsPage != null)
             {
-                if(type == "edit-cms")
+                if (type == "edit-cms")
                 {
-                    cmsPage.Title =model.Title;
-                    cmsPage.Description=model.Description;
-                    cmsPage.Status=model.Status;
-                    cmsPage.Slug=model.Slug;
+                    cmsPage.Title = model.Title;
+                    cmsPage.Description = model.Description;
+                    cmsPage.Status = model.Status;
+                    cmsPage.Slug = model.Slug;
                     _db.SaveChanges();
                     return cmsPage;
                 }
@@ -403,8 +410,8 @@ namespace CIPlatform.Repository.Repository
 
         public bool deleteuser(long user_id)
         {
-            User user = _db.Users.FirstOrDefault(x=>x.UserId == user_id);
-            if(user is null)
+            User user = _db.Users.FirstOrDefault(x => x.UserId == user_id);
+            if (user is null)
             {
                 return false;
             }
@@ -412,10 +419,10 @@ namespace CIPlatform.Repository.Repository
             {
                 _db.Comments.RemoveRange(_db.Comments.Where(x => x.UserId == user.UserId));
                 _db.FavoriteMissions.RemoveRange(_db.FavoriteMissions.Where(x => x.UserId == user.UserId));
-                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x=>x.UserId==user.UserId));
-                _db.MissionInvites.RemoveRange(_db.MissionInvites.Where(x=>x.FromUserId == user.UserId || x.FromUserId == user.UserId));
+                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x => x.UserId == user.UserId));
+                _db.MissionInvites.RemoveRange(_db.MissionInvites.Where(x => x.FromUserId == user.UserId || x.FromUserId == user.UserId));
                 _db.MissionRatings.RemoveRange(_db.MissionRatings.Where(x => x.UserId == user.UserId));
-                _db.Stories.RemoveRange(_db.Stories.Where(x=>x.UserId == user.UserId));
+                _db.Stories.RemoveRange(_db.Stories.Where(x => x.UserId == user.UserId));
                 _db.StoryViews.RemoveRange(_db.StoryViews.Where(x => x.UserId == user.UserId));
                 _db.StoryInvites.RemoveRange(_db.StoryInvites.Where(x => x.FromUserId == user.UserId || x.FromUserId == user.UserId));
                 _db.Timesheets.RemoveRange(_db.Timesheets.Where(x => x.UserId == user.UserId));
@@ -423,6 +430,48 @@ namespace CIPlatform.Repository.Repository
                 _db.Users.Remove(user);
                 _db.SaveChanges();
                 return true;
+            }
+        }
+
+        public User AddUser(UserViewModel model)
+        {
+            string secpass = BCrypt.Net.BCrypt.HashPassword(model.Password);
+            User user = new User();
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.Password = secpass;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Role = model.Role;
+            }
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            return user;
+        }
+
+        public User EditUser(long user_id, UserViewModel model, string type)
+        {
+            User user = _db.Users.FirstOrDefault(x => x.UserId == user_id);
+            if (user is not null)
+            {
+                if (type == "edit-user")
+                {
+                    user.EmployeeId = model.EmpId;
+                    user.Role = model.Role;
+                    user.Department = model.Department;
+                    user.Status = model.status;
+                    _db.SaveChanges();
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
             }
         }
     }

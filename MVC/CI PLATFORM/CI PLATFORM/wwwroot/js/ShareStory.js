@@ -109,8 +109,6 @@ function savestory() {
 
     }
 }
-
-
 function validate() {
     mission = parseInt($('.form-select').find(':selected').val())
     title = $('.title').val()

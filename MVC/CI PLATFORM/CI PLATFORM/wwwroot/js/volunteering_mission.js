@@ -57,8 +57,7 @@ function AddComments(missionId, UserId) {
                 missionId: missionId
             },
             success: function (data) {
-                $("#comment-status").html("comment sent for approvel");
-                $("#comment-status").css("color", "green");
+               
                 $('#user-comment').val('');
                 
             }
