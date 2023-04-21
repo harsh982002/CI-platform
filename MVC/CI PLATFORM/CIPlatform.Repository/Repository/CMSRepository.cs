@@ -60,8 +60,9 @@ namespace CIPlatform.Repository.Repository
         }
 
         /*MissionApplication*/
-        public List<MissionAppViewModel> GetApp()
+        public MissionAppViewModel GetApp()
         {
+            MissionAppViewModel model = new MissionAppViewModel();
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
                                                                                         select new MissionAppViewModel
@@ -73,7 +74,8 @@ namespace CIPlatform.Repository.Repository
                                                                                             Title = ma.Mission.Title,
                                                                                             AppliedAt = ma.AppliedAt,
                                                                                         }).ToList();
-            return allapplications;
+            model.MissionApps = allapplications;
+            return model;
         }
         public bool updatestatus(long id, string? status)
         {
@@ -100,8 +102,9 @@ namespace CIPlatform.Repository.Repository
         }
 
         /*Mission*/
-        public List<MissionSelectViewModel> GetMission()
+        public MissionSelectViewModel GetMission()
         {
+            MissionSelectViewModel model = new MissionSelectViewModel();
             List<CIPlatform.Entitites.Models.Mission> missions = _db.Missions.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> allmission = (from m in missions
                                                                                       select new MissionSelectViewModel
@@ -112,15 +115,20 @@ namespace CIPlatform.Repository.Repository
                                                                                           StartDate = m.StartDate,
                                                                                           EndDate = m.EndDate,
 
+
                                                                                       }).ToList();
-
-
-            return allmission;
+            model.citys = _db.Cities.ToList();
+            model.countries = _db.Countries.ToList();
+            model.Skills = _db.Skills.ToList();
+            model.theme = _db.MissionThemes.ToList();
+            model.Missions = allmission;
+            return model;
         }
 
         /*Story*/
-        public List<StorySelectViewModel> GetStory()
+        public StorySelectViewModel GetStory()
         {
+            StorySelectViewModel model = new StorySelectViewModel();
             List<CIPlatform.Entitites.Models.Story> stories = _db.Stories.ToList();
             List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> allstory = (from s in stories
                                                                                   select new StorySelectViewModel
@@ -130,8 +138,10 @@ namespace CIPlatform.Repository.Repository
                                                                                       UserName = s.User.FirstName + " " + s.User.LastName,
                                                                                       MissionId = s.MissionId,
                                                                                       MissionName = s.Mission.Title,
+                                                                                     
                                                                                   }).ToList();
-            return allstory;
+            model.Stories = allstory;
+            return model;
         }
 
         public bool deleteStory(long story_id)
@@ -176,8 +186,8 @@ namespace CIPlatform.Repository.Repository
         }
 
         /*Themes*/
-        public List<MissionThemeViewModel> GetTheme()
-        {
+        public MissionThemeViewModel GetTheme()
+        {   MissionThemeViewModel model = new MissionThemeViewModel();
             List<CIPlatform.Entitites.Models.MissionTheme> themes = _db.MissionThemes.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> allthemes = (from t in themes
                                                                                     select new MissionThemeViewModel
@@ -188,7 +198,8 @@ namespace CIPlatform.Repository.Repository
 
 
                                                                                     }).ToList();
-            return allthemes;
+            model.MissionThemes = allthemes;
+            return model;
         }
 
         public bool deletetheme(long theme_id)
@@ -243,8 +254,9 @@ namespace CIPlatform.Repository.Repository
 
         /*Skills*/
 
-        public List<SkillViewModel> GetSkill()
+        public SkillViewModel GetSkill()
         {
+            SkillViewModel model = new SkillViewModel();
             List<CIPlatform.Entitites.Models.Skill> skills = _db.Skills.ToList();
             List<CIPlatform.Entitites.ViewModel.SkillViewModel> allskills = (from s in skills
                                                                              select new SkillViewModel
@@ -253,7 +265,8 @@ namespace CIPlatform.Repository.Repository
                                                                                  SkillName = s.SkillName,
                                                                                  Status = s.Status,
                                                                              }).ToList();
-            return allskills;
+            model.SkillList = allskills;
+            return model;
         }
 
         public Skill AddSkill(long user_id, SkillViewModel model)
@@ -309,8 +322,9 @@ namespace CIPlatform.Repository.Repository
         }
 
         /*User*/
-        public List<UserViewModel> GetUser()
+        public UserViewModel GetUser()
         {
+            UserViewModel model = new UserViewModel();
             List<CIPlatform.Entitites.Models.User> users = _db.Users.ToList();
             List<CIPlatform.Entitites.ViewModel.UserViewModel> allusers = (from u in users
                                                                            select new UserViewModel
@@ -330,11 +344,13 @@ namespace CIPlatform.Repository.Repository
                                                                                ProfileText = u.ProfileText,
                                                                                Avatar = u.Avatar,
                                                                            }).ToList();
-            return allusers;
+            model.UserViewModels = allusers;
+            return model;
         }
 
-        public List<CmsViewModel> GetCms()
+        public CmsViewModel GetCms()
         {
+            CmsViewModel model = new CmsViewModel();
             List<CIPlatform.Entitites.Models.CmsPage> cmsPages = _db.CmsPages.ToList();
             List<CIPlatform.Entitites.ViewModel.CmsViewModel> allCms = (from c in cmsPages
                                                                         select new CmsViewModel
@@ -345,7 +361,8 @@ namespace CIPlatform.Repository.Repository
                                                                             Status = c.Status,
                                                                             Title = c.Title,
                                                                         }).ToList();
-            return allCms;
+            model.cmsViewModel = allCms;
+            return model;
         }
 
         public CmsViewModel GetAllCMS()
@@ -473,6 +490,60 @@ namespace CIPlatform.Repository.Repository
             {
                 return null;
             }
+        }
+
+        public bool deletemission(long mission_id)
+        {
+            CIPlatform.Entitites.Models.Mission mission = _db.Missions.FirstOrDefault(x => x.MissionId == mission_id);
+            if (mission is not null)
+            {
+                _db.Comments.RemoveRange(_db.Comments.Where(x=>x.MissionId == mission.MissionId));
+                _db.FavoriteMissions.RemoveRange(_db.FavoriteMissions.Where(x => x.MissionId == mission.MissionId));
+                _db.MissionDocuments.RemoveRange(_db.MissionDocuments.Where(x => x.MissionId == mission.MissionId));
+                _db.MissionInvites.RemoveRange(_db.MissionInvites.Where(x => x.MissionId == mission.MissionId));
+                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x=>x.MissionId == mission.MissionId));
+                _db.MissionMedia.RemoveRange(_db.MissionMedia.Where(x => x.MissionId == mission.MissionId));
+                _db.MissionRatings.RemoveRange(_db.MissionRatings.Where(x => x.MissionId == mission.MissionId));
+                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x=>x.MissionId== mission.MissionId));
+                _db.Stories.RemoveRange(_db.Stories.Where(x => x.MissionId == mission.MissionId));
+                _db.Timesheets.RemoveRange(_db.Timesheets.Where(x => x.MissionId == mission.MissionId));
+                _db.GoalMissions.RemoveRange(_db.GoalMissions.Where(x => x.MissionId == mission.MissionId));
+                _db.Missions.Remove(mission);
+                _db.SaveChanges();
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool AddMission(MissionSelectViewModel model)
+        {
+            CIPlatform.Entitites.Models.Mission mission = new Entitites.Models.Mission();
+            
+                mission.CountryId = model.CountryId;
+                mission.CityId = model.CityId;
+                mission.ThemeId = model.ThemeId;
+                mission.Title = model.Title;
+                mission.Description = model.Description;
+                mission.StartDate = model.StartDate;
+                mission.EndDate = model.EndDate;
+                mission.Deadline = model.Deadline;
+                mission.OrganizationName = model.OrganizationName;
+                mission.OrganizationDetail = model.OrganizationDetail;
+                mission.MissionType = model.missiontype;
+                mission.GoalObject = model.goalobject;
+                mission.TotalSeats = model.TotalSeats;
+                mission.Achieved = model.Achieved;
+                mission.Status = "1";
+                mission.AvbSeat = model.AvbSeat;
+                mission.Availability = model.Availability;
+
+            _db.Missions.Add(mission);
+            _db.SaveChanges();
+            return true;
         }
     }
 }

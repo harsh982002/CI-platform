@@ -21,7 +21,7 @@ namespace CIPlatform.Entitites.ViewModel
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string? Email { get; set; }
 
-
+        [Required]
         public string? EmpId { get; set; }
 
         public string? Department { get; set; }
@@ -39,6 +39,7 @@ namespace CIPlatform.Entitites.ViewModel
         [Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string? ConfirmPassword { get; set; }
 
+        [Required]
         public string? Role { get; set; }
 
         public string? status { get; set; }
@@ -51,6 +52,6 @@ namespace CIPlatform.Entitites.ViewModel
 
         public string? Avatar { get; set; }
 
-        public List<UserViewModel>? userViewModels { get; set; }
+        public List<UserViewModel>? UserViewModels { get; set; }
     }
 }

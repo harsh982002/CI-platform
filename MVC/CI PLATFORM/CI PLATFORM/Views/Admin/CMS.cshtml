@@ -1,5 +1,4 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -7,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" asp-append-version="true" />
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
-@model List<CIPlatform.Entitites.ViewModel.CmsViewModel>
+@model CIPlatform.Entitites.ViewModel.CmsViewModel
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -22,10 +21,10 @@
                     <img class="search" src="~/images/search.png" alt="not load" />
                     <div class="form-floating w-75 d-flex">
                         <input type="search" class="form-control search-input" id="floatingSearch" style="border:none;" placeholder="Search Users...." />
-                        <label for="floatingSearch" class="d-flex align-items-center" >Search Users....</label>
+                        <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
                     </div>
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-target="#Add" onclick="clearModal()" data-bs-toggle="modal" style="border: 1px solid #F88634; border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;font-size:smaller;" >
+                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-target="#Add" onclick="clearModal()" data-bs-toggle="modal" style="border: 1px solid #F88634; border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;font-size:smaller;">
                     <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
                 </button>
             </div>
@@ -38,27 +37,30 @@
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
-                          <tbody>
-                              @{
-                                  foreach (var item in Model)
-                                  {
-                                      <tr id="cms-@item.CmsPageId">
-                              <td>@item.Title</td>
-
-                                @if (item.Status == "1")
+                    <tbody>
+                            @{
+                                foreach (var item in Model.cmsViewModel)
                                 {
-                              <td><span style="color:#02f702">Active</span></td>
-                                  }
-                                else{
-                              <td><span style="color:red">Offline</span></td>
-                                 }
-                              <td><img  src="~/images/edit.png"  data-bs-target="#Add" data-bs-toggle="modal" class="edbutton" onclick="editcmspage('@item.CmsPageId','@item.Title','@item.Description','@item.Slug','@item.Status','edit-cms')" alt=""/>
-                                   <img src="~/images/bin.png"  data-bs-target="#delete" data-bs-toggle="modal" onclick="getcms('@item.CmsPageId')" class="ms-2 edbutton" alt="" /></td>
-                            </tr>
-                                  }
-                              }
-                          </tbody>
-                     </thead>   
+                                <tr id="cms-@item.CmsPageId">
+                                    <td>@item.Title</td>
+
+                                        @if (item.Status == "1")
+                                        {
+                                        <td><span style="color:#02f702">Active</span></td>
+                                        }
+                                        else
+                                        {
+                                        <td><span style="color:red">Offline</span></td>
+                                        }
+                                    <td>
+                                        <img src="~/images/edit.png" data-bs-target="#Add" data-bs-toggle="modal" class="edbutton" onclick="editcmspage('@item.CmsPageId','@item.Title','@item.Description','@item.Slug','@item.Status','edit-cms')" alt="" />
+                                        <img src="~/images/bin.png" data-bs-target="#delete" data-bs-toggle="modal" onclick="getcms('@item.CmsPageId')" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                </tr>
+                                }
+                            }
+                    </tbody>
+                    </thead>
                 </table>
                 <partial name="Pagination_partial" />
             </div>
@@ -74,34 +76,35 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-
+           
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
             </div>
+
             <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                 <div class="w-100">
                     <label class="form-label mt-2">Title</label>
                     <input class="form-control title" id="title" value="" />
-                    <span class="text-danger d-none" id="title-alert">Title can't be empty!</span>
+                    <span class="text-danger d-none" id="titleAlert">Title can't be empty.</span>
                 </div>
                 <div class="w-100 form-group">
                     <label class="form-label mt-2">Description</label>
-                    <textarea id="editor"></textarea>
-                    <span class="text-danger d-none" id="description-alert">Description can't be empty!</span>
+                    <textarea id="editor" ></textarea>
+                   
                 </div>
 
                 <div class="w-100">
                     <label class="form-label mt-2">Slug</label>
                     <input class="form-control slug" id="slug" value="" />
-                    <span class="text-danger d-none" id="slug-alert">Slug can't be empty!</span>
+                    <span class="text-danger d-none" id="slugAlert">Slug can't be empty.</span>
                 </div>
                 <div class="w-100">
                     <label class="form-label mt-2">Status</label>
-                     <select id='status' class="form-select"  aria-label="Select Mission">
-                            
-                           <option value=0>0</option>
-                            <option value=1>1</option>
-                        </select>
+                    <select id='status' class="form-select" aria-label="Select Mission">
+
+                        <option value=0>0</option>
+                        <option value=1>1</option>
+                    </select>
 
                 </div>
             </div>
@@ -130,13 +133,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button" onclick="deletecms()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+                <button type="button" onclick="deletecms()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
 </div>
 
 
-    <input id="cms-id" type="hidden" />
-    <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/6/tinymce.min.js"></script>
-    <script src="~/js/cmspage.js"></script>
+<input id="cms-id" type="hidden" />
+<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/6/tinymce.min.js"></script>
+<script src="~/js/cmspage.js"></script>
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

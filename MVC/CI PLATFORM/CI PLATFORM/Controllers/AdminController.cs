@@ -27,7 +27,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.CmsViewModel> cms = _allRepository.cmsRepository.GetCms();
+                CIPlatform.Entitites.ViewModel.CmsViewModel cms = _allRepository.cmsRepository.GetCms();
                 return View(cms);
             }
        
@@ -78,7 +78,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.UserViewModel> users = _allRepository.cmsRepository.GetUser();
+                CIPlatform.Entitites.ViewModel.UserViewModel users = _allRepository.cmsRepository.GetUser();
                 return View(users);
             }
         }
@@ -132,7 +132,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> themes = _allRepository.cmsRepository.GetTheme();
+                CIPlatform.Entitites.ViewModel.MissionThemeViewModel themes = _allRepository.cmsRepository.GetTheme();
                 return View(themes);
             }
         }
@@ -177,7 +177,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> applications = _allRepository.cmsRepository.GetApp();
+                CIPlatform.Entitites.ViewModel.MissionAppViewModel applications = _allRepository.cmsRepository.GetApp();
                 return View(applications);
             }
            
@@ -201,12 +201,25 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel> missions = _allRepository.cmsRepository.GetMission();
+                CIPlatform.Entitites.ViewModel.MissionSelectViewModel missions = _allRepository.cmsRepository.GetMission();
                 return View(missions);
             }
         }
 
-
+        [HttpPost]
+        [Route("/Admin/Mission")]
+        public IActionResult Mission_CMS(string? type,long mission_id)
+        {
+            if (type == "mission-delete")
+            {
+                bool success = _allRepository.cmsRepository.deletemission(mission_id);
+                return Json(new { success });
+            }
+            else
+            {
+                return null;
+            }
+        }
         [Route("/Admin/Story")]
         public IActionResult Story_CMS()
         {
@@ -218,7 +231,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.StorySelectViewModel> stories = _allRepository.cmsRepository.GetStory();
+                CIPlatform.Entitites.ViewModel.StorySelectViewModel stories = _allRepository.cmsRepository.GetStory();
                 return View(stories);
             }
         }
@@ -257,7 +270,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                List<CIPlatform.Entitites.ViewModel.SkillViewModel> skills = _allRepository.cmsRepository.GetSkill();
+                CIPlatform.Entitites.ViewModel.SkillViewModel skills = _allRepository.cmsRepository.GetSkill();
                 return View(skills);
             }
         }
@@ -292,6 +305,27 @@ namespace CI_PLATFORM.Controllers
                 Skill skill = _allRepository.cmsRepository.AddSkill(userId, model);
                 return View(skill);
             }
+        }
+
+        [Route("/Admin/AddMission")]
+        public IActionResult AddMission(CIPlatform.Entitites.ViewModel.MissionSelectViewModel model)
+        {
+            if (model.mission is null)
+            {
+                CIPlatform.Entitites.ViewModel.MissionSelectViewModel missions = _allRepository.cmsRepository.GetMission();
+                return View(missions);
+            }
+            else
+            {
+                
+                
+                    bool success = _allRepository.cmsRepository.AddMission(model.mission);
+                    CIPlatform.Entitites.ViewModel.MissionSelectViewModel mis = _allRepository.cmsRepository.GetMission();
+                    return View("Mission_CMS", mis);
+                
+               
+            }
+
         }
     }
 }

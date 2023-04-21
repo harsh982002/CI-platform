@@ -5,7 +5,7 @@
     ViewData["title"] = "Admin";
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
-@model  List<CIPlatform.Entitites.ViewModel.MissionSelectViewModel>
+@model  CIPlatform.Entitites.ViewModel.MissionSelectViewModel
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -23,9 +23,9 @@
                         <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
                     </div>
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center">
+                <a href="/Admin/AddMission" class="btn applybutton d-flex justify-content-between align-items-center">
                     <img src="~/images/plus.png"  class="me-2" style="height:13px;" /><span>Add</span>
-                </button>
+                </a>
             </div>
 
             <div class="w-100" style="overflow-x:auto;">
@@ -44,15 +44,15 @@
                     </thead>
                     <tbody>
                             @{
-                            foreach (var item in @Model)
+                            foreach (var item in @Model.Missions)
                             {
-                            <tr>
+                            <tr id="mission-@item.mission_id">
                             <td>@item.Title</td>
                             <td>@item.missiontype</td>
                             <td>@item.StartDate?.ToString().Substring(0,11)</td>
                             <td>@item.EndDate?.ToString().Substring(0,11)</td>
-                            <td><img  src="~/images/edit.png" class="edbutton" alt=""/>
-                            <img src="~/images/bin.png"  class="ms-2 edbutton" alt="" /></td>
+                            <td><img  src="~/images/edit.png"   class="edbutton" alt=""/>
+                            <img src="~/images/bin.png" onclick="getmission('@item.mission_id')" data-bs-toggle="modal" data-bs-target="#delete"  class="ms-2 edbutton" alt="" /></td>
                             </tr>
                             }
                             }
@@ -67,3 +67,22 @@
         <partial name="Mobile_Navigation_partial" />
     </div>
 </div>
+<div class="modal fade" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Skill</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure? You want to delete the Skill?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="deletemission()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="mission-id" type="hidden" />
+<script src="~/js/missioncms.js"></script>

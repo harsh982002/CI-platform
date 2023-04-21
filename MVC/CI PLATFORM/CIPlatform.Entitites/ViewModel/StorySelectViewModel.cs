@@ -17,5 +17,7 @@ namespace CIPlatform.Entitites.ViewModel
         public long? MissionId { get; set; }
 
         public string? MissionName { get; set; }
+
+        public List<StorySelectViewModel>? Stories { get; set; }
     }
 }

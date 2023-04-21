@@ -41,7 +41,6 @@ namespace CIPlatform.Repository.Repository
         }
         public bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type)
         {
-            
             CIPlatform.Entitites.Models.Story story = new CIPlatform.Entitites.Models.Story();
             if (type == "PUBLISHED")
             {
@@ -194,9 +193,9 @@ namespace CIPlatform.Repository.Repository
         {
             CIPlatform.Entitites.Models.MissionApplication mission = new CIPlatform.Entitites.Models.MissionApplication();
             mission.ApprovalStatus = "APPROVE";
-
+            var story = _db.Stories.Where(s=>s.UserId == user_id && s.StatusUserwant =="DRAFT").FirstOrDefault();
             List<CIPlatform.Entitites.Models.Mission> User_Applied_Missions = (from m in missionApplications
-                                                                               where m.UserId == user_id && m.ApprovalStatus == "APPROVE"
+                                                                               where m.UserId == user_id && !m.Mission.Stories.Contains(story)
                                                                                select m.Mission).ToList();
             return User_Applied_Missions;
         }

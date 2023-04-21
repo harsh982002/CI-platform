@@ -1,0 +1,205 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Admin";
+    ViewData["css"] = "Volunteering_Timesheet.css";
+}
+@model CIPlatform.Entitites.ViewModel.MissionSelectViewModel 
+<div class="row w-100" style="height:90vh;">
+    <div class="col-lg-3 col-md-3 navigation col-sm-3">
+        <partial name="Navigation_partial" />
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <div class="container-fluid mt-5">
+            <form asp-action="AddMission" id="form" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                <div class="row main w-100">
+                    <div class="col-lg-12 col-md-7 profile-details">
+                        <div class="w-100 border-bottom">
+                            <h5>Mission Details</h5>
+                        </div>
+                        <div class="row mt-2">
+                           
+                            <div class="col-lg-4 col-md-6 mt-2">
+                                <label class="form-label">Country</label><select id='country' asp-for=mission.CountryId onchange="getcities()" class="form-select country me-3" aria-label="Select Mission">
+                                    <option disabled selected>Select Your Country</option>
+                                      @{
+                                        
+                                        foreach (var item in Model.countries)
+                                        {
+                                             if (item.CountryId == Model.CountryId)
+                                        {
+                                            <option value=@item.CountryId selected>@item.Name</option>
+                                        }else{
+                                        <option value=@item.CountryId>@item.Name</option>
+                                        }
+                                        }
+                                        }
+                                        
+
+                                </select>
+                                <span asp-validation-for=mission.CountryId class="text-danger d-block"></span>
+                            </div>
+                             <div class="col-lg-4 col-md-6 mt-2">
+                                <label class="form-label">City</label><select id='city' asp-for=mission.CityId class="form-select city me-3" aria-label="Select Mission">
+                            <option disabled selected>Select Your City</option>
+                            @{
+                                if (Model.citys is not null)
+                                {
+                                    foreach (var item in Model.citys)
+                                    {
+                                        if (item.CityId == Model.CityId)
+                                        {
+                                            <option value=@item.CityId selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@item.CityId>@item.Name</option>
+                                        }
+                                    }
+                                }
+                            }
+                        </select>
+                                <span asp-validation-for=mission.CityId class="text-danger d-block"></span>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mt-2">
+                                <label class="form-label">Theme</label><select id='country' asp-for=mission.ThemeId  class="form-select country me-3" aria-label="Select Mission">
+                                    <option disabled selected>Select Your theme</option>
+                                    @{
+
+                                        foreach (var item in Model.theme)
+                                        { if (item.MissionThemeId == Model.ThemeId)
+                                            {
+                                                <option value=@item.MissionThemeId selected>@item.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value=@item.MissionThemeId>@item.Title</option>
+                                            }
+                                        }
+                                        }
+                                        
+
+                                </select>
+                                <span class="text-danger d-block"></span>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mt-2">
+                                <label class="form-label">Skills</label><select id='country' asp-for=mission.skillid class="form-select country me-3" aria-label="Select Mission">
+                                    <option disabled selected>Select Your theme</option>
+                                     @{
+                                       
+                                        foreach (var item in Model.Skills)
+                                        {
+                                             if (item.SkillId == Model.skillid)
+                                        {
+                                            <option value=@item.SkillId selected>@item.SkillName</option>
+                                        }
+                                        <option value=@item.SkillId>@item.SkillName</option>
+                                        }
+                                        }
+                                        
+
+                                </select>
+                                <span class="text-danger d-block"></span>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 mt-2"><label class="form-label">Title</label><input placeholder="Enter Mission Title" asp-for=mission.Title type="text" class="form-control" id='title' />
+                             <span asp-validation-for=mission.Title class="text-danger d-block"></span></div>
+                            <div class="col-lg-4 mt-2 col-md-6 ">
+                                <label class="form-label">Availablity</label><select id='avilablity' asp-for=mission.Availability class="form-select me-3" aria-label="Select Mission">
+                                    <option value=0 disabled selected>Select Your Availablity</option>
+                                    <option value='Daily'>Daily</option>
+                                    <option value='Weekly'>Weekly</option>
+                                    <option value='Weekend'>Weekend</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <label class="form-label">Description</label><textarea placeholder="Enter Your Bio..." asp-for=mission.Description rows=3 class="form-control" id='bio'></textarea>
+                                <span asp-validation-for=mission.Description class="text-danger d-block"></span>
+                            </div>
+                            <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
+                                <label class="form-label" type="date">Start Date</label>
+                                <input asp-for=mission.StartDate type="date" class="form-control" placeholder="Select Date" />
+                                <span class="text-danger d-none" id="date">Date Is Required</span>
+                                
+                            </div>
+                            <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
+                                <label class="form-label" type="date">End Date</label>
+                                <input asp-for=mission.EndDate type="date" class="form-control" placeholder="Select Date" />
+                                <span class="text-danger d-none" id="date">Date Is Required</span>
+                               
+                            </div>
+                            <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
+                                <label asp-for=mission.Deadline class="form-label" type="date">Deadline</label>
+                                <input type="date" class="form-control" placeholder="Select Date" />
+                                <span class="text-danger d-none" id="date">Date Is Required</span>
+                               
+                            </div>
+                            <div class="col-lg-12"><label class="form-label">Organization Name</label><input asp-for=mission.OrganizationName placeholder="Enter Mission Title" type="text" class="form-control" id='title' />
+                             <span asp-validation-for=mission.OrganizationName class="text-danger d-block"></span></div>
+                            <div class="col-lg-12">
+                                <label class="form-label">Organization Details</label><textarea placeholder="Enter Your Bio..." rows=2 asp-for=mission.OrganizationDetail class="form-control" id='bio'></textarea>
+                                <span asp-validation-for=mission.OrganizationDetail class="text-danger d-block"></span>
+                            </div>
+
+                            <div class="col-lg-3 mt-2 col-md-6 ">
+                                <label class="form-label">Mission Type</label><select id='avilablity' asp-for=mission.missiontype class="form-select me-3" aria-label="Select Mission">
+                                    <option value=0 disabled selected>Select Mission Type</option>
+                                    <option value='GOAL'>Goal</option>
+                                    <option value='TIME'>Time</option>
+                                </select>
+                                 <span asp-validation-for=mission.missiontype class="text-danger d-block"></span>
+                            </div>
+                            <div class="col-lg-3 mt-2 col-md-6 ">
+                                <label class="form-label">Total Seats</label>
+                                <input asp-for=mission.TotalSeats type="number" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span asp-validation-for=mission.TotalSeats class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="col-lg-3 mt-2 col-md-6 ">
+                                <label class="form-label">Goal Object</label>
+                                <input asp-for=mission.goalobject type="text" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span asp-validation-for=mission.goalobject class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="col-lg-3 mt-2 col-md-6 ">
+                                <label class="form-label">Achieved</label>
+                                <input asp-for=mission.Achieved type="text" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label">Avb Seats</label>
+                                <input asp-for=mission.AvbSeat type="number" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span asp-validation-for=mission.AvbSeat class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label">Mission Media</label>
+                                <input type="file" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label">Mission Documents</label>
+                                <input type="file" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mobile-navigation">
+        <partial name="Mobile_Navigation_partial" />
+    </div>
+</div>
+
+<input id="mission-id" type="hidden" />
+<script src="~/js/missioncms.js"></script>
+    @section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    }

@@ -8,7 +8,7 @@
 }
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accesor
-@model List<CIPlatform.Entitites.ViewModel.UserViewModel>
+@model CIPlatform.Entitites.ViewModel.UserViewModel
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -46,7 +46,7 @@
                     </thead>
                     <tbody>
                         @{
-                            foreach (var item in Model)
+                            foreach (var item in Model.UserViewModels)
                             {
                                 <tr id="user-@item.user_id">
                                     <td>@item.FirstName</td>
@@ -63,8 +63,9 @@
                                         <td><span style="color:red">Offline</span></td>
                                     }
                                     <td>
-                                        <img src="~/images/edit.png" class="edbutton" data-bs-toggle="modal" data-bs-target="#Edit" onclick="Edituser('@item.user_id','@item.FirstName','@item.LastName'
-              ,'@item.Email','@item.Password','@item.PhoneNumber','@item.Role','@item.CityId','@item.CountryId','@item.EmpId','@item.Department','@item.status','@item.ProfileText','edit-user','@item.Avatar')" alt="" />
+                                        <img src="~/images/edit.png" class="edbutton" data-bs-toggle="modal" data-bs-target="#Edit" onclick="Edituser('@item.user_id','@item.FirstName','@item.LastName','@item.Email'
+                                        ,'@item.Password','@item.PhoneNumber','@item.Role','@item.CityId','@item.CountryId','@item.EmpId','@item.Department','@item.status'
+                                        ,'@item.ProfileText','edit-user','@item.Avatar')" alt="" />
                                         <img src="~/images/bin.png" data-bs-target="#delete" onclick="getuser('@item.user_id')" data-bs-toggle="modal" class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
@@ -110,27 +111,27 @@
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">FirstName</label>
                         <input type="text" class="form-control" id="fname" placeholder="Enter First Name" required />
-                        <span class="text-danger d-none" id="first-alert">Please Enter FirstName</span>
+                        <span class="text-danger d-none" id="firstalert">Please Enter FirstName</span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">LastName</label>
                         <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" required />
-                        <span class="text-danger d-none" id="last-alert">Please Enter LastName</span>
+                        <span class="text-danger d-none" id="lastalert">Please Enter LastName</span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="Enter MailId" required />
-                        <span class="text-danger d-none" id="mail-alert">Please Enter Email</span>
+                        <span class="text-danger d-none" id="mailalert">Please Enter Email</span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">Password</label>
                         <input type="password" class="form-control" id="pass" placeholder="Enter Password" required />
-                        <span class="text-danger d-none" id="pass-alert">Please Enter Password</span>
+                        <span class="text-danger d-none" id="passalert">Please Enter Password</span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">PhoneNumber</label>
                         <input type="tel" class="form-control" id="phone" placeholder="Enter PhoneNumber" required />
-                        <span class="text-danger d-none" id="phone-alert">Please Enter PhoneNumber</span>
+                        <span class="text-danger d-none" id="phonealert">Please Enter PhoneNumber</span>
                     </div>
                     <div class="col-lg-6 col-md-6 mt-2">
                         <label class="form-label mt-2">Role</label>
@@ -225,7 +226,7 @@
                 <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
                     <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
                 </div>
-                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="EditUserDetails()" data-bs-dismiss="modal" >Submit</button>
+                <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="EditUserDetails()">Submit</button>
             </div>
         </div>
     </div>

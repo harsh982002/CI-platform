@@ -5,7 +5,7 @@
     ViewData["title"] = "Admin";
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
-@model List<CIPlatform.Entitites.ViewModel.StorySelectViewModel>
+@model CIPlatform.Entitites.ViewModel.StorySelectViewModel
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -41,7 +41,7 @@
                     </thead>
                     <tbody>
                             @{
-                            foreach (var item in Model)
+                            foreach (var item in Model.Stories)
                             {
                             <tr>
                             <td>@item.StoryName</td>
@@ -117,4 +117,4 @@
 
 
 <input id="story-id" type="hidden" />
-<script src="~/js/cms.js"></script>
+<script src="~/js/storycms.js"></script>
