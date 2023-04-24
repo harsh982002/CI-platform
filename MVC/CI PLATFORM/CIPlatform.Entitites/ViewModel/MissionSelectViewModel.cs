@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ namespace CIPlatform.Entitites.ViewModel
 {
     public class MissionSelectViewModel
     {
-        public long? mission_id { get; set; }
+        public long mission_id { get; set; }
 
         public long? ThemeId { get; set; }
 
@@ -60,7 +61,13 @@ namespace CIPlatform.Entitites.ViewModel
         public List<Skill>? Skills { get; set; }
         public List<MissionTheme>? theme { get; set; }
 
+        public string? selected_skill { get; set; }
+        public List<MissionSkill>? missionSkills { get; set; }
         public MissionSelectViewModel? mission { get; set; }
+
+        public List<IFormFile>? missionMediums { get; set;}
+
+        public List<IFormFile>? MissionDocuments { get; set; }
 
     }
 }

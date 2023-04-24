@@ -164,28 +164,35 @@ namespace CI_PLATFORM.Controllers
         public IActionResult ProfilePage()
         {
             var userId = long.Parse(HttpContext.Session.GetString("UserId"));
-            if (ModelState.IsValid)
-            {
+            if(HttpContext.Session.GetString("UserId") is not null) {
+                if (ModelState.IsValid)
+                {
 
-                CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
-                if (details?.CountryId is not null)
-                {
-                    HttpContext.Session.SetString("Country", details?.CountryId.ToString());
+                    CIPlatform.Entitites.ViewModel.ProfileViewModel details = _allRepository.profileRepository.Get_details(0, userId);
+                    if (details?.CountryId is not null)
+                    {
+                        HttpContext.Session.SetString("Country", details?.CountryId.ToString());
+                    }
+                    if (details?.Avatar is not null)
+                    {
+                        HttpContext.Session.SetString("Avtar", details?.Avatar);
+                    }
+                    if (details?.FirstName is not null && details?.LastName is not null)
+                    {
+                        HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
+                    }
+                    return View(details);
                 }
-                if (details?.Avatar is not null)
+                else
                 {
-                    HttpContext.Session.SetString("Avtar", details?.Avatar);
+                    return View();
                 }
-                if (details?.FirstName is not null && details?.LastName is not null)
-                {
-                    HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
-                }
-                return View(details);
             }
             else
             {
-                return View();
+                return RedirectToAction("Login", "UserAccount");
             }
+            
         }
 
         [HttpPost]

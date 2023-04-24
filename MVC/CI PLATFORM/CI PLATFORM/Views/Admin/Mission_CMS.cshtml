@@ -51,7 +51,7 @@
                             <td>@item.missiontype</td>
                             <td>@item.StartDate?.ToString().Substring(0,11)</td>
                             <td>@item.EndDate?.ToString().Substring(0,11)</td>
-                            <td><img  src="~/images/edit.png"   class="edbutton" alt=""/>
+                            <td><a href="/Admin/EditMission/@item.mission_id" ><img  src="~/images/edit.png"   class="edbutton" alt=""/></a>
                             <img src="~/images/bin.png" onclick="getmission('@item.mission_id')" data-bs-toggle="modal" data-bs-target="#delete"  class="ms-2 edbutton" alt="" /></td>
                             </tr>
                             }

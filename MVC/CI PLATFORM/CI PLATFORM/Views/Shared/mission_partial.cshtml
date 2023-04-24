@@ -12,9 +12,9 @@
         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
-                    <a asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+                    <a href="/Home/Volunteermission/@item.MissionId">
                         <img class="group list-group-image w-100 h-100"
-                         src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+                         src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
                     </a>
                     <div class="location-img">
 
@@ -49,14 +49,14 @@
                        
                     }
                     <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
-                        <a href='/volunteering_mission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
-                            View Details <img class="ms-2" src="images/right-arrow.png" alt="">
+                        <a href='/Home/Volunteermission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                            View Details <img class="ms-2" src="~/images/right-arrow.png" alt="">
                         </a>
                     </div>
                 </div>
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">
-                        @item.Title?.Substring(0,10)...
+                        @item.Title?.Substring(0,20)...
                     </h4>
                     <p class="group inner list-group-item-text">
                         @item.Description?.Substring(0,100).....
@@ -157,7 +157,7 @@
                             }
                             else
                             {
-                                <a class="applyButton btn" asp-action="Volunteermission" asp-controller="Home" asp-route-id="@item.MissionId">
+                                <a class="applyButton btn" href="/Home/Volunteermission/@item.MissionId">
 
                                     Apply <img src="/images/right-arrow.png" alt="">
 

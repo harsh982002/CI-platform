@@ -40,6 +40,12 @@ namespace CIPlatform.Repository.Interface
         bool deletecms(long cms_id);
         CIPlatform.Entitites.Models.CmsPage AddCms(long user_id, CIPlatform.Entitites.ViewModel.CmsViewModel model);
 
+        CIPlatform.Entitites.ViewModel.MissionSelectViewModel getdetails(long id);
+
         CIPlatform.Entitites.Models.CmsPage EditCms(long cms_id, CIPlatform.Entitites.ViewModel.CmsViewModel model, string type);
+
+        bool EditMission(long id, CIPlatform.Entitites.ViewModel.MissionSelectViewModel model);
+
+        CIPlatform.Entitites.ViewModel.BannerViewModel GetBanner();
     }
 }

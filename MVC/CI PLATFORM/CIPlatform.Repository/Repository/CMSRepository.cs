@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisioForge.MediaFramework.Helpers;
 
 namespace CIPlatform.Repository.Repository
 {
@@ -31,6 +32,7 @@ namespace CIPlatform.Repository.Repository
         List<MissionInvite> already_recommended_users = new List<MissionInvite>();
         List<Timesheet> timesheets = new List<Timesheet>();
         List<CmsPage> cmsPages = new List<CmsPage>();
+        List<Banner> banners1 = new List<Banner>();
 
         public CMSRepository(CiplatformContext db)
         {
@@ -57,6 +59,7 @@ namespace CIPlatform.Repository.Repository
             already_recommended_users = _db.MissionInvites.ToList();
             timesheets = _db.Timesheets.ToList();
             cmsPages = _db.CmsPages.ToList();
+            banners1 = _db.Banners.ToList();
         }
 
         /*MissionApplication*/
@@ -114,7 +117,8 @@ namespace CIPlatform.Repository.Repository
                                                                                           Title = m.Title,
                                                                                           StartDate = m.StartDate,
                                                                                           EndDate = m.EndDate,
-
+                                                                                          Deadline = m.Deadline,
+                                                                                         
 
                                                                                       }).ToList();
             model.citys = _db.Cities.ToList();
@@ -522,7 +526,6 @@ namespace CIPlatform.Repository.Repository
         public bool AddMission(MissionSelectViewModel model)
         {
             CIPlatform.Entitites.Models.Mission mission = new Entitites.Models.Mission();
-            
                 mission.CountryId = model.CountryId;
                 mission.CityId = model.CityId;
                 mission.ThemeId = model.ThemeId;
@@ -540,10 +543,157 @@ namespace CIPlatform.Repository.Repository
                 mission.Status = "1";
                 mission.AvbSeat = model.AvbSeat;
                 mission.Availability = model.Availability;
-
             _db.Missions.Add(mission);
             _db.SaveChanges();
+            int count = 1;
+            foreach (var image in model.missionMediums)
+            {
+                FileInfo fileInfo = new FileInfo(image.FileName);
+                string filename = $"mission{mission.MissionId}-image-{count}" + fileInfo.Extension;
+                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                _db.MissionMedia.Add(new MissionMedium
+                {
+                    MissionId = mission.MissionId,
+                    MediaPath = filename
+                });
+                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+                count++;
+            }
+            _db.SaveChanges();
+            foreach (var doc in model.MissionDocuments)
+            {
+                FileInfo fileInfo = new FileInfo(doc.FileName);
+                string filename = $"mission{mission.MissionId}-document-{count}" + fileInfo.Extension;
+                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", filename);
+                _db.MissionDocuments.Add(new MissionDocument
+                {
+                    MissionId = mission.MissionId,
+                    DocumentPath = filename
+                });
+                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+                count++;
+            }
+            _db.SaveChanges();
             return true;
+        }
+
+        public MissionSelectViewModel getdetails(long id)
+        {
+            CIPlatform.Entitites.Models.Mission mission = _db.Missions.Find(id);
+            MissionSelectViewModel model = new MissionSelectViewModel();
+            model.mission = new MissionSelectViewModel();
+            model.mission.mission_id = id;
+            model.mission.Achieved = mission.Achieved;
+            model.mission.Availability = mission.Availability;
+            model.mission.AvbSeat = mission.AvbSeat;
+            model.mission.CityId = mission.CityId;
+            model.mission.CountryId = mission.CountryId;
+            model.mission.Deadline = mission.Deadline;
+            model.mission.Description = mission.Description;
+            model.mission.ThemeId = mission.ThemeId;
+            model.mission.StartDate = mission.StartDate;
+            model.mission.EndDate = mission.EndDate;
+            model.mission.Title = mission.Title;
+            model.mission.TotalSeats = mission.TotalSeats;
+            model.mission.goalobject = mission.GoalObject;
+            model.mission.OrganizationName = mission.OrganizationName;
+            model.mission.OrganizationDetail = mission.OrganizationDetail;
+            model.mission.missiontype = mission.MissionType;
+            model.citys = _db.Cities.ToList();
+            model.countries = _db.Countries.ToList();
+            model.Skills = _db.Skills.ToList();
+            model.theme = _db.MissionThemes.ToList();
+            return model;
+        }
+
+        public bool EditMission(long id, MissionSelectViewModel model)
+        {
+           CIPlatform.Entitites.Models.Mission updatemission = _db.Missions.FirstOrDefault(x=>x.MissionId == id);
+            
+                if (updatemission is not null)
+                {
+                    updatemission.Availability = model.Availability;
+                    updatemission.Achieved = model.Achieved;
+                    updatemission.AvbSeat = model.AvbSeat;
+                    updatemission.CountryId = model.CountryId;
+                    updatemission.CityId = model.CityId;
+                    updatemission.Deadline = model.Deadline;
+                    updatemission.EndDate = model.EndDate;
+                    updatemission.StartDate = model.StartDate;
+                    updatemission.ThemeId = model.ThemeId;
+                    updatemission.GoalObject = model.goalobject;
+                    updatemission.Title = model.Title;
+                    updatemission.Description = model.Description;
+                    updatemission.MissionType = model.missiontype;
+                    updatemission.OrganizationName = model.OrganizationName;
+                    updatemission.OrganizationDetail = model.OrganizationDetail;
+                    _db.SaveChanges();
+                    int count = 1;
+                    foreach (var image in model.missionMediums)
+                    {
+                        FileInfo fileInfo = new FileInfo(image.FileName);
+                        string filename = $"mission{updatemission.MissionId}-image-{count}" + fileInfo.Extension;
+                        string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                        _db.MissionMedia.Add(new MissionMedium
+                        {
+                            MissionId = updatemission.MissionId,
+                            MediaPath = filename
+                        });
+                        using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                        {
+                            image.CopyTo(fileStream);
+                        }
+                        count++;
+                    }
+                    _db.SaveChanges();
+                    foreach (var doc in model.MissionDocuments)
+                    {
+                        FileInfo fileInfo = new FileInfo(doc.FileName);
+                        string filename = $"mission{updatemission.MissionId}-document-{count}" + fileInfo.Extension;
+                        string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", filename);
+                        _db.MissionDocuments.Add(new MissionDocument
+                        {
+                            MissionId = updatemission.MissionId,
+                            DocumentPath = filename
+                        });
+                        using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                        {
+                            image.CopyTo(fileStream);
+                        }
+                        count++;
+                    }
+                    _db.SaveChanges();
+                    return true;
+
+                }
+                
+            else
+            {
+                return false;
+            }
+        }
+
+        public BannerViewModel GetBanner()
+        {
+
+            BannerViewModel model = new BannerViewModel();
+            List<CIPlatform.Entitites.Models.Banner> banners = _db.Banners.ToList();
+            List<CIPlatform.Entitites.ViewModel.BannerViewModel> allbanner = (from b in banners
+                                                                             select new BannerViewModel
+                                                                             {
+                                                                                 BannerId = b.BannerId,
+                                                                                 Text = b.Text,
+                                                                                 Image = b.Image,
+                                                                                 SortOrder = b.SortOrder,
+                                                                             }).ToList();
+            model.Bans = allbanner;
+            return model;
         }
     }
 }

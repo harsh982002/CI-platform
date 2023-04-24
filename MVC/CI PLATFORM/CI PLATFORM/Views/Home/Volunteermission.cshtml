@@ -18,14 +18,14 @@
     <div class="main1  row">
 
         <div class="image  col-lg-6  d-flex flex-column h-100" style="border: none;">
-            <img src="@Model.mission.MissionMedia.ElementAt(0).MediaPath" id="image-area" class=""
+            <img src="~/images/@Model?.mission?.MissionMedia.ElementAt(0).MediaPath" id="image-area" class=""
                  style="max-width: 720px; height: 428px;" />
             <div id="carousel-bottom" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="row p-1">
                             <div class="col-3 p-1">
-                                <img src="@Model.mission.MissionMedia.ElementAt(0).MediaPath"
+                                <img src="~/images/@Model?.mission?.MissionMedia.ElementAt(0).MediaPath"
                                      class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" height="120"
                                      role="img" onclick="display(this)">
                             </div>
@@ -87,7 +87,7 @@
         <div class="card col-lg-6" style="border: none;">
             <div class="card-body mt-3 ">
                 <span class="fs-4 fw-bold dark-gray mt">
-                    @Model.mission.Title
+                    @Model?.mission?.Title
                 </span>
                 <p class="light-gray mt-2" style="font-size:15px">
                     Lorem ipsum dolor sit amet, consectetur
@@ -104,7 +104,7 @@
                             }
                             else
                             {
-                                <span> @Model.mission.StartDate.Value.Day/@Model.mission.StartDate.Value.Month/@Model.mission.StartDate.Value.Year until @Model.mission.EndDate.Value.Day/@Model.mission.EndDate.Value.Month/@Model.mission.EndDate.Value.Year </span>
+                                <span> @Model?.mission?.StartDate.Value.Day/@Model?.mission?.StartDate.Value.Month/@Model?.mission?.StartDate.Value.Year until @Model?.mission?.EndDate.Value.Day/@Model?.mission?.EndDate.Value.Month/@Model?.mission?.EndDate.Value.Year </span>
                             }
                         }
 
@@ -117,7 +117,7 @@
                     <div class="d-flex align-items-center ">
                         <img src="/images/Seats-left.png" />
                         <div class="d-flex flex-column ms-2 ">
-                            <span class="dark-gray">@Model.mission.AvbSeat</span>
+                            <span class="dark-gray">@Model?.mission?.AvbSeat</span>
                             <span class="light-gray fs-fourteen">Seats Left</span>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                 string? str1 = @Model?.mission?.GoalObject;
                                 string str2 = string.Empty;
                                 int goal = 0;
-                                for (int i = 0; i <= str1.Length - 1; i++)
+                                for (int i = 0; i <= str1?.Length - 1; i++)
                                 {
                                     if (Char.IsDigit(str1[i]))
                                         str2 += str1[i];
@@ -173,14 +173,14 @@
                 <div class=" d-flex flex-wrap">
                     @if (@Model.Favorite_mission == 1)
                     {
-                        <button type="submit" onclick="Add(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%; color: red">Remove from favourite</button>
+                        <button type="submit" onclick="Add(@Model?.mission?.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%; color: red">Remove from favourite</button>
                     }
                     else
                     {
-                        <button type="submit" onclick="Add(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%;">Add to favourite</button>
+                        <button type="submit" onclick="Add(@Model?.mission?.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))" id="addToFav" class="rounded-pill border bg-white" style="flex: 45%;">Add to favourite</button>
                     }
 
-                    @if (@Model.applyuser == "APPROVE" && DateTime.Now < @Model.mission.Deadline)
+                    @if (@Model.applyuser == "APPROVE" && DateTime.Now < @Model?.mission?.Deadline)
                     {
                         <button type="button" class="main-btn btn rounded-pill border-bottom rounded-pill me-2 border" data-bs-toggle="modal" data-bs-target="#exampleModal" style="flex: 45%;">
 
@@ -226,7 +226,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" onclick="sendMail(@Model.mission.MissionId)" data-bs-dismiss="modal">Send Mail</button>
+                                    <button type="submit" class="btn btn-primary" onclick="sendMail(@Model?.mission?.MissionId)" data-bs-dismiss="modal">Send Mail</button>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                                 {
                                     for (var i = 1; i <= 5; i++)
                                     {
-                                        if (i <= @Model.Rating)
+                                        if (i <= @Model?.Rating)
                                         {
                                             <img style="height:30px" id='@i-star' onclick="rating(@i,@Accesor?.HttpContext?.Session.GetString("UserId"),@Model?.mission?.MissionId)" src="~/images/selected-star.png" alt="" />
                                         }
@@ -284,7 +284,7 @@
                             <img src="/images/pin1.png" alt="" class="">
                             <div class="mt-3">
                                 <div>city</div>
-                                <div>@Model.mission.City.Name</div>
+                                <div>@Model?.mission?.City.Name</div>
                             </div>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                             <!-- <img src="" alt="" class=""> -->
                             <img src="/images/web.png" alt="" class="">
                             @{
-                                if(@Model.mission.Theme is not null)
+                                if(@Model?.mission?.Theme is not null)
                                 {
                                 <div class="mt-3">
                                 <div>Theme</div>
@@ -317,7 +317,7 @@
                             <img src="/images/calender.png" alt="" class="">
                             <div class="mt-3">
                                 <div>Date</div>
-                                @if (DateTime.Now < @Model.mission.Deadline)
+                                @if (DateTime.Now < @Model?.mission?.Deadline)
                                 {
                                     <div>Ongoing Oppertunity</div>
                                 }
@@ -335,7 +335,7 @@
                             <img src="/images/organization.png" alt="" class="">
                             <div class="mt-3">
                                 <div>Organization</div>
-                                <div>@Model.mission.OrganizationName</div>
+                                <div>@Model?.mission?.OrganizationName</div>
                             </div>
                         </div>
                     </div>
@@ -349,7 +349,7 @@
 
                         @if (Model.applyuser is null)
                         {
-                            if (DateTime.Now < @Model.mission.Deadline)
+                            if (DateTime.Now < @Model?.mission?.Deadline)
                             {
                                 <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
                                 class="applyButton bg-white" style="border: 2px solid #F88634; border-radius: 24px" id="volunteer-status">
@@ -359,7 +359,7 @@
                             }
                             else
                             {
-                                <button type="submit" value="Apply" onclick="ApplyMission(@Model.mission.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
+                                <button type="submit" value="Apply" onclick="ApplyMission(@Model?.mission?.MissionId,@Accesor?.HttpContext?.Session.GetString("UserId"))"
                                 class="applyButton-cls bg-white" @*style="border: 2px solid #F88634; border-radius: 24px"*@ id="volunteer-status" disabled>
                                     closed
 
@@ -429,18 +429,18 @@
 
                             <h5 class="py-3" style="font-size: 25px;">Introduction</h5>
                             <p class="m-2 intro">
-                                @Model.mission.Description
+                                @Model?.mission?.Description
                             </p>
 
                             <h5 class="py-3" style="font-size: 25px;">Challenge</h5>
                             <p class="challenge">
-                                @Model.mission.ShortDescription
+                                @Model?.mission?.ShortDescription
                             </p>
 
                             <h5 class="py-3" style="font-size: 25px;">Documents</h5>
                             <div class="row">
                                 @{
-                                    foreach (var item in @Model?.mission?.MissionDocuments)
+                                    foreach (var item in Model?.mission?.MissionDocuments)
                                     {
                                         <div class="d-flex ms-2 mt-2 align-items-center border rounded-pill p-1">
                                             <a href='~/documents/@item.DocumentPath' target='_blank' style='text-decoration:none; color:black;'>
@@ -493,7 +493,7 @@
                                 <div class="bg-white card ms-3 me-3 mt-1 ScrollStyle " data-spy="scroll">
                                     @if (@Model.mission.Comments != null)
                                     {
-                                        @foreach (var item in @Model.comments)
+                                        @foreach (var item in @Model?.comments)
                                         {
                                             <div class="card-body">
                                                 <div class="d-flex">
@@ -561,10 +561,9 @@
                                         <td class="py-3">Skills</td>
 
                                         <td class="py-3">
-                                            @foreach (var i in @Model.mission.MissionSkills)
-                                            {
-                                                @i.Skill.SkillName <span>,</span>
-                                            }
+                                           
+                                               Web Development <span>,</span>
+                                            
                                         </td>
                                     </tr>
                                 </thead>
@@ -632,7 +631,7 @@
                                 @if (@Model.mission.MissionApplications != null)
                                 {
 
-                                    @foreach (var item in @Model.missionApplications)
+                                    @foreach (var item in @Model?.missionApplications)
                                     {
                                         <div class="d-flex col-3 flex-column m-1 justify-content-center">
                                             @if (@item.User.Avatar is not null)
@@ -696,7 +695,7 @@
                     <div class="thumbnail card d-flex">
                         <div class="img-event">
                             <img class="group list-group-image w-100 h-100"
-                             src="@item.MissionMedia.ElementAt(0).MediaPath" alt="" />
+                             src="~/images/@item.MissionMedia.ElementAt(0).MediaPath" alt="" />
                             <div class="location-img">
                                 <img class="text-light" src="/images/pin.png" alt="">
                                 <span class="text-light">@item.City.Name</span>
@@ -731,10 +730,10 @@
                         </div>
                         <div class="caption mt-3" style=" padding-right: 2% !important; padding-left: 2% !important;">
                             <h4 class="group card-title inner list-group-item-heading">
-                                @item.Title
+                                @item.Title?.Substring(0,20)....
                             </h4>
                             <p class="group inner list-group-item-text">
-                                @item.Description
+                                @item.Description?.Substring(0,100).....
                             </p>
                             <div class="d-flex justify-content-between">
                                 <span class="organization">@item.OrganizationName</span>

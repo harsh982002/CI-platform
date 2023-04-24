@@ -13,6 +13,7 @@
     <div class="col-lg-9 col-md-9 col-sm-9">
         <div class="container-fluid mt-5">
             <form asp-action="AddMission" id="form" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for=mission.mission_id />
                 <div class="row main w-100">
                     <div class="col-lg-12 col-md-7 profile-details">
                         <div class="w-100 border-bottom">
@@ -63,7 +64,7 @@
                                 <span asp-validation-for=mission.CityId class="text-danger d-block"></span>
                             </div>
                             <div class="col-lg-4 col-md-6 mt-2">
-                                <label class="form-label">Theme</label><select id='country' asp-for=mission.ThemeId  class="form-select country me-3" aria-label="Select Mission">
+                                <label class="form-label">Theme</label><select id='theme' asp-for=mission.ThemeId  class="form-select country me-3" aria-label="Select Mission">
                                     <option disabled selected>Select Your theme</option>
                                     @{
 
@@ -84,7 +85,7 @@
                                 <span class="text-danger d-block"></span>
                             </div>
                             <div class="col-lg-4 col-md-6 mt-2">
-                                <label class="form-label">Skills</label><select id='country' asp-for=mission.skillid class="form-select country me-3" aria-label="Select Mission">
+                                <label class="form-label">Skills</label><select id='skill' asp-for=mission.selected_skill class="form-select country me-3" aria-label="Select Mission">
                                     <option disabled selected>Select Your theme</option>
                                      @{
                                        
@@ -121,31 +122,31 @@
                             </div>
                             <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
                                 <label class="form-label" type="date">Start Date</label>
-                                <input asp-for=mission.StartDate type="date" class="form-control" placeholder="Select Date" />
+                                <input id="sdate" asp-for=mission.StartDate type="date" class="form-control" placeholder="Select Date" />
                                 <span class="text-danger d-none" id="date">Date Is Required</span>
                                 
                             </div>
                             <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
-                                <label class="form-label" type="date">End Date</label>
+                                <label id="edate" class="form-label" type="date">End Date</label>
                                 <input asp-for=mission.EndDate type="date" class="form-control" placeholder="Select Date" />
                                 <span class="text-danger d-none" id="date">Date Is Required</span>
                                
                             </div>
                             <div class=" col-lg-4 col-md-3 col-sm-3 mt-2">
-                                <label asp-for=mission.Deadline class="form-label" type="date">Deadline</label>
-                                <input type="date" class="form-control" placeholder="Select Date" />
+                                <label  class="form-label" type="date">Deadline</label>
+                                <input id="deadline" asp-for=mission.Deadline type="date" class="form-control" placeholder="Select Date" />
                                 <span class="text-danger d-none" id="date">Date Is Required</span>
                                
                             </div>
-                            <div class="col-lg-12"><label class="form-label">Organization Name</label><input asp-for=mission.OrganizationName placeholder="Enter Mission Title" type="text" class="form-control" id='title' />
+                            <div class="col-lg-12"><label class="form-label">Organization Name</label><input asp-for=mission.OrganizationName placeholder="Enter Mission Title" type="text" class="form-control" id='oname' />
                              <span asp-validation-for=mission.OrganizationName class="text-danger d-block"></span></div>
                             <div class="col-lg-12">
-                                <label class="form-label">Organization Details</label><textarea placeholder="Enter Your Bio..." rows=2 asp-for=mission.OrganizationDetail class="form-control" id='bio'></textarea>
+                                <label class="form-label">Organization Details</label><textarea placeholder="Enter Your Bio..." rows=2 asp-for=mission.OrganizationDetail class="form-control" id='odetails'></textarea>
                                 <span asp-validation-for=mission.OrganizationDetail class="text-danger d-block"></span>
                             </div>
 
                             <div class="col-lg-3 mt-2 col-md-6 ">
-                                <label class="form-label">Mission Type</label><select id='avilablity' asp-for=mission.missiontype class="form-select me-3" aria-label="Select Mission">
+                                <label class="form-label">Mission Type</label><select id='mtype' asp-for=mission.missiontype class="form-select me-3" aria-label="Select Mission">
                                     <option value=0 disabled selected>Select Mission Type</option>
                                     <option value='GOAL'>Goal</option>
                                     <option value='TIME'>Time</option>
@@ -154,32 +155,32 @@
                             </div>
                             <div class="col-lg-3 mt-2 col-md-6 ">
                                 <label class="form-label">Total Seats</label>
-                                <input asp-for=mission.TotalSeats type="number" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input asp-for=mission.TotalSeats type="number" id="tseats" placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span asp-validation-for=mission.TotalSeats class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="col-lg-3 mt-2 col-md-6 ">
                                 <label class="form-label">Goal Object</label>
-                                <input asp-for=mission.goalobject type="text" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input asp-for=mission.goalobject type="text" id="goalobject" placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span asp-validation-for=mission.goalobject class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="col-lg-3 mt-2 col-md-6 ">
                                 <label class="form-label">Achieved</label>
-                                <input asp-for=mission.Achieved type="text" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input asp-for=mission.Achieved type="text" id="achieved" placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="col-lg-4 mt-3">
                                 <label class="form-label">Avb Seats</label>
-                                <input asp-for=mission.AvbSeat type="number" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input asp-for=mission.AvbSeat type="number" id="avbseats" placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span asp-validation-for=mission.AvbSeat class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="col-lg-4 mt-3">
                                 <label class="form-label">Mission Media</label>
-                                <input type="file" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input type="file" asp-for=mission.missionMediums  placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="col-lg-4 mt-3">
                                 <label class="form-label">Mission Documents</label>
-                                <input type="file" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input type="file" asp-for=mission.MissionDocuments placeholder="Enter Spent Hours" class="form-control time-hours" />
                                 <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
                             </div>
                             <div class="d-flex justify-content-end">
