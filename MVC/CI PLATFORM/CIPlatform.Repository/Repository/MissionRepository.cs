@@ -319,7 +319,6 @@ namespace CIPlatform.Repository.Repository
 
 
 
-
         public bool add_to_favourite(long user_id, long mission_id)
         {
             if (user_id != 0 && mission_id != 0)
@@ -490,6 +489,7 @@ namespace CIPlatform.Repository.Repository
 
         public Timesheet AddSheet(long user_id, TimeSheetViewModel model, string type)
         {
+            CIPlatform.Entitites.Models.Mission mission = _db.Missions.Find(model.mission_id);
             if (type == "goal")
             {
                 Timesheet timesheet = new Timesheet();
@@ -497,6 +497,10 @@ namespace CIPlatform.Repository.Repository
                     timesheet.MissionId = model.mission_id;
                     timesheet.UserId = user_id;
                     timesheet.Action = model.action;
+                    if(timesheet.Action > 0)
+                    {
+                        mission.Achieved = mission.Achieved + timesheet.Action;
+                    }
                     timesheet.DateVolunteered = DateTime.Parse(model.date);
                     timesheet.Notes = model.message;
                 }
@@ -527,6 +531,7 @@ namespace CIPlatform.Repository.Repository
         public Timesheet EditSheet(long timesheet_id, TimeSheetViewModel model, string type)
         {
             Timesheet timesheet = _db.Timesheets.FirstOrDefault(x => x.TimesheetId == timesheet_id);
+            CIPlatform.Entitites.Models.Mission mission = _db.Missions.Find(model.mission_id);
             if (timesheet is not null)
             {
                 if (type == "edit-timesheet")
@@ -543,6 +548,10 @@ namespace CIPlatform.Repository.Repository
                 else
                 {
                     timesheet.Action = model.action;
+                    if(timesheet.Action > 0)
+                    {
+                        mission.Achieved = model.action;
+                    }
                     timesheet.DateVolunteered = DateTime.Parse(model.date);
                     timesheet.Notes = model.message;
                     _db.SaveChanges();

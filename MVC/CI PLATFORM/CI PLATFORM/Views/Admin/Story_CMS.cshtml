@@ -3,6 +3,7 @@
 *@
 @{
     ViewData["title"] = "Admin";
+                 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" asp-append-version="true" />
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
 @model CIPlatform.Entitites.ViewModel.StorySelectViewModel
@@ -27,7 +28,7 @@
             </div>
 
             <div class="w-100" style="overflow-x:auto;">
-                <table class="table border border-bottom-0 h-100  table-responsive">
+                <table id="example" class="table border border-bottom-0 h-100  table-responsive">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Story Title</th>
@@ -57,7 +58,7 @@
                     </tbody>
                 </table>
             </div>
-            <partial name="Pagination_partial" />
+@*            <partial name="Pagination_partial" />*@
         </div>
     </div>
     <div class="mobile-navigation">
@@ -117,4 +118,14 @@
 
 
 <input id="story-id" type="hidden" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="~/js/storycms.js"></script>
+<script>
+    $(document).ready(function () {
+        $.noConflict()
+    $('#example').DataTable({
+        pagingType: 'full_numbers',
+    });
+});
+</script>

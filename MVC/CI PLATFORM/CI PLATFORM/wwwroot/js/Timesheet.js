@@ -202,12 +202,16 @@ const edittimesheet = (id, mission, hours, minutes, message, type, action) => {
     }
 }
 
-const deletetimesheet = (id) => {
-    $(`#timesheet-${id}`).remove()
+const getsheet = (id) => {
+    timesheet_id = id;
+}
+
+const deletetimesheet = () => {
+    $(`#timesheet-${timesheet_id}`).remove()
     $.ajax({
         url: '/Home/Timesheet',
         type: 'POST',
-        data: { timesheet_id: parseInt(id), type: "time-delete" },
+        data: { timesheet_id: parseInt(timesheet_id), type: "time-delete" },
         success: function (result) {
         },
         error: function () {

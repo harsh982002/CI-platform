@@ -318,6 +318,7 @@ namespace CI_PLATFORM.Controllers
             }
             else if(model.mission.mission_id != 0)
             {
+
                 bool success = _allRepository.cmsRepository.EditMission(model.mission.mission_id, model.mission);
                 CIPlatform.Entitites.ViewModel.MissionSelectViewModel mis = _allRepository.cmsRepository.GetMission();
                 return View("Mission_CMS", mis);
@@ -355,5 +356,59 @@ namespace CI_PLATFORM.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("/Admin/Banner")]
+        public IActionResult Banner(long banner_id, string? type )
+        {
+            if (type == "banner-delete")
+            {
+                bool success = _allRepository.cmsRepository.deletebanner(banner_id);
+                return Json(new{success});
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [Route("/Admin/AddBanner")]
+        public IActionResult AddBanner()
+        {
+            
+                CIPlatform.Entitites.ViewModel.BannerViewModel banner = _allRepository.cmsRepository.GetBanner();
+                return View(banner);
+            
+        }
+        [HttpPost]
+        [Route("/Admin/AddBanner")]
+        public IActionResult AddBanner(CIPlatform.Entitites.ViewModel.BannerViewModel model)
+        {
+            if (model == null)
+            {
+                CIPlatform.Entitites.ViewModel.BannerViewModel banner = _allRepository.cmsRepository.GetBanner();
+                return View(banner);
+            }
+            else if(model.BannerId != 0)
+            {
+                bool success = _allRepository.cmsRepository.editbanner(model.BannerId, model);
+                CIPlatform.Entitites.ViewModel.BannerViewModel mis = _allRepository.cmsRepository.GetBanner();
+                return View("Banner", mis);
+            }
+            else
+            {
+                bool success = _allRepository.cmsRepository.Addbanner(model);
+                CIPlatform.Entitites.ViewModel.BannerViewModel mis = _allRepository.cmsRepository.GetBanner();
+                return View("Banner", mis);
+            }
+        }
+
+        [Route("/Admin/EditBanner/{banner_id}")]
+        public IActionResult EditBanner(long banner_id)
+        {
+            CIPlatform.Entitites.ViewModel.BannerViewModel ban = _allRepository.cmsRepository.getbannerdetail(banner_id);
+            return View("AddBanner", ban);
+        }
+        
     }
 }

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
-    
+
     @* <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />*@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -24,6 +24,16 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+            @{
+                if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+                {
+                    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#CMS-sidebar" role="button" aria-controls="offcanvasExample">
+                        CMS
+                    </a>
+                }
+
+            }
+
             <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Landingplatform">Home</a>
             <a class="nav-link text-muted" asp-area="" asp-controller="Story" asp-action="Story">Stories</a>
             <a class="nav-link text-muted " asp-area="" asp-controller="Home" asp-action="Privacy">Policy </a>
@@ -35,15 +45,16 @@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
-                  
-                        @{
-                            if(@Accesor?.HttpContext?.Session.GetString("role") is not null){
-                              <a class="nav-link text-muted" asp-action="User_CMS" asp-controller="Admin">Admin</a>
-                            }
-                           
+
+                    @{
+                        if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+                        {
+                            <a class="nav-link text-muted" asp-action="User_CMS" asp-controller="Admin">Admin</a>
                         }
-                        
-                    
+
+                    }
+
+
                     @{
                         @if (@Accesor?.HttpContext?.Session.GetString("Country") is not null)
                         {

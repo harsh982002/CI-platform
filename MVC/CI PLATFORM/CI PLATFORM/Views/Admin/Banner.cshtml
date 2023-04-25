@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["title"] = "Admin";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" asp-append-version="true" />
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
 @model CIPlatform.Entitites.ViewModel.BannerViewModel
@@ -15,19 +16,19 @@
             </div>
             <div class="d-flex mt-3 justify-content-between align-items-center">
                 <div class="d-flex search-div align-items-center">
-                    <img class="search" src="~/images/search.png" alt="not load" />
-                    <div class="form-floating w-75 d-flex">
+                    @*<img class="search" src="~/images/search.png" alt="not load" />
+                        <div class="form-floating w-75 d-flex">
                         <input type="search" class="form-control search-input" id="floatingSearch" style="border:none;" placeholder="Search Users...." />
                         <label for="floatingSearch" class="d-flex align-items-center">Search Users....</label>
-                    </div>
+                        </div>*@
                 </div>
-                <button class="btn applybutton d-flex justify-content-between align-items-center" data-bs-target="#Add" data-bs-toggle="modal" style="border: 1px solid #F88634; border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;font-size:smaller;">
+                <a href="/Admin/AddBanner" class="btn applybutton d-flex justify-content-between align-items-center" style="border: 1px solid #F88634; border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;font-size:smaller;">
                     <img src="~/images/plus.png" class="me-2" style="height:13px;" /><span>Add</span>
-                </button>
+                </a>
             </div>
 
-            <div class="w-100" style="overflow-x:auto;">
-                <table class="table border border-bottom-0 table-responsive mt-4">
+            <div class="w-100 mt-3" style="overflow-x:auto;">
+                <table id="example" class="table border border-bottom-0 table-responsive mt-4">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Image</th>
@@ -44,8 +45,8 @@
                                     <td>@item.Text</td>
                                     <td>@item.SortOrder</td>
                                     <td>
-                                        <img src="~/images/edit.png" data-bs-target="#Add" data-bs-toggle="modal" class="edbutton" alt="" />
-                                        <img src="~/images/bin.png" data-bs-target="#delete" data-bs-toggle="modal" class="ms-2 edbutton" alt="" />
+                                        <a href="/Admin/EditBanner/@item.BannerId"><img src="~/images/edit.png" data-bs-target="#Add" data-bs-toggle="modal" class="edbutton" alt="" /></a>
+                                        <img src="~/images/bin.png" data-bs-target="#delete" data-bs-toggle="modal" onclick="getbanner('@item.BannerId')" class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                                 }
@@ -53,7 +54,8 @@
                     </tbody>
                     </thead>
                 </table>
-                <partial name="Pagination_partial" />
+                @*                <partial name="Pagination_partial" />
+                *@
             </div>
         </div>
     </div>
@@ -73,47 +75,22 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn applybutton" data-bs-dismiss="modal">Yes</button>
+                <button type="button" class="btn applybutton" onclick="deletebanner()" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="Add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add User</h5>
-            </div>
-            <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
-                <div class="row">
-
-                    <div class="col-lg-12 col-md-6 mt-2">
-                        <label class="form-label mt-2">Text</label>
-                        <textarea placeholder="Enter Your Bio..." rows=2  class="form-control" id='odetails'></textarea>
-                        <span class="text-danger d-none" id="passalert">Please Enter Text</span>
-                    </div>
-                    <div class="col-lg-12 col-md-6 mt-2">
-                        <label class="form-label mt-2">SortOrder</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Enter PhoneNumber" required />
-                        <span class="text-danger d-none" id="phonealert">Please Enter PhoneNumber</span>
-                    </div>
-                    <div class="col-lg-12 mt-3">
-                        <label class="form-label">Images</label>
-                        <input type="file" placeholder="Enter Spent Hours" class="form-control time-hours" />
-                        <span class="text-danger d-none time-hours-valid">Enter Valid Hours</span>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
-                </div>
-                <button type="submit" data-bs-dismiss="modal" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn" onclick="adduser()">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
+<input id="banner-id" type="hidden" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="~/js/Bannercms.js"></script>
+<script>
+        $(document).ready(function () {
+            $.noConflict()
+        $('#example').DataTable({
+            pagingType: 'full_numbers',
+        });
+    });
+</script>

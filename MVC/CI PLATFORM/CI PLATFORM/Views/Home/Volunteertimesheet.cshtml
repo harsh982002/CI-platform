@@ -19,17 +19,17 @@
             </div>
             <div class="mt-4 row time-table h-75">
                 <table class="ms-2 time-timesheets">
-                    <tr><th>Mission</th><th>Date</th><th>Hours</th><th>Minutes</th><th> </th></tr>
+                    <tr ><th>Mission</th><th>Date</th><th>Hours</th><th>Minutes</th><th> </th></tr>
                     @{
                         foreach (var item in Model.timesheets)
                         {
                             if (item.Action is null)
                             {
                                 <tr id='timesheet-@item.TimesheetId'>
-                                    <td>@item.Mission.Title.ToString().Substring(0,20)...</td>
-                                    <td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.Time.ToString().Substring(0,2)</td>
-                                    <td>@item.Time.ToString().Substring(3,5)</td>
+                                    <td>@item?.Mission?.Title.ToString().Substring(0,20)...</td>
+                                    <td>@item?.DateVolunteered.ToString("dd-MM-yyyy")</td>
+                                    <td>@item?.Time?.ToString().Substring(0,2)</td>
+                                    <td>@item?.Time?.ToString().Substring(3,5)</td>
                                     <td>
                                         <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@item.TimesheetId,@item.MissionId,'@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time')" src="~/images/edit.png" class="edbutton" alt="" />
                                         <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" />
@@ -57,12 +57,12 @@
                             if (item.Action is not null)
                             {
                                 <tr id='timesheet-@item.TimesheetId'>
-                                    <td>@item.Mission.Title.ToString().Substring(0,20)...</td>
+                                    <td>@item?.Mission?.Title.ToString().Substring(0,20)...</td>
                                     <td>@item.DateVolunteered.ToString("dd-MM-yyyy")</td>
                                     <td>@item.Action</td>
                                     <td>
                                         <img onclick="edittimesheet(@item.TimesheetId,@item.MissionId,0,0,'@item.Notes','goal','@item.Action')" data-bs-toggle="modal" data-bs-target="#goal" src="~/images/edit.png" class="edbutton" alt="" />
-                                        <img data-bs-toggle="modal" data-bs-target="#delete" src="~/images/bin.png"  class="ms-2 edbutton" alt="" />
+                                        <img data-bs-toggle="modal" data-bs-target="#delete" onclick="getsheet('@item.TimesheetId')" src="~/images/bin.png"  class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                             }
@@ -95,7 +95,7 @@
                             {
                                 if (@item.missiontype == "TIME")
                                 {
-                                    <option value=@item.mission_id id=@item.mission_id>@item.Title.ToString().Substring(0,20)...</option>
+                                    <option value=@item?.mission_id id=@item?.mission_id>@item?.Title?.ToString().Substring(0,20)...</option>
                                 }
                             }
                         }
@@ -153,7 +153,7 @@
                             {
                                 if (@item.missiontype == "GOAL")
                                 {
-                                    <option value='mission_id-@item.mission_id goal_object-@item.goalobject' id='mission-@item.mission_id'>@item.Title.ToString().Substring(0,20)...</option>
+                                    <option value='mission_id-@item?.mission_id goal_object-@item?.goalobject' id='mission-@item?.mission_id'>@item?.Title?.ToString().Substring(0,20)...</option>
                                 }
                             }
                         }
@@ -200,7 +200,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button" onclick="deletetimesheet(@Model.timesheets.ElementAt(0).TimesheetId)" class="btn applybutton">Yes</button>    
+                <button type="button" onclick="deletetimesheet()" class="btn applybutton">Yes</button>    
             </div>
         </div>
     </div>

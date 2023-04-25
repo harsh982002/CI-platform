@@ -47,5 +47,13 @@ namespace CIPlatform.Repository.Interface
         bool EditMission(long id, CIPlatform.Entitites.ViewModel.MissionSelectViewModel model);
 
         CIPlatform.Entitites.ViewModel.BannerViewModel GetBanner();
+
+        bool deletebanner(long banner_id);
+
+       bool Addbanner(CIPlatform.Entitites.ViewModel.BannerViewModel model);
+
+        CIPlatform.Entitites.ViewModel.BannerViewModel getbannerdetail(long id);
+
+        bool editbanner(long id, CIPlatform.Entitites.ViewModel.BannerViewModel model);
     }
 }

@@ -67,7 +67,9 @@ namespace CIPlatform.Repository.Repository
         {
             MissionAppViewModel model = new MissionAppViewModel();
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
+           
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
+                                                                                        where ma.ApprovalStatus== "PENDING"
                                                                                         select new MissionAppViewModel
                                                                                         {
                                                                                             id = ma.MissionApplicationId,
@@ -509,6 +511,7 @@ namespace CIPlatform.Repository.Repository
                 _db.MissionMedia.RemoveRange(_db.MissionMedia.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionRatings.RemoveRange(_db.MissionRatings.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x=>x.MissionId== mission.MissionId));
+                
                 _db.Stories.RemoveRange(_db.Stories.Where(x => x.MissionId == mission.MissionId));
                 _db.Timesheets.RemoveRange(_db.Timesheets.Where(x => x.MissionId == mission.MissionId));
                 _db.GoalMissions.RemoveRange(_db.GoalMissions.Where(x => x.MissionId == mission.MissionId));
@@ -694,6 +697,84 @@ namespace CIPlatform.Repository.Repository
                                                                              }).ToList();
             model.Bans = allbanner;
             return model;
+        }
+
+        public bool deletebanner(long banner_id)
+        {
+            Banner banner = _db.Banners.FirstOrDefault(x => x.BannerId == banner_id);
+            if (banner is not null)
+            {
+                _db.Banners.Remove(banner);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Addbanner(BannerViewModel model)
+        {
+            CIPlatform.Entitites.Models.Banner banner = new Banner();
+            {
+                banner.Text = model.Text;
+                banner.SortOrder = model.SortOrder;
+                banner.Image = "abc";
+            }
+            _db.Banners.Add(banner);
+            _db.SaveChanges();
+           
+                FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
+                string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
+                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                banner.Image = filename;
+                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+            
+           
+            _db.SaveChanges();
+            return true;
+
+        }
+
+        public BannerViewModel getbannerdetail(long id)
+        {
+           Banner banner = _db.Banners.Find(id);
+            BannerViewModel bannerViewModel = new BannerViewModel();
+            bannerViewModel.BannerId = id;
+            bannerViewModel.SortOrder = banner.SortOrder;
+            bannerViewModel.Text = banner.Text;
+            return bannerViewModel;
+        }
+
+        public bool editbanner(long id, BannerViewModel model)
+        {
+            Banner banner = _db.Banners.FirstOrDefault(x=>x.BannerId == id);
+            if(banner is not null)
+            {
+                banner.Text = model.Text;
+                banner.SortOrder = model.SortOrder;
+                
+                FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
+                string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
+                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                banner.Image = filename;
+                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

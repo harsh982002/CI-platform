@@ -4,6 +4,9 @@
 
 }
 @model CIPlatform.Entitites.ViewModel.Mission
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+
 
 <partial name="SecondHeader_partial" />
 @*main body*@
@@ -27,13 +30,20 @@
     </div>
     @*missions*@
     <div class="row missions">
-        <partial name="mission_partial"/>
+        <partial name="mission_partial" />
     </div>
+
     <div class='container d-none justify-content-center align-items-center mt-5 mb-5 w-50 text-muted no-mission-found'>
         <span>No Mission Found</span>
-        <button class="applyButton w-75 mt-3 btn">
-            Submit New Mission <img src="images/right-arrow.png" alt="">
-        </button>
+        @{
+            if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+            {
+                <a class="applyButton w-75 mt-3 btn" href="/Admin/Mission">
+                    Submit New Mission <img src="images/right-arrow.png" alt="">
+                </a>
+            }
+        }
+
     </div>
 </div>
 @*pagination*@
@@ -52,11 +62,11 @@
             {
                 if (i == 1)
                 {
-                                <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i' onclick="pagination(@i)">@i</span></li>
                 }
                 else
                 {
-                                <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
                 }
             }
         }
