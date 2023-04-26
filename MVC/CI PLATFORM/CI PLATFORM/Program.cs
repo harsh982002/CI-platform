@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using CIPlatform.Entitites.Data;
 using CIPlatform.Repository.Interface;
 using CIPlatform.Repository.Repository;
@@ -22,7 +24,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 var app = builder.Build();
 
 
@@ -42,7 +44,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession();
-
+app.UseNotyf();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=UserAccount}/{action=Login}");

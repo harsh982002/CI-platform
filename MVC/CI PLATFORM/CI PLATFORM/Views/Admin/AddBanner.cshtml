@@ -15,21 +15,21 @@
                 <div class="row main w-100">
                     <div class="col-lg-12 col-md-12 col-sm-12 profile-details">
                         <div class="w-100 border-bottom">
-                            <h5>Mission Details</h5>
+                            <h5>Banner Details</h5>
                         </div>
                         <div class="row mt-2">
                             <div class="col-lg-12">
-                                <label class="form-label">Description</label><textarea placeholder="Enter Your Bio..." asp-for=Text rows=3 class="form-control" id='bio'></textarea>
+                                <label class="form-label">Description</label><textarea placeholder="Enter Banner Text" asp-for=Text rows=3 class="form-control" id='bio'></textarea>
                                 <span asp-validation-for=Text class="text-danger d-block"></span>
                             </div>
                             <div class="col-lg-6 mt-2 col-md-6 ">
                                 <label class="form-label">Total Seats</label>
-                                <input asp-for=SortOrder type="number" id="tseats" placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input asp-for=SortOrder type="number" id="tseats" placeholder="Enter SortOrder" class="form-control time-hours" />
                                 <span asp-validation-for=SortOrder class="text-danger d-block"></span>
                             </div>
                             <div class="col-lg-6 mt-2  col-md-6 ">
                                 <label class="form-label">Mission Media</label>
-                                <input type="file" asp-for=BannerImage placeholder="Enter Spent Hours" class="form-control time-hours" />
+                                <input type="file" asp-for=BannerImage  class="form-control time-hours" />
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Submit</button>

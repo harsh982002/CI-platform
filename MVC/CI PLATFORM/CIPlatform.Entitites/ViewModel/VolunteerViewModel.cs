@@ -10,10 +10,10 @@ namespace CIPlatform.Entitites.ViewModel
     public class VolunteerViewModel
     {
 
-
+        public long MissionId { get; set; }
         public CIPlatform.Entitites.Models.Mission? mission { get; set; }
         public List<CIPlatform.Entitites.Models.Mission>? related_mission { get; set; }
-        public List<User>? Recent_volunteers { get; set; }
+        public List<CIPlatform.Entitites.ViewModel.UserViewModel>? Recent_volunteers { get; set; }
         public List<Comment>? comments { get; set; }
 
         public List<MissionSkill>? mission_skill { get; set; }

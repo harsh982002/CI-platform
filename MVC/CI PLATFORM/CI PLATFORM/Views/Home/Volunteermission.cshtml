@@ -17,66 +17,66 @@
                  style="max-width: 720px; height: 428px;" />
             <div id="carousel-bottom" class="carousel slide">
                 <div class="carousel-inner">
-                        <div class="row p-1">
-                            @{
-                                int sub_count = 4;
-                                int check = 0;
-                                int carousel_count = (int)Math.Ceiling((double)@Model?.mission?.MissionMedia.Count / 4);
-                                for (var i = 0; i < carousel_count; i++)
+                    <div class="row p-1">
+                        @{
+                            int sub_count = 4;
+                            int check = 0;
+                            int carousel_count = (int)Math.Ceiling((double)@Model?.mission?.MissionMedia.Count / 4);
+                            for (var i = 0; i < carousel_count; i++)
+                            {
+                                if (check == 0)
                                 {
-                                    if (check == 0)
-                                    {
-                                        <div class="carousel-item active">
-                                            <div class="d-flex col-3 m-1">
-                                                @if (@Model?.mission?.MissionMedia.Count >= sub_count)
+                                    <div class="carousel-item active">
+                                        <div class="d-flex col-3 m-1">
+                                            @if (@Model?.mission?.MissionMedia.Count >= sub_count)
+                                            {
+                                                @for (int j = 0; j < sub_count; j++)
                                                 {
-                                                    @for (int j = 0; j < sub_count; j++)
-                                                    {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
-                                         height="120" role="img" onclick="display(this)" alt="" />
-                                                    }
+                                                    <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
+                                     height="120" role="img" onclick="display(this)" alt="" />
                                                 }
-                                                else
+                                            }
+                                            else
+                                            {
+                                                @for (int j = 0; j < @Model?.mission?.MissionMedia.Count; j++)
                                                 {
-                                                    @for (int j = 0; j < @Model?.mission?.MissionMedia.Count; j++)
-                                                    {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
-                                         height="120" role="img" onclick="display(this)" alt="" />
-                                                    }
+                                                    <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
+                                     height="120" role="img" onclick="display(this)" alt="" />
                                                 }
-                                            </div>
+                                            }
                                         </div>
-                                        check = check + 4;
-                                    }
-                                    else
-                                    {
-                                        <div class="carousel-item">
-                                            <div class="d-flex col-3 p-1">
-                                                @if (@Model?.mission?.MissionMedia.Count - (4 * i) >= sub_count)
-                                                {
-                                                    @for (int j = check; j < sub_count + check; j++)
-                                                    {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
-                                         height="120" role="img" onclick="display(this)" alt="" />
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
-                                                    {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
-                                         height="120" role="img" onclick="display(this)" alt="" />
-                                                    }
-                                                }
-                                            </div>
-                                        </div>
-                                        check = check + 4;
-                                    }
+                                    </div>
+                                    check = check + 4;
                                 }
-
+                                else
+                                {
+                                    <div class="carousel-item">
+                                        <div class="d-flex col-3 p-1">
+                                            @if (@Model?.mission?.MissionMedia.Count - (4 * i) >= sub_count)
+                                            {
+                                                @for (int j = check; j < sub_count + check; j++)
+                                                {
+                                                    <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
+                                     height="120" role="img" onclick="display(this)" alt="" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
+                                                {
+                                                    <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
+                                     height="120" role="img" onclick="display(this)" alt="" />
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    check = check + 4;
+                                }
                             }
-                        </div>
-                   
+
+                        }
+                    </div>
+
 
                 </div>
                 <button class="carousel-control-prev w-auto ps-2 pe-2 bg-black bg-opacity-100 mt-2 mb-2"
@@ -610,52 +610,53 @@
                     </div>
                 </div>
             </div>
+            <div class="volunteers">
+                <div class="border mt-4 ">
+                    <div class="card">
 
-            <div class="border mt-4 ">
-                <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs card-title ">
+                                <li class="nav-item">
+                                    <div class="nav-link active text-decoration-none border-0 ps-0 recents">
+                                        Recent
+                                        Volunteer
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="card-body">
-                        <ul class="nav nav-tabs card-title ">
-                            <li class="nav-item">
-                                <div class="nav-link active text-decoration-none border-0 ps-0 recents">
-                                    Recent
-                                    Volunteer
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                        <!-- Tab panes -->
 
+                        <div class="tab-content">
+                            <div class="tab-pane container active ">
 
-
-
-
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane container active " id="previous">
-
-                            <div class="card-body row justify-content-center">
-
-                                @if (@Model.mission.MissionApplications != null)
-                                {
-
-                                    @foreach (var item in @Model?.missionApplications)
+                                <div class="card-body row justify-content-center">
+                                @{
+                                    
+                                    @if (@Model.mission.MissionApplications != null)
                                     {
-                                        <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                            @if (@item.User.Avatar is not null)
-                                            {
-                                                <img src="@item.User.Avatar" alt="" class="rounded-circle">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/images/volunteer1.png" alt="" class="rounded-circle">
+                                        
+                                        @foreach (var item in @Model?.missionApplications)
+                                        {
+                                            
+                                            <div class="d-flex col-3 flex-column m-1 justify-content-center">
+                                                @if (@item.User.Avatar is not null)
+                                                {
+                                                    <img src="@item.User.Avatar" alt="" class="rounded-circle">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/volunteer1.png" alt="" class="rounded-circle">
 
-                                            }
+                                                }
 
-                                            <div class="text-center">@item.User.FirstName @item.User.LastName</div>
-                                        </div>
+                                                <div class="text-center size">@item.User.FirstName @item.User.LastName</div>
+                                            </div>
+                                        }
                                     }
-                                }
+                                    }
+                                </div>
+
                             </div>
 
                         </div>
@@ -663,19 +664,6 @@
                     </div>
 
                 </div>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item border">
-                        <a class="nav-link active border-0 " data-bs-toggle="tab" href="#previous">
-                            <<
-                        </a>
-                    </li>
-                    <li class="border flex-fill d-flex justify-content-center align-items-center">
-                        <div>1-9 of 25 recent volunteers</div>
-                    </li>
-                    <li class="nav-item border">
-                        <a class="nav-link border-0" data-bs-toggle="tab" href="#next">>></a>
-                    </li>
-                </ul>
             </div>
         </div>
 

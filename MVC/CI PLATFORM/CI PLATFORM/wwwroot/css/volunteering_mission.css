@@ -324,7 +324,10 @@ cursor:pointer;
 
 
 .ScrollStyle {
-    max-height: 478px;
+    max-height: 582px;
     overflow-y: scroll;
 }
 
+.size{
+    font-size:small;
+}

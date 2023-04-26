@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entitites.Models;
+using CIPlatform.Entitites.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,6 @@ namespace CIPlatform.Repository.Interface
         bool DeleteSheet(long timesheet_id);
 
         CIPlatform.Entitites.ViewModel.TimeSheetViewModel user_mission(long user_id);
-
+/*        VolunteerViewModel Next_Volunteers(int count, long user_id, long mission_id);*/
     }
 }

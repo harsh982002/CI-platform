@@ -19,6 +19,8 @@ namespace CIPlatform.Entitites.ViewModel
 
         public DateTime? AppliedAt { get; set; }
 
+        public string? ApprovalStatus { get; set; }
+
         public List<MissionAppViewModel> MissionApps { get; set; }
     }
 }

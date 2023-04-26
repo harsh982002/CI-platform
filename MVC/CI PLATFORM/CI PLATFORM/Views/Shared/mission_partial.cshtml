@@ -147,13 +147,30 @@
                     <div class="d-flex justify-content-center mt-4">
 
                         @{
-                            @if (DateTime.Now > @item.Deadline)
+
+                            @if (DateTime.Now > @item.Deadline || @item.AvbSeat == 0)
                             {
                                 <button class="applyButton-cls btn" disabled>
 
                                     Closed
 
                                 </button>
+                            }
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="APPROVE" && c.UserId.Equals(@ViewBag.UserId)).ToList().Count>0)
+                            {
+                               <a class="applyButton btn" href="/Home/Volunteermission/@item.MissionId">
+
+                                    Applied
+
+                                </a>
+                            }
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="PENDING" && c.UserId.Equals(@ViewBag.UserId)).ToList().Count>0)
+                            {
+                               <a class="applyButton btn" href="/Home/Volunteermission/@item.MissionId">
+
+                                    Requested
+
+                                </a>
                             }
                             else
                             {

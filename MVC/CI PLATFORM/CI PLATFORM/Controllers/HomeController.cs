@@ -40,6 +40,8 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Landingplatform")]
         public IActionResult Landingplatform()
         {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            ViewBag.UserId = userId;
             if (HttpContext.Session.GetString("Country") is not null)
             {
 
@@ -159,6 +161,8 @@ namespace CI_PLATFORM.Controllers
             var Rating = _allRepository.missionRepository.addRatings(rating, mission_id, userId);
             return Json(Rating);
         }
+
+        
 
         [Route("/Home/Profile")]
         public IActionResult ProfilePage()

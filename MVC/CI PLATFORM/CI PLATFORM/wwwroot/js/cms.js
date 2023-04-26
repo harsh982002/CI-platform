@@ -40,13 +40,13 @@ const adduser = () => {
             data: { fname: fname, lname: lname, email: email, pass: pass, phone: phone, role: role },
             success: function (result) {
                 if (result.success) {
-                    $("#Add").modal('hide')
                     document.getElementById("fname").value = ""
                     document.getElementById("lname").value = ""
                     document.getElementById(`email`).value = ""
                     document.getElementById(`pass`).value = ""
                     document.getElementById(`phone`).value = ""
                     document.getElementById(`role`).value = ""
+                    location.reload();
                 }
             },
             error: function () {
@@ -96,7 +96,7 @@ const EditUserDetails = () => {
             success: function (result) {
                 if (result.view) {
                     $(`#user-${parseInt(document.getElementById("user-id").value)}`).replaceWith(result.view.result)
-
+                    location.reload();
                 }
             },
             error: function () {

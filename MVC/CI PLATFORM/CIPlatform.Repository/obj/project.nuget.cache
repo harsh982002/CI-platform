@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ZSQ9Ow3cpL/QU6+oM6wUyyTy9uZLQUgJOn3WhCKaDMNxAgPtBaf3qiz50vysf+0Lz0HI1eUEh3SLE848Sqs1OA==",
+  "dgSpecHash": "nUVIcWd8qetmsreZBN9ingWqm//8t74qUP9Ql2YFZZ8G2VVo0UdLyqBsBmiQCAYd9lbdtBx4d0JXeHz3fHd1uQ==",
   "success": true,
   "projectFilePath": "C:\\CI\\CI platform\\MVC\\CI PLATFORM\\CIPlatform.Repository\\CIPlatform.Repository.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pca118\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
@@ -58,6 +59,7 @@
     "C:\\Users\\pca118\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\mimekit\\3.6.0\\mimekit.3.6.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\pca118\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\npoco\\5.7.1\\npoco.5.7.1.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\pca118\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",

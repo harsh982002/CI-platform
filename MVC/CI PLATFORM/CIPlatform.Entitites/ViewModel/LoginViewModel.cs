@@ -18,5 +18,7 @@ namespace CIPlatform.Entities.ViewModel
         
         public string? Password { get; set; }
 
+        
+
     }
 }

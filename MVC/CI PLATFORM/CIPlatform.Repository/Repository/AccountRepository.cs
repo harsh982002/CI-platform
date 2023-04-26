@@ -34,6 +34,9 @@ namespace CIPlatform.Repository.Repository
         {
             return _Message;
         }
+
+
+
         public User LoginViewModel(LoginViewModel model)
         {
             User user = _context.Users.FirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));

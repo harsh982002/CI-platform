@@ -329,3 +329,5 @@ C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Core.d
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Libs.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.MediaFramework.dll
 C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\VisioForge.Types.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\AspNetCoreHero.ToastNotification.Views.dll
+C:\CI\CI platform\MVC\CI PLATFORM\CI PLATFORM\bin\Debug\net6.0\AspNetCoreHero.ToastNotification.dll

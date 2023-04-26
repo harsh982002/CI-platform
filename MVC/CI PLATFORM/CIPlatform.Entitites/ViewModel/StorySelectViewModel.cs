@@ -18,6 +18,8 @@ namespace CIPlatform.Entitites.ViewModel
 
         public string? MissionName { get; set; }
 
+        public string? ApprovalStatus { get; set; }
+
         public List<StorySelectViewModel>? Stories { get; set; }
     }
 }

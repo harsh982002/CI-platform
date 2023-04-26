@@ -55,5 +55,7 @@ namespace CIPlatform.Repository.Interface
         CIPlatform.Entitites.ViewModel.BannerViewModel getbannerdetail(long id);
 
         bool editbanner(long id, CIPlatform.Entitites.ViewModel.BannerViewModel model);
+
+        public Boolean IsValidUserEmail(CIPlatform.Entitites.ViewModel.UserViewModel model);
     }
 }

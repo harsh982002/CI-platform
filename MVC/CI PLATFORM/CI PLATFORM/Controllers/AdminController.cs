@@ -1,4 +1,5 @@
-﻿using CIPlatform.Entitites.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using CIPlatform.Entitites.Models;
 using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,12 @@ namespace CI_PLATFORM.Controllers
     public class AdminController : Controller
     {
         private readonly IAllRepository _allRepository;
-
-        public AdminController(IAllRepository allRepository)
+        private readonly INotyfService _notyf;
+       
+        public AdminController(IAllRepository allRepository, INotyfService notyf)
         {
             _allRepository = allRepository;
+            _notyf = notyf;
         }
 
         public IActionResult Index()
@@ -53,7 +56,12 @@ namespace CI_PLATFORM.Controllers
                     Status = status,
                 };
                 CmsPage cms = _allRepository.cmsRepository.EditCms(cms_id, model, type);
-                return View(cms);
+                bool success = false;
+                if(cms != null)
+                {
+                    success = true;
+                }
+                return Json(new {success});
             }
             else
             {
@@ -65,7 +73,12 @@ namespace CI_PLATFORM.Controllers
                     Status = status,
                 };
                 CmsPage cms = _allRepository.cmsRepository.AddCms(userId, model);
-                return View(cms);
+                bool success = false;
+                if (cms != null)
+                {
+                    success = true;
+                }
+                return Json(new { success }); ;
             }
         }
 
@@ -86,7 +99,7 @@ namespace CI_PLATFORM.Controllers
 
         [HttpPost]
         [Route("/Admin")]
-        public IActionResult User_CMS(long user_id, string? type, string? fname, string? lname, string? phone, string? email, string? pass, string? role, string? empid, string? department, string? status)
+        public IActionResult User_CMS(long user_id, string? type, string? fname, string? lname, string? phone, string? email, string? pass, string? role, string? empid, string? department, string? status, CIPlatform.Entitites.ViewModel.UserViewModel model1)
         {
 
             if (type == "user-delete")
@@ -104,22 +117,42 @@ namespace CI_PLATFORM.Controllers
                     status = status
                 };
                 User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
-                return View(user);
+                bool success = false;
+                if(user != null)
+                {
+                    success = true;
+                }
+                return Json(new {success});
             }
             else
             {
-                CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
-                {
-                    FirstName = fname,
-                    LastName = lname,
-                    Email = email,
-                    Password = pass,
-                    Role = role,
-                    PhoneNumber = phone
+                if (_allRepository.cmsRepository.IsValidUserEmail(model1))
+                        {
+                    CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
+                    {
+                        FirstName = fname,
+                        LastName = lname,
+                        Email = email,
+                        Password = pass,
+                        Role = role,
+                        PhoneNumber = phone
 
-                };
-                User user = _allRepository.cmsRepository.AddUser(model);
-                return View(user);
+                    };
+                    User user = _allRepository.cmsRepository.AddUser(model);
+                    bool success = false;
+                    if(user is not null)
+                    {
+                        success = true;
+                    }
+                    return Json(new {success});
+                }
+                else
+                {
+                    _notyf.Warning("This Mail Account Already Register !! Please Check your mail or Login your Account...");
+                   /* ViewBag.alert = String.Format("This Mail Account Already Register !! Please Check your mail or Login your Account...");*/
+                    CIPlatform.Entitites.ViewModel.UserViewModel users = _allRepository.cmsRepository.GetUser();
+                    return View("User_CMS",users);
+                }
             }
         }
 
@@ -154,7 +187,12 @@ namespace CI_PLATFORM.Controllers
                     theme_name = theme,
                 };
                 MissionTheme themes = _allRepository.cmsRepository.EditTheme(theme_id, model, type);
-                return View(themes);
+                bool success = false;
+                if(themes is not null)
+                {
+                    success = true;
+                }
+                return Json(new {success});
             }
             else
             {
@@ -165,7 +203,12 @@ namespace CI_PLATFORM.Controllers
                     theme_name = theme,
                 };
                 MissionTheme themes = _allRepository.cmsRepository.AddTheme(theme_id, model);
-                return View(themes);
+                bool success = false;
+                if(themes is not null)
+                {
+                    success = true;
+                }
+                return Json(new {success});
             }
         }
         [Route("/Admin/App")]
@@ -294,7 +337,12 @@ namespace CI_PLATFORM.Controllers
                     Status = status
                 };
                 Skill skill = _allRepository.cmsRepository.EditSkill(skill_id, model, type);
-                return View(skill);
+                bool success = false;
+                if(skill != null)
+                {
+                    success = true;
+                }
+                return Json(new {success});
             }
             else
             {
@@ -304,7 +352,13 @@ namespace CI_PLATFORM.Controllers
                     Status = status
                 };
                 Skill skill = _allRepository.cmsRepository.AddSkill(userId, model);
-                return View(skill);
+                bool success = false;
+                if (skill != null)
+                {
+                    success = true;
+                }
+                return Json(new { success });
+                
             }
         }
 

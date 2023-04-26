@@ -10,108 +10,119 @@
     <div class="offcanvas-body d-flex flex-column w-100 h-100" style="background-color:orange">
         <h4 class="mt-5" style="color:white">NAVIGATION</h4>
         @{
-            if (Context.Request.Path.Equals("/Admin/User_CMS"))
+            if (Context.Request.Path.Equals("/Admin"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/user-orange.png" />
                     <span class="ms-3" style="color:orange">User</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/user-white.png" />
                     <span class="ms-3" style="color:white">User</span>
                 </a>
             }
-            if (Context.Request.Path.Equals("/Admin"))
+            if (Context.Request.Path.Equals("/Admin/CMS"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/CMS" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/cms-orange.png" />
                     <span class="ms-3" style="color:orange">CMS Page</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/CMS" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/cms-white.png" />
                     <span class="ms-3" style="color:white">CMS Page</span>
                 </a>
             }
             if (Context.Request.Path.Equals("/Admin/Mission"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/Mission" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/mission-orange.png" />
                     <span class="ms-3" style="color:orange">Mission</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/Mission" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/mission-white.png" />
                     <span class="ms-3" style="color:white">Mission</span>
                 </a>
             }
             if (Context.Request.Path.Equals("/Admin/Theme"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/Theme" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/theme-orange.png" />
                     <span class="ms-3" style="color:orange">Mission Theme</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/Theme" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/theme-white.png" />
                     <span class="ms-3" style="color:white">Mission Theme</span>
                 </a>
             }
             if (Context.Request.Path.Equals("/Admin/Skill"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/Skill" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/skill-orange.png" />
                     <span class="ms-3" style="color:orange">Mission SKill</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/Skill" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/skill-white.png" />
                     <span class="ms-3" style="color:white">Mission Skill</span>
                 </a>
             }
             if (Context.Request.Path.Equals("/Admin/App"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/App" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/ma-orange.png" />
                     <span class="ms-3" style="color:orange">Mission Application</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/App" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/ma-white.png" />
                     <span class="ms-3" style="color:white">Mission Application</span>
                 </a>
             }
             if (Context.Request.Path.Equals("/Admin/Story"))
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                <a href="/Admin/Story" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
                     <img class="ms-2" src="~/images/story-orange.png" />
                     <span class="ms-3" style="color:orange">Story</span>
                 </a>
             }
             else
             {
-                <a class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                <a href="/Admin/Story" class="d-flex align-items-center mt-3" style="text-decoration:none;">
                     <img class="ms-2" src="~/images/story-white.png" />
                     <span class="ms-3" style="color:white">Story</span>
                 </a>
             }
-            <div class="d-flex align-items-center  mt-3">
-                <img class="ms-2" src="~/images/banner-white.png" />
-                <span class="ms-3" style="color:white">Baner Management</span>
-            </div>
+            if (Context.Request.Path.Equals("/Admin/Banner"))
+            {
+                 <a href="/Admin/Banner" class="d-flex align-items-center mt-3" style="text-decoration:none; background-color:white;">
+                    <img class="ms-2" src="~/images/banner-orange.png" />
+                    <span class="ms-3" style="color:orange">Banner Management</span>
+                </a>
+            }
+            else
+            {
+                <a href="/Admin/Banner" class="d-flex align-items-center mt-3" style="text-decoration:none;">
+                    <img class="ms-2" src="~/images/banner-white.png" />
+                    <span class="ms-3" style="color:white">Banner Management</span>
+                </a>
+            }
+            
         }
     </div>
 

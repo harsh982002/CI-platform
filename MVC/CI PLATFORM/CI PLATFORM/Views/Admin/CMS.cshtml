@@ -85,24 +85,26 @@
             <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                 <div class="w-100">
                     <label class="form-label mt-2">Title</label>
-                    <input class="form-control title" id="title" value="" />
+                    <input class="form-control title" placeholder="Enter Title.." id="title" value="" />
                     <span class="text-danger d-none" id="titleAlert">Title can't be empty.</span>
+                    <span class="text-danger d-none" id="sametitle">Title already exist.</span>
                 </div>
                 <div class="w-100 form-group">
                     <label class="form-label mt-2">Description</label>
-                    <textarea id="editor"></textarea>
+                    <textarea id="editor" placeholder="Enter Description.."></textarea>
 
                 </div>
 
                 <div class="w-100">
                     <label class="form-label mt-2">Slug</label>
-                    <input class="form-control slug" id="slug" value="" />
+                    <input class="form-control slug" placeholder="Enter slug.." id="slug" value="" />
                     <span class="text-danger d-none" id="slugAlert">Slug can't be empty.</span>
+                    <span class="text-danger d-none" id="sameslug">Slug can't be same.</span>
                 </div>
                 <div class="w-100">
                     <label class="form-label mt-2">Status</label>
                     <select id='status' class="form-select" aria-label="Select Mission">
-
+                         <option disabled selected>Select Cms Status</option>
                         <option value=0>0</option>
                         <option value=1>1</option>
                     </select>
@@ -110,12 +112,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                    <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
-
-
-                </div>
-                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" data-bs-dismiss="modal" onclick="addcms()">Save</button>
+               <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" onClick="window.location.reload();" type="button" class="btn applybutton" data-bs-dismiss="modal">Cancle</button>
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton"  onclick="addcms()">Save</button>
             </div>
 
 
@@ -133,6 +131,7 @@
                 <p>Are you sure? You want to delete this Entry?</p>
             </div>
             <div class="modal-footer">
+                
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
                 <button type="button" onclick="deletecms()" class="btn applybutton" data-bs-dismiss="modal">Yes</button>
             </div>

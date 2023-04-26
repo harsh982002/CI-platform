@@ -59,7 +59,11 @@ const addcms = () => {
 
                     if (result.view) {
                         $(`#cms-${parseInt(document.getElementById("cms-id").value)}`).replaceWith(result.view.result)
-                        location.reload()
+                        location.reload();
+                    }
+                    else {
+                        $("#sametitle").addClass('d-block').removeClass('d-none');
+                        $("#sameslug").addClass('d-block').removeClass('d-none');
                     }
                 },
                 error: function () {
@@ -77,8 +81,11 @@ const addcms = () => {
                 data: { title: title, editor: editor, status: status, slug: slug },
                 success: function (result) {
                     if (result.success) {
-                        $("#Add").modal('hide')
-                        location.reload()
+                        location.reload();
+                    }
+                    else {
+                        $("#sametitle").addClass('d-block').removeClass('d-none');
+                        $("#sameslug").addClass('d-block').removeClass('d-none');
                     }
                 },
                 error: function () {
@@ -124,6 +131,7 @@ const validate = () => {
         $("#slugAlert").addClass('d-none').removeClass('d-block')
     }
 }
+
 
 
 

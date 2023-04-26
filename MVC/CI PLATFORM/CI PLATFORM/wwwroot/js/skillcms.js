@@ -31,8 +31,12 @@ const addskill = () => {
                 success: function (result) {
                     if (result.view) {
                         $(`#skill-${parseInt(document.getElementById("skill-id").value)}`).replaceWith(result.view.result)
-                        window.location.reload();
+                        location.reload();
                     }
+                    else {
+                        $("#sameskill").addClass('d-block').removeClass('d-none')
+                    }
+                   
                 },
                 error: function () {
                     console.log("Error updating variable");
@@ -48,10 +52,12 @@ const addskill = () => {
                 data: { sname: sname, status: status },
                 success: function (result) {
                     if (result.success) {
-                        $("#Add").modal('hide')
                         document.getElementById("sname").value = ""
                         document.getElementById("Status").value = ""
-                        window.location.reload();
+                        location.reload();
+                    }
+                    else {
+                        $("#sameskill").addClass('d-block').removeClass('d-none')
                     }
                 },
                 error: function () {
@@ -86,3 +92,4 @@ const skillvalidate = () => {
         $("#skillalert").addClass('d-none').removeClass('d-block')
     }
 }
+

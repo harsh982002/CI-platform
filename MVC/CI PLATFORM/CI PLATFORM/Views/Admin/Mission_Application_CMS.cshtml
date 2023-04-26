@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" asp-append-version="true" />
     ViewData["css"] = "Volunteering_Timesheet.css";
 }
-@model  CIPlatform.Entitites.ViewModel.MissionAppViewModel
+@model CIPlatform.Entitites.ViewModel.MissionAppViewModel
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />
@@ -17,22 +17,23 @@
                 <h5>Mission Application</h5>
             </div>
             <div class="d-flex mt-5 justify-content-between align-items-center">
-@*                <div class="d-flex search-div align-items-center">
+                @*                <div class="d-flex search-div align-items-center">
                     <img class="search" src="~/images/search.png" alt="not load" />
                     <div class="form-floating w-75 d-flex">
-                        <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Themes...." />
-                        <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
+                    <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Themes...." />
+                    <label for="floatingSearch" class="d-flex align-items-center">Search Themes....</label>
                     </div>
-                </div>*@
-               
+                    </div>*@
+
             </div>
 
             <div class="w-100" style="overflow-x:auto;">
-                <table id="example" class="table border border-bottom-0 h-100  table-responsive">
+                <table id="example" class="table border border-bottom-0 h-100  table-responsive-sm">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Mission Title</th>
                             <th scope="col">Mission ID</th>
+                            <th scope="col">Status</th>
                             <th scope="col">User ID</th>
                             <th scope="col">User Name</th>
                             <th scope="col">Applied Date</th>
@@ -43,25 +44,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @{
+                        @{
                             foreach (var item in Model.MissionApps)
                             {
-                            <tr >
-                            <td>@item.Title</td>
-                            <td>@item.mission_id</td>
-                            <td>@item.user_id</td>
-                            <td>@item.name</td>
-                            <td>@item.AppliedAt.ToString().Substring(0,11)</td>
-                            <td><img  src="~/images/checked-green.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#approve" class="edbutton" alt=""/>
-                            <img src="~/images/cancled-red.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#notapprove" class="ms-2 edbutton" alt="" /></td>
-                            </tr>
+                                <tr>
+                                    <td>@item.Title</td>
+                                    <td>@item.mission_id</td>
+                                    @if (@item.ApprovalStatus == "APPROVE")
+                                    {
+                                        <td><span style="color:#02f702">Approved</span></td>
+                                    }
+                                    else if (@item.ApprovalStatus == "DECLINE")
+                                    {
+                                        <td><span style="color:red">Declined</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span style="color:red">Pending</span></td>
+                                    }
+
+                                    <td>@item.user_id</td>
+                                    <td>@item.name</td>
+                                    <td>@item.AppliedAt.ToString().Substring(0,11)</td>
+                                    <td>
+                                        <img src="~/images/checked-green.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#approve" class="edbutton" alt="" />
+                                        <img src="~/images/cancled-red.png" onclick="getma('@item.id')" data-bs-toggle="modal" data-bs-target="#notapprove" class="ms-2 edbutton" alt="" />
+                                    </td>
+                                </tr>
                             }
-                            }
-                        
+                        }
+
                     </tbody>
                 </table>
             </div>
-@*            <partial name="Pagination_partial" />*@
+            @*            <partial name="Pagination_partial" />*@
         </div>
     </div>
     <div class="mobile-navigation">
@@ -80,7 +96,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button" onclick="validation('APPROVE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+                <button type="button" onclick="validation('APPROVE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
@@ -97,7 +113,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn applybutton" data-bs-dismiss="modal">No</button>
-                <button type="button" onclick="validation('DECLINE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>    
+                <button type="button" onclick="validation('DECLINE')" class="btn applybutton" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
@@ -108,10 +124,10 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="~/js/storycms.js"></script>
 <script>
-    $(document).ready(function () {
-        $.noConflict()
-    $('#example').DataTable({
-        pagingType: 'full_numbers',
+        $(document).ready(function () {
+            $.noConflict()
+        $('#example').DataTable({
+            pagingType: 'full_numbers',
+        });
     });
-});
 </script>

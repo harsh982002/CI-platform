@@ -144,16 +144,16 @@ function sendMail(MissionId) {
     })
 }
 
-const prev_volunteers = (user_id, id) => {
+const prev_volunteers = (user_id, mission_id) => {
     var one_page_volunteers = 9
     if (count > 1) {
         count--;
         $.ajax({
-            url: `/Home/Volunteermission/${id}`,
+            url: `/Home/RecentVolunteer/${mission_id}`,
             type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, id: id },
+            data: { count: count - 1, user_id: user_id, mission_id: mission_id },
             success: function (result) {
-                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.volunteers').empty().append(result)
                 $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
             },
             error: function () {
@@ -163,16 +163,16 @@ const prev_volunteers = (user_id, id) => {
     }
 }
 
-const next_volunteers = (max_page, user_id, id) => {
+const next_volunteers = (max_page, user_id, mission_id) => {
     var one_page_volunteers = 9
     if (count < max_page) {
         count++;
         $.ajax({
-            url: `/Home/Volunteermission/${id}`,
+            url: `/Home/RecentVolunteer/${mission_id}`,
             type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", id: id, user_id: user_id },
+            data: { count: count - 1, mission_id: mission_id, user_id: user_id },
             success: function (result) {
-                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.volunteers').empty().append(result)
                 $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
             },
             error: function () {

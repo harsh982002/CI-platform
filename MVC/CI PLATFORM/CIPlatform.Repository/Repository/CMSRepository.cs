@@ -69,7 +69,6 @@ namespace CIPlatform.Repository.Repository
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
            
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
-                                                                                        where ma.ApprovalStatus== "PENDING"
                                                                                         select new MissionAppViewModel
                                                                                         {
                                                                                             id = ma.MissionApplicationId,
@@ -78,6 +77,7 @@ namespace CIPlatform.Repository.Repository
                                                                                             name = ma.User.FirstName + " " + ma.User.LastName,
                                                                                             Title = ma.Mission.Title,
                                                                                             AppliedAt = ma.AppliedAt,
+                                                                                            ApprovalStatus = ma.ApprovalStatus,
                                                                                         }).ToList();
             model.MissionApps = allapplications;
             return model;
@@ -144,6 +144,7 @@ namespace CIPlatform.Repository.Repository
                                                                                       UserName = s.User.FirstName + " " + s.User.LastName,
                                                                                       MissionId = s.MissionId,
                                                                                       MissionName = s.Mission.Title,
+                                                                                      ApprovalStatus = s.Status
                                                                                      
                                                                                   }).ToList();
             model.Stories = allstory;
@@ -225,20 +226,29 @@ namespace CIPlatform.Repository.Repository
 
         public MissionTheme EditTheme(long theme_id, MissionThemeViewModel model, string type)
         {
+            MissionTheme themename = _db.MissionThemes.FirstOrDefault(x => x.Title.ToLower() == model.theme_name.ToLower());
             MissionTheme missionTheme = _db.MissionThemes.FirstOrDefault(x => x.MissionThemeId == theme_id);
             if (type == "edit-theme")
             {
-                if (missionTheme != null)
+                if(themename is null)
                 {
-                    missionTheme.Title = model.theme_name;
-                    missionTheme.Status = model.status;
-                    _db.SaveChanges();
-                    return missionTheme;
+                    if (missionTheme != null)
+                    {
+                        missionTheme.Title = model.theme_name;
+                        missionTheme.Status = model.status;
+                        _db.SaveChanges();
+                        return missionTheme;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
                     return null;
                 }
+               
             }
             else
             {
@@ -248,14 +258,22 @@ namespace CIPlatform.Repository.Repository
 
         public MissionTheme AddTheme(long user_id, MissionThemeViewModel model)
         {
-            MissionTheme theme = new MissionTheme();
+           MissionTheme themename = _db.MissionThemes.FirstOrDefault(x=>x.Title.ToLower() == model.theme_name.ToLower());
+            if(themename == null)
             {
-                theme.Title = model.theme_name;
-                theme.Status = model.status;
-            };
-            _db.MissionThemes.Add(theme);
-            _db.SaveChanges();
-            return theme;
+                MissionTheme theme = new MissionTheme();
+                {
+                    theme.Title = model.theme_name;
+                    theme.Status = model.status;
+                };
+                _db.MissionThemes.Add(theme);
+                _db.SaveChanges();
+                return theme;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /*Skills*/
@@ -277,32 +295,50 @@ namespace CIPlatform.Repository.Repository
 
         public Skill AddSkill(long user_id, SkillViewModel model)
         {
-            Skill skill = new Skill();
+            Skill skilname = _db.Skills.Where(x=>x.SkillName.ToLower() == model.SkillName).FirstOrDefault();
+            if(skilname is null)
             {
-                skill.SkillName = model.SkillName;
-                skill.Status = model.Status;
+                Skill skill = new Skill();
+                {
+                    skill.SkillName = model.SkillName;
+                    skill.Status = model.Status;
+                }
+                _db.Skills.Add(skill);
+                _db.SaveChanges();
+                return skill;
             }
-            _db.Skills.Add(skill);
-            _db.SaveChanges();
-            return skill;
+            else
+            {
+                return null;
+            }
+            
         }
 
         public Skill EditSkill(int skill_id, SkillViewModel model, string type)
         {
+            Skill skillname = _db.Skills.Where(x => x.SkillName.ToLower() == model.SkillName).FirstOrDefault();
             Skill skill = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
             if (skill is not null)
             {
-                if (type == "edit-skill")
+                if(skillname is null)
                 {
-                    skill.Status = model.Status;
-                    skill.SkillName = model.SkillName;
-                    _db.SaveChanges();
-                    return skill;
+                    if (type == "edit-skill")
+                    {
+                        skill.Status = model.Status;
+                        skill.SkillName = model.SkillName;
+                        _db.SaveChanges();
+                        return skill;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
                     return null;
                 }
+                
             }
             else
             {
@@ -381,16 +417,25 @@ namespace CIPlatform.Repository.Repository
 
         public CmsPage AddCms(long user_id, CmsViewModel model)
         {
-            CmsPage cmsPage = new CmsPage();
+            CmsPage cms = _db.CmsPages.FirstOrDefault(x => x.Title.ToLower() == model.Title.ToLower() || x.Slug.ToLower() == model.Slug.ToLower());
+            if(cms is null)
             {
-                cmsPage.Title = model.Title;
-                cmsPage.Slug = model.Slug;
-                cmsPage.Status = model.Status;
-                cmsPage.Description = model.Description;
+                CmsPage cmsPage = new CmsPage();
+                {
+                    cmsPage.Title = model.Title;
+                    cmsPage.Slug = model.Slug;
+                    cmsPage.Status = model.Status;
+                    cmsPage.Description = model.Description;
+                }
+                _db.CmsPages.Add(cmsPage);
+                _db.SaveChanges();
+                return cmsPage;
             }
-            _db.CmsPages.Add(cmsPage);
-            _db.SaveChanges();
-            return cmsPage;
+            else
+            {
+                return null;
+            }
+            
         }
 
         public bool deletecms(long cms_id)
@@ -411,19 +456,28 @@ namespace CIPlatform.Repository.Repository
 
         public CmsPage EditCms(long cms_id, CmsViewModel model, string type)
         {
+            CmsPage cms = _db.CmsPages.FirstOrDefault(x => x.Title.ToLower() == model.Title.ToLower() || x.Slug.ToLower() == model.Slug.ToLower());
             CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
             if (cmsPage != null)
             {
-                if (type == "edit-cms")
+                if(cms is null)
                 {
-                    cmsPage.Title = model.Title;
-                    cmsPage.Description = model.Description;
-                    cmsPage.Status = model.Status;
-                    cmsPage.Slug = model.Slug;
-                    _db.SaveChanges();
-                    return cmsPage;
+                    if (type == "edit-cms")
+                    {
+                        cmsPage.Title = model.Title;
+                        cmsPage.Description = model.Description;
+                        cmsPage.Status = model.Status;
+                        cmsPage.Slug = model.Slug;
+                        _db.SaveChanges();
+                        return cmsPage;
+                    }
+                    else { return null; }
                 }
-                else { return null; }
+                else
+                {
+                    return null;
+                }
+                
             }
             else
             {
@@ -458,6 +512,7 @@ namespace CIPlatform.Repository.Repository
 
         public User AddUser(UserViewModel model)
         {
+            
             string secpass = BCrypt.Net.BCrypt.HashPassword(model.Password);
             User user = new User();
             {
@@ -471,6 +526,29 @@ namespace CIPlatform.Repository.Repository
             _db.Users.Add(user);
             _db.SaveChanges();
             return user;
+        }
+        public Boolean IsValidUserEmail(UserViewModel model)
+        {
+            try
+            {
+                User? user = _db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+                if (user == null)
+                {
+                    
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                return false;
+            }
         }
 
         public User EditUser(long user_id, UserViewModel model, string type)

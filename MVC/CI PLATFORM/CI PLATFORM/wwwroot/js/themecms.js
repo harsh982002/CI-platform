@@ -39,7 +39,10 @@ const addtheme = () => {
                 success: function (result) {
                     if (result.view) {
                         $(`#theme-${parseInt(document.getElementById("theme-id").value)}`).replaceWith(result.view.result)
-
+                        location.reload();
+                    }
+                    else {
+                        $("#sametheme").addClass('d-block').removeClass('d-none');
                     }
                 },
                 error: function () {
@@ -56,10 +59,12 @@ const addtheme = () => {
                 data: { theme: theme, themestatus: themestatus },
                 success: function (result) {
                     if (result.success) {
-                        $("#Add").modal('hide')
                         document.getElementById("theme").value = ""
                         document.getElementById("themestatus").value = ""
-
+                        location.reload();
+                    }
+                    else {
+                        $("#sametheme").addClass('d-block').removeClass('d-none');
                     }
                 },
                 error: function () {
