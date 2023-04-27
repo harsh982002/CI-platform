@@ -64,9 +64,14 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.Mission GetAllMission()
         {
+           /* missions = _db.Missions.Where(m=>m.CityId == city_id).ToList();*/
             /*var application = _db.MissionApplications.FirstOrDefault(x => x.MissionId ==  && x.UserId == user_id)?.ApprovalStatus;*/
             int total_missions = missions.Count;
-            missions = missions.Take(9).ToList();
+            if (missions.Count > 0)
+            {
+                missions = missions.Take(9).ToList();
+            }
+            
             var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions};
             return Missions;
         }
@@ -146,6 +151,7 @@ namespace CIPlatform.Repository.Repository
             //sort all mission as per user need
             if (sort_by == "newest")
             {
+                
                 Missions = new Entitites.ViewModel.Mission
                 {
                     Missions = (from m in mission
@@ -407,7 +413,7 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
 
 
-            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/UserAccount/Login?returnedUrl=/Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
+            var mailBody = "<h1>" + fromUser.FirstName + " Recommended Mission</h1><br><h2><a href='" + "https://localhost:44335/Home/Volunteermission/" + mission_id + "'>Go to Mission</a></h2>";
 
             foreach (var item in emailList)
             {

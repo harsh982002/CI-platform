@@ -40,18 +40,27 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Landingplatform")]
         public IActionResult Landingplatform()
         {
-            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
-            ViewBag.UserId = userId;
-            if (HttpContext.Session.GetString("Country") is not null)
+            
+            if(HttpContext.Session.GetString("UserId") is not null)
             {
-
-                CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetAllMission();
-                return View(missions);
+               
+                if (HttpContext.Session.GetString("Country") is not null)
+                {
+                    long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+                    ViewBag.UserId = userId;
+                    CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetAllMission();
+                    return View(missions);
+                }
+                else
+                {
+                    return RedirectToAction("ProfilePage", "Home");
+                }
             }
             else
             {
-                return RedirectToAction("ProfilePage", "Home");
+                return RedirectToAction("Login", "UserAccount");
             }
+          
 
         }
 
@@ -93,7 +102,7 @@ namespace CI_PLATFORM.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
-                return RedirectToAction("Login", "UserAccount");
+                return RedirectToAction("Login", "UserAccount",new {retunUrl = $"Home/Volunteermission/{id}" });
             }
 
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -184,6 +193,10 @@ namespace CI_PLATFORM.Controllers
                     if (details?.FirstName is not null && details?.LastName is not null)
                     {
                         HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
+                    }
+                    if(details?.CityId is not null)
+                    {
+                        HttpContext.Session.SetString("City", details?.CityId.ToString());
                     }
                     return View(details);
                 }

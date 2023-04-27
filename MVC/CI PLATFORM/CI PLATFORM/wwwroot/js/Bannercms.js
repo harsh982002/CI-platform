@@ -10,6 +10,7 @@ const deletebanner = () => {
         type: 'POST',
         data: { banner_id: parseInt(banner_id), type: "banner-delete" },
         success: function (result) {
+            location.reload();
         },
         error: function () {
             console.log("Error updating variable");

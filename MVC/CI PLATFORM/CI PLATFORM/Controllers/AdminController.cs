@@ -8,12 +8,12 @@ namespace CI_PLATFORM.Controllers
     public class AdminController : Controller
     {
         private readonly IAllRepository _allRepository;
-        private readonly INotyfService _notyf;
-       
-        public AdminController(IAllRepository allRepository, INotyfService notyf)
+        
+
+        public AdminController(IAllRepository allRepository)
         {
             _allRepository = allRepository;
-            _notyf = notyf;
+            
         }
 
         public IActionResult Index()
@@ -57,11 +57,11 @@ namespace CI_PLATFORM.Controllers
                 };
                 CmsPage cms = _allRepository.cmsRepository.EditCms(cms_id, model, type);
                 bool success = false;
-                if(cms != null)
+                if (cms != null)
                 {
                     success = true;
                 }
-                return Json(new {success});
+                return Json(new { success });
             }
             else
             {
@@ -92,6 +92,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
+                
                 CIPlatform.Entitites.ViewModel.UserViewModel users = _allRepository.cmsRepository.GetUser();
                 return View(users);
             }
@@ -109,25 +110,30 @@ namespace CI_PLATFORM.Controllers
             }
             else if (type == "edit-user")
             {
-                CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
-                {
-                    Role = role,
-                    EmpId = empid,
-                    Department = department,
-                    status = status
-                };
-                User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
-                bool success = false;
-                if(user != null)
-                {
-                    success = true;
-                }
-                return Json(new {success});
+
+                
+                    CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
+                    {
+                        Role = role,
+                        EmpId = empid,
+                        Department = department,
+                        status = status
+                    };
+                    User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
+                    bool success = false;
+                    if (user != null)
+                    {
+                        success = true;
+                    }
+                    return Json(new { success });
+                
+                
             }
             else
             {
+                
                 if (_allRepository.cmsRepository.IsValidUserEmail(model1))
-                        {
+                {
                     CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
                     {
                         FirstName = fname,
@@ -140,18 +146,15 @@ namespace CI_PLATFORM.Controllers
                     };
                     User user = _allRepository.cmsRepository.AddUser(model);
                     bool success = false;
-                    if(user is not null)
+                    if (user is not null)
                     {
                         success = true;
                     }
-                    return Json(new {success});
+                    return Json(new { success });
                 }
                 else
                 {
-                    _notyf.Warning("This Mail Account Already Register !! Please Check your mail or Login your Account...");
-                   /* ViewBag.alert = String.Format("This Mail Account Already Register !! Please Check your mail or Login your Account...");*/
-                    CIPlatform.Entitites.ViewModel.UserViewModel users = _allRepository.cmsRepository.GetUser();
-                    return View("User_CMS",users);
+                    return Json(new {success=false});
                 }
             }
         }
@@ -188,11 +191,11 @@ namespace CI_PLATFORM.Controllers
                 };
                 MissionTheme themes = _allRepository.cmsRepository.EditTheme(theme_id, model, type);
                 bool success = false;
-                if(themes is not null)
+                if (themes is not null)
                 {
                     success = true;
                 }
-                return Json(new {success});
+                return Json(new { success });
             }
             else
             {
@@ -204,11 +207,11 @@ namespace CI_PLATFORM.Controllers
                 };
                 MissionTheme themes = _allRepository.cmsRepository.AddTheme(theme_id, model);
                 bool success = false;
-                if(themes is not null)
+                if (themes is not null)
                 {
                     success = true;
                 }
-                return Json(new {success});
+                return Json(new { success });
             }
         }
         [Route("/Admin/App")]
@@ -338,11 +341,11 @@ namespace CI_PLATFORM.Controllers
                 };
                 Skill skill = _allRepository.cmsRepository.EditSkill(skill_id, model, type);
                 bool success = false;
-                if(skill != null)
+                if (skill != null)
                 {
                     success = true;
                 }
-                return Json(new {success});
+                return Json(new { success });
             }
             else
             {
@@ -358,7 +361,7 @@ namespace CI_PLATFORM.Controllers
                     success = true;
                 }
                 return Json(new { success });
-                
+
             }
         }
 
@@ -370,7 +373,7 @@ namespace CI_PLATFORM.Controllers
                 CIPlatform.Entitites.ViewModel.MissionSelectViewModel missions = _allRepository.cmsRepository.GetMission();
                 return View(missions);
             }
-            else if(model.mission.mission_id != 0)
+            else if (model.mission.mission_id != 0)
             {
 
                 bool success = _allRepository.cmsRepository.EditMission(model.mission.mission_id, model.mission);
@@ -379,6 +382,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
+
                 bool success = _allRepository.cmsRepository.AddMission(model.mission);
                 CIPlatform.Entitites.ViewModel.MissionSelectViewModel mis = _allRepository.cmsRepository.GetMission();
                 return View("Mission_CMS", mis);
@@ -391,7 +395,7 @@ namespace CI_PLATFORM.Controllers
 
             CIPlatform.Entitites.ViewModel.MissionSelectViewModel missions = _allRepository.cmsRepository.getdetails(mission_id);
             return View("AddMission", missions);
-            
+
 
         }
 
@@ -413,12 +417,12 @@ namespace CI_PLATFORM.Controllers
 
         [HttpPost]
         [Route("/Admin/Banner")]
-        public IActionResult Banner(long banner_id, string? type )
+        public IActionResult Banner(long banner_id, string? type)
         {
             if (type == "banner-delete")
             {
                 bool success = _allRepository.cmsRepository.deletebanner(banner_id);
-                return Json(new{success});
+                return Json(new { success });
             }
             else
             {
@@ -429,10 +433,10 @@ namespace CI_PLATFORM.Controllers
         [Route("/Admin/AddBanner")]
         public IActionResult AddBanner()
         {
-            
-                CIPlatform.Entitites.ViewModel.BannerViewModel banner = _allRepository.cmsRepository.GetBanner();
-                return View(banner);
-            
+
+            CIPlatform.Entitites.ViewModel.BannerViewModel banner = _allRepository.cmsRepository.GetBanner();
+            return View(banner);
+
         }
         [HttpPost]
         [Route("/Admin/AddBanner")]
@@ -443,7 +447,7 @@ namespace CI_PLATFORM.Controllers
                 CIPlatform.Entitites.ViewModel.BannerViewModel banner = _allRepository.cmsRepository.GetBanner();
                 return View(banner);
             }
-            else if(model.BannerId != 0)
+            else if (model.BannerId != 0)
             {
                 bool success = _allRepository.cmsRepository.editbanner(model.BannerId, model);
                 CIPlatform.Entitites.ViewModel.BannerViewModel mis = _allRepository.cmsRepository.GetBanner();
@@ -463,6 +467,6 @@ namespace CI_PLATFORM.Controllers
             CIPlatform.Entitites.ViewModel.BannerViewModel ban = _allRepository.cmsRepository.getbannerdetail(banner_id);
             return View("AddBanner", ban);
         }
-        
+
     }
 }

@@ -33,9 +33,6 @@ const addskill = () => {
                         $(`#skill-${parseInt(document.getElementById("skill-id").value)}`).replaceWith(result.view.result)
                         location.reload();
                     }
-                    else {
-                        $("#sameskill").addClass('d-block').removeClass('d-none')
-                    }
                    
                 },
                 error: function () {

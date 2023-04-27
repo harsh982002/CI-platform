@@ -41,9 +41,6 @@ const addtheme = () => {
                         $(`#theme-${parseInt(document.getElementById("theme-id").value)}`).replaceWith(result.view.result)
                         location.reload();
                     }
-                    else {
-                        $("#sametheme").addClass('d-block').removeClass('d-none');
-                    }
                 },
                 error: function () {
                     console.log("Error updating variable");

@@ -67,7 +67,7 @@ namespace CIPlatform.Repository.Repository
         {
             MissionAppViewModel model = new MissionAppViewModel();
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
-           
+
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
                                                                                         select new MissionAppViewModel
                                                                                         {
@@ -120,7 +120,7 @@ namespace CIPlatform.Repository.Repository
                                                                                           StartDate = m.StartDate,
                                                                                           EndDate = m.EndDate,
                                                                                           Deadline = m.Deadline,
-                                                                                         
+
 
                                                                                       }).ToList();
             model.citys = _db.Cities.ToList();
@@ -145,7 +145,7 @@ namespace CIPlatform.Repository.Repository
                                                                                       MissionId = s.MissionId,
                                                                                       MissionName = s.Mission.Title,
                                                                                       ApprovalStatus = s.Status
-                                                                                     
+
                                                                                   }).ToList();
             model.Stories = allstory;
             return model;
@@ -194,7 +194,8 @@ namespace CIPlatform.Repository.Repository
 
         /*Themes*/
         public MissionThemeViewModel GetTheme()
-        {   MissionThemeViewModel model = new MissionThemeViewModel();
+        {
+            MissionThemeViewModel model = new MissionThemeViewModel();
             List<CIPlatform.Entitites.Models.MissionTheme> themes = _db.MissionThemes.ToList();
             List<CIPlatform.Entitites.ViewModel.MissionThemeViewModel> allthemes = (from t in themes
                                                                                     select new MissionThemeViewModel
@@ -230,7 +231,7 @@ namespace CIPlatform.Repository.Repository
             MissionTheme missionTheme = _db.MissionThemes.FirstOrDefault(x => x.MissionThemeId == theme_id);
             if (type == "edit-theme")
             {
-                if(themename is null)
+                if (themename is null)
                 {
                     if (missionTheme != null)
                     {
@@ -248,7 +249,7 @@ namespace CIPlatform.Repository.Repository
                 {
                     return null;
                 }
-               
+
             }
             else
             {
@@ -258,8 +259,8 @@ namespace CIPlatform.Repository.Repository
 
         public MissionTheme AddTheme(long user_id, MissionThemeViewModel model)
         {
-           MissionTheme themename = _db.MissionThemes.FirstOrDefault(x=>x.Title.ToLower() == model.theme_name.ToLower());
-            if(themename == null)
+            MissionTheme themename = _db.MissionThemes.FirstOrDefault(x => x.Title.ToLower() == model.theme_name.ToLower());
+            if (themename == null)
             {
                 MissionTheme theme = new MissionTheme();
                 {
@@ -295,8 +296,8 @@ namespace CIPlatform.Repository.Repository
 
         public Skill AddSkill(long user_id, SkillViewModel model)
         {
-            Skill skilname = _db.Skills.Where(x=>x.SkillName.ToLower() == model.SkillName).FirstOrDefault();
-            if(skilname is null)
+            Skill skilname = _db.Skills.Where(x => x.SkillName.ToLower() == model.SkillName).FirstOrDefault();
+            if (skilname is null)
             {
                 Skill skill = new Skill();
                 {
@@ -311,7 +312,7 @@ namespace CIPlatform.Repository.Repository
             {
                 return null;
             }
-            
+
         }
 
         public Skill EditSkill(int skill_id, SkillViewModel model, string type)
@@ -320,7 +321,7 @@ namespace CIPlatform.Repository.Repository
             Skill skill = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
             if (skill is not null)
             {
-                if(skillname is null)
+                if (skillname is null)
                 {
                     if (type == "edit-skill")
                     {
@@ -338,7 +339,7 @@ namespace CIPlatform.Repository.Repository
                 {
                     return null;
                 }
-                
+
             }
             else
             {
@@ -418,7 +419,7 @@ namespace CIPlatform.Repository.Repository
         public CmsPage AddCms(long user_id, CmsViewModel model)
         {
             CmsPage cms = _db.CmsPages.FirstOrDefault(x => x.Title.ToLower() == model.Title.ToLower() || x.Slug.ToLower() == model.Slug.ToLower());
-            if(cms is null)
+            if (cms is null)
             {
                 CmsPage cmsPage = new CmsPage();
                 {
@@ -435,7 +436,7 @@ namespace CIPlatform.Repository.Repository
             {
                 return null;
             }
-            
+
         }
 
         public bool deletecms(long cms_id)
@@ -460,7 +461,7 @@ namespace CIPlatform.Repository.Repository
             CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
             if (cmsPage != null)
             {
-                if(cms is null)
+                if (cms is null)
                 {
                     if (type == "edit-cms")
                     {
@@ -477,7 +478,7 @@ namespace CIPlatform.Repository.Repository
                 {
                     return null;
                 }
-                
+
             }
             else
             {
@@ -512,7 +513,7 @@ namespace CIPlatform.Repository.Repository
 
         public User AddUser(UserViewModel model)
         {
-            
+
             string secpass = BCrypt.Net.BCrypt.HashPassword(model.Password);
             User user = new User();
             {
@@ -534,7 +535,7 @@ namespace CIPlatform.Repository.Repository
                 User? user = _db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
                 if (user == null)
                 {
-                    
+
                     return true;
                 }
                 else
@@ -546,7 +547,7 @@ namespace CIPlatform.Repository.Repository
             }
             catch (Exception ex)
             {
-                
+
                 return false;
             }
         }
@@ -581,15 +582,15 @@ namespace CIPlatform.Repository.Repository
             CIPlatform.Entitites.Models.Mission mission = _db.Missions.FirstOrDefault(x => x.MissionId == mission_id);
             if (mission is not null)
             {
-                _db.Comments.RemoveRange(_db.Comments.Where(x=>x.MissionId == mission.MissionId));
+                _db.Comments.RemoveRange(_db.Comments.Where(x => x.MissionId == mission.MissionId));
                 _db.FavoriteMissions.RemoveRange(_db.FavoriteMissions.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionDocuments.RemoveRange(_db.MissionDocuments.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionInvites.RemoveRange(_db.MissionInvites.Where(x => x.MissionId == mission.MissionId));
-                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x=>x.MissionId == mission.MissionId));
+                _db.MissionApplications.RemoveRange(_db.MissionApplications.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionMedia.RemoveRange(_db.MissionMedia.Where(x => x.MissionId == mission.MissionId));
                 _db.MissionRatings.RemoveRange(_db.MissionRatings.Where(x => x.MissionId == mission.MissionId));
-                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x=>x.MissionId== mission.MissionId));
-                
+                _db.MissionSkills.RemoveRange(_db.MissionSkills.Where(x => x.MissionId == mission.MissionId));
+
                 _db.Stories.RemoveRange(_db.Stories.Where(x => x.MissionId == mission.MissionId));
                 _db.Timesheets.RemoveRange(_db.Timesheets.Where(x => x.MissionId == mission.MissionId));
                 _db.GoalMissions.RemoveRange(_db.GoalMissions.Where(x => x.MissionId == mission.MissionId));
@@ -607,24 +608,34 @@ namespace CIPlatform.Repository.Repository
         public bool AddMission(MissionSelectViewModel model)
         {
             CIPlatform.Entitites.Models.Mission mission = new Entitites.Models.Mission();
-                mission.CountryId = model.CountryId;
-                mission.CityId = model.CityId;
-                mission.ThemeId = model.ThemeId;
-                mission.Title = model.Title;
-                mission.Description = model.Description;
-                mission.StartDate = model.StartDate;
-                mission.EndDate = model.EndDate;
-                mission.Deadline = model.Deadline;
-                mission.OrganizationName = model.OrganizationName;
-                mission.OrganizationDetail = model.OrganizationDetail;
-                mission.MissionType = model.missiontype;
-                mission.GoalObject = model.goalobject;
-                mission.TotalSeats = model.TotalSeats;
-                mission.Achieved = model.Achieved;
-                mission.Status = "1";
-                mission.AvbSeat = model.AvbSeat;
-                mission.Availability = model.Availability;
+            mission.CountryId = model.CountryId;
+            mission.CityId = model.CityId;
+            mission.ThemeId = model.ThemeId;
+            mission.Title = model.Title;
+            mission.Description = model.Description;
+            mission.StartDate = model.StartDate;
+            mission.EndDate = model.EndDate;
+            mission.Deadline = model.Deadline;
+            mission.OrganizationName = model.OrganizationName;
+            mission.OrganizationDetail = model.OrganizationDetail;
+            mission.MissionType = model.missiontype;
+            mission.GoalObject = model.goalobject;
+            mission.TotalSeats = model.TotalSeats;
+            mission.Achieved = model.Achieved;
+            mission.Status = "1";
+            mission.AvbSeat = model.AvbSeat;
+            mission.Availability = model.Availability;
             _db.Missions.Add(mission);
+            _db.SaveChanges();
+            string[]? getskills = model.skillname?.Split(",");
+            foreach (var skill in getskills)
+            {
+                _db.MissionSkills.Add(new MissionSkill
+                {
+                    MissionId = mission.MissionId,
+                    SkillId = int.Parse(skill)
+                });
+            }
             _db.SaveChanges();
             int count = 1;
             foreach (var image in model.missionMediums)
@@ -695,65 +706,83 @@ namespace CIPlatform.Repository.Repository
 
         public bool EditMission(long id, MissionSelectViewModel model)
         {
-           CIPlatform.Entitites.Models.Mission updatemission = _db.Missions.FirstOrDefault(x=>x.MissionId == id);
-            
-                if (updatemission is not null)
-                {
-                    updatemission.Availability = model.Availability;
-                    updatemission.Achieved = model.Achieved;
-                    updatemission.AvbSeat = model.AvbSeat;
-                    updatemission.CountryId = model.CountryId;
-                    updatemission.CityId = model.CityId;
-                    updatemission.Deadline = model.Deadline;
-                    updatemission.EndDate = model.EndDate;
-                    updatemission.StartDate = model.StartDate;
-                    updatemission.ThemeId = model.ThemeId;
-                    updatemission.GoalObject = model.goalobject;
-                    updatemission.Title = model.Title;
-                    updatemission.Description = model.Description;
-                    updatemission.MissionType = model.missiontype;
-                    updatemission.OrganizationName = model.OrganizationName;
-                    updatemission.OrganizationDetail = model.OrganizationDetail;
-                    _db.SaveChanges();
-                    int count = 1;
-                    foreach (var image in model.missionMediums)
-                    {
-                        FileInfo fileInfo = new FileInfo(image.FileName);
-                        string filename = $"mission{updatemission.MissionId}-image-{count}" + fileInfo.Extension;
-                        string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
-                        _db.MissionMedia.Add(new MissionMedium
-                        {
-                            MissionId = updatemission.MissionId,
-                            MediaPath = filename
-                        });
-                        using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
-                        {
-                            image.CopyTo(fileStream);
-                        }
-                        count++;
-                    }
-                    _db.SaveChanges();
-                    foreach (var doc in model.MissionDocuments)
-                    {
-                        FileInfo fileInfo = new FileInfo(doc.FileName);
-                        string filename = $"mission{updatemission.MissionId}-document-{count}" + fileInfo.Extension;
-                        string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", filename);
-                        _db.MissionDocuments.Add(new MissionDocument
-                        {
-                            MissionId = updatemission.MissionId,
-                            DocumentPath = filename
-                        });
-                        using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
-                        {
-                            image.CopyTo(fileStream);
-                        }
-                        count++;
-                    }
-                    _db.SaveChanges();
-                    return true;
+            CIPlatform.Entitites.Models.Mission updatemission = _db.Missions.FirstOrDefault(x => x.MissionId == id);
 
+            if (updatemission is not null)
+            {
+                updatemission.Availability = model.Availability;
+                updatemission.Achieved = model.Achieved;
+                updatemission.AvbSeat = model.AvbSeat;
+                updatemission.CountryId = model.CountryId;
+                updatemission.CityId = model.CityId;
+                updatemission.Deadline = model.Deadline;
+                updatemission.EndDate = model.EndDate;
+                updatemission.StartDate = model.StartDate;
+                updatemission.ThemeId = model.ThemeId;
+                updatemission.GoalObject = model.goalobject;
+                updatemission.Title = model.Title;
+                updatemission.Description = model.Description;
+                updatemission.MissionType = model.missiontype;
+                updatemission.OrganizationName = model.OrganizationName;
+                updatemission.OrganizationDetail = model.OrganizationDetail;
+                _db.SaveChanges();
+                foreach (var image in updatemission.MissionMedia)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", image.MediaPath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    _db.MissionMedia.Remove(image);
                 }
-                
+                int count = 1;
+                foreach (var image in model.missionMediums)
+                {
+                    FileInfo fileInfo = new FileInfo(image.FileName);
+                    string filename = $"mission{updatemission.MissionId}-image-{count}" + fileInfo.Extension;
+                    string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                    _db.MissionMedia.Add(new MissionMedium
+                    {
+                        MissionId = updatemission.MissionId,
+                        MediaPath = filename
+                    });
+                    using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                    {
+                        image.CopyTo(fileStream);
+                    }
+                    count++;
+                }
+                _db.SaveChanges();
+                foreach (var doc in updatemission.MissionDocuments)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", doc.DocumentPath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    _db.MissionDocuments.Remove(doc);
+                }
+                foreach (var doc in model.MissionDocuments)
+                {
+                    FileInfo fileInfo = new FileInfo(doc.FileName);
+                    string filename = $"mission{updatemission.MissionId}-document-{count}" + fileInfo.Extension;
+                    string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Documents", filename);
+                    _db.MissionDocuments.Add(new MissionDocument
+                    {
+                        MissionId = updatemission.MissionId,
+                        DocumentPath = filename
+                    });
+                    using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                    {
+                        image.CopyTo(fileStream);
+                    }
+                    count++;
+                }
+                _db.SaveChanges();
+                return true;
+
+            }
+
             else
             {
                 return false;
@@ -766,13 +795,13 @@ namespace CIPlatform.Repository.Repository
             BannerViewModel model = new BannerViewModel();
             List<CIPlatform.Entitites.Models.Banner> banners = _db.Banners.ToList();
             List<CIPlatform.Entitites.ViewModel.BannerViewModel> allbanner = (from b in banners
-                                                                             select new BannerViewModel
-                                                                             {
-                                                                                 BannerId = b.BannerId,
-                                                                                 Text = b.Text,
-                                                                                 Image = b.Image,
-                                                                                 SortOrder = b.SortOrder,
-                                                                             }).ToList();
+                                                                              select new BannerViewModel
+                                                                              {
+                                                                                  BannerId = b.BannerId,
+                                                                                  Text = b.Text,
+                                                                                  Image = b.Image,
+                                                                                  SortOrder = b.SortOrder,
+                                                                              }).ToList();
             model.Bans = allbanner;
             return model;
         }
@@ -802,17 +831,17 @@ namespace CIPlatform.Repository.Repository
             }
             _db.Banners.Add(banner);
             _db.SaveChanges();
-           
-                FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
-                string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
-                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
-                banner.Image = filename;
-                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream);
-                }
             
-           
+            FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
+            string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
+            string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+            banner.Image = filename;
+            using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+            {
+                model.BannerImage.CopyTo(fileStream);
+            }
+
+
             _db.SaveChanges();
             return true;
 
@@ -820,7 +849,7 @@ namespace CIPlatform.Repository.Repository
 
         public BannerViewModel getbannerdetail(long id)
         {
-           Banner banner = _db.Banners.Find(id);
+            Banner banner = _db.Banners.Find(id);
             BannerViewModel bannerViewModel = new BannerViewModel();
             bannerViewModel.BannerId = id;
             bannerViewModel.SortOrder = banner.SortOrder;
@@ -830,12 +859,12 @@ namespace CIPlatform.Repository.Repository
 
         public bool editbanner(long id, BannerViewModel model)
         {
-            Banner banner = _db.Banners.FirstOrDefault(x=>x.BannerId == id);
-            if(banner is not null)
+            Banner banner = _db.Banners.FirstOrDefault(x => x.BannerId == id);
+            if (banner is not null)
             {
                 banner.Text = model.Text;
                 banner.SortOrder = model.SortOrder;
-                
+
                 FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
                 string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
                 string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);

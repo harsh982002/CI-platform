@@ -23,7 +23,7 @@ namespace CIPlatform.Entitites.ViewModel
      
         public string ThemeName { get; set; }
 
-        public string SkillName { get; set; }
+        
 
         [Required(ErrorMessage = "Description can't be null")]
         public string? Description { get; set; }
@@ -61,15 +61,19 @@ namespace CIPlatform.Entitites.ViewModel
         public string? Availability { get; set; }
 
         [Required(ErrorMessage = "StartDate is required.")]
+        [DataType(DataType.DateTime)]
         public DateTime? StartDate { get; set; }
 
         [Required(ErrorMessage = "EndDate is required.")]
+        [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
         public List<MissionSelectViewModel>? Missions { get; set; }
         public List<Country>? countries { get; set; }
 
         public List<City>? citys { get; set; }
+
+        public string? skillname { get; set; }
 
         public List<Skill>? Skills { get; set; }
         public List<MissionTheme>? theme { get; set; }
@@ -81,6 +85,8 @@ namespace CIPlatform.Entitites.ViewModel
         public List<IFormFile>? missionMediums { get; set;}
 
         public List<IFormFile>? MissionDocuments { get; set; }
+
+     
 
     }
 }

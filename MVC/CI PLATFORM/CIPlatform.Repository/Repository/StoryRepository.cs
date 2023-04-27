@@ -173,7 +173,7 @@ namespace CIPlatform.Repository.Repository
         public CIPlatform.Entitites.ViewModel.Mission GetStories(long user_id)
         {
             stories = (from s in stories
-                       where s.Status == "PUBLISHED" 
+                       where s.Status == "PUBLISHED" || (s.UserId == user_id && s.Status == "DRAFT")
                        orderby s.Status ascending
                        select s).ToList();
             return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Take(9).ToList(), total_missions = stories.Count };

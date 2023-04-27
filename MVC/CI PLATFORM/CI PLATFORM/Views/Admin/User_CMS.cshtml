@@ -12,15 +12,6 @@
 @model CIPlatform.Entitites.ViewModel.UserViewModel
 
 
-@if (ViewBag.Message != null)
-{
-    <script type="text/javascript">
-
-        window.onload = function () {
-            alert("@ViewBag.Message");
-        };
-    </script>
-}
 <div class="row w-100" style="height:90vh;">
     <div class="col-lg-3 col-md-3 navigation col-sm-3">
         <partial name="Navigation_partial" />

@@ -48,6 +48,9 @@ const adduser = () => {
                     document.getElementById(`role`).value = ""
                     location.reload();
                 }
+                else {
+                    alert("This Mail Account Already Register !! Please Check your mail or Login your Account...");
+                }
             },
             error: function () {
                 console.log("Error updating variable");

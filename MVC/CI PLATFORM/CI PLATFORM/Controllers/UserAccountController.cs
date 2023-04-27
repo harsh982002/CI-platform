@@ -13,16 +13,18 @@ namespace CI_PLATFORM.Controllers
     public class UserAccountController : Controller
     {
         private readonly IAccountRepository _registerInterface;
+        private readonly IAllRepository _allRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration configuration;
 
 
-        public UserAccountController(ILogger<HomeController> logger, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
+        public UserAccountController(ILogger<HomeController> logger,IAllRepository allRepository, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
                               IConfiguration _configuration)
         {
             _registerInterface = accountInterface;
             _httpContextAccessor = httpContextAccessor;
             configuration = _configuration;
+            _allRepository = allRepository;
         }
 
         [Route("/logout")]
@@ -34,16 +36,32 @@ namespace CI_PLATFORM.Controllers
 
        
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl)
         {
+            if (HttpContext.Session.GetString("UserId") is not null)
+            {
+                if (returnUrl is not null)
+                {
+                    return new RedirectResult(returnUrl);
+                }
+                return RedirectToAction("Landingplatform", "Home");
+            }
+            else
+            {
+                if(returnUrl is not null)
+                {
+                    TempData["returnUrl"] = returnUrl;
+                }
+            }
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             return View();
         }
 
         
         [HttpPost]
-        public IActionResult Login(LoginViewModel model,string? returnedUrl)
+        public IActionResult Login(LoginViewModel model)
         {
-         
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             try
             {
                 if (ModelState.IsValid)
@@ -74,26 +92,31 @@ namespace CI_PLATFORM.Controllers
                                 var userId = _registerInterface.GetUserID(user.Email);
                                 HttpContext.Session.SetString("UserId", userId.ToString());
                                 HttpContext.Session.SetString("Country", user.CountryId.ToString());
+                                HttpContext.Session.SetString("City", user.CityId.ToString());
                                 if(user.Avatar is not null)
                                 {
                                     HttpContext.Session.SetString("Avtar", user.Avatar);
                                 }
                                 HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
-                                if (!string.IsNullOrEmpty(returnedUrl))
+
+                                if(user.Role == "Admin")
                                 {
-
-                                    return Redirect(returnedUrl);
-
-
-                                }
-                                else if(user.Role == "Admin")
-                                {
+                                    if (TempData.ContainsKey("returnUrl"))
+                                    {
+                                        var url = TempData["returnUrl"] as string;
+                                        return new RedirectResult(url);
+                                    }
                                     HttpContext.Session.SetString("role",user.Role);
                                     return RedirectToAction("CMS", "Admin");
                                 }
-                                else {
+                                
+                                    if (TempData.ContainsKey("returnUrl"))
+                                    {
+                                        var url = TempData["returnUrl"] as string;
+                                        return new RedirectResult(url);
+                                    }
                                     return RedirectToAction("Landingplatform", "Home");
-                                }
+                                
                                
                             }
                         }
