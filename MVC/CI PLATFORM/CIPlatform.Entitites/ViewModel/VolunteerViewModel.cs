@@ -26,6 +26,8 @@ namespace CIPlatform.Entitites.ViewModel
         public int? Favorite_mission { get; set; }
         public int Rating { get; set; }
         public List<User>? users { get; set; }
+
+        public List<MissionInvite>? invites { get; set; }
         public double? Avg_ratings { get; set; }
         public int? Rating_count { get; set; }
         public bool Applied_or_not { get; set; }

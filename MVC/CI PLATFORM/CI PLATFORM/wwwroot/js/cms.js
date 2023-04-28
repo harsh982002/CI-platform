@@ -99,8 +99,8 @@ const EditUserDetails = () => {
             success: function (result) {
                 if (result.view) {
                     $(`#user-${parseInt(document.getElementById("user-id").value)}`).replaceWith(result.view.result)
-                    location.reload();
                 }
+                location.reload();
             },
             error: function () {
                 console.log("Error updating variable");

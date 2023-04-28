@@ -59,11 +59,6 @@ const addcms = () => {
 
                     if (result.view) {
                         $(`#cms-${parseInt(document.getElementById("cms-id").value)}`).replaceWith(result.view.result)
-                        location.reload();
-                    }
-                    else {
-                        $("#sametitle").addClass('d-block').removeClass('d-none');
-                        $("#sameslug").addClass('d-block').removeClass('d-none');
                     }
                 },
                 error: function () {

@@ -3,6 +3,7 @@ using CIPlatform.Entitites.Models;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
 using MailKit.Security;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using MimeKit.Text;
 using System;
@@ -235,22 +236,29 @@ namespace CIPlatform.Repository.Repository
         /*Volunteermission*/
         CIPlatform.Entitites.ViewModel.VolunteerViewModel IMissionRepository.Mission(long id, long user_id)
         {
+            
             int rate = 0;
             int avg_rating = 0;
             var fav = _db.FavoriteMissions.Where(x => x.MissionId == id && x.UserId == user_id).Count();
             var application = _db.MissionApplications.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id)?.ApprovalStatus;
             var recentvol = _db.MissionApplications.Where(x => x.MissionId == id && x.ApprovalStatus == "APPROVE").ToList();
             var com = _db.Comments.Where(x => x.MissionId == id).ToList();
-            var user = _db.Users.ToList();
+            var user = _db.Users.Include(x=>x.MissionInvites).ToList();
+
             if (_db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id) is not null)
             {
                 rate = _db.MissionRatings.FirstOrDefault(x => x.MissionId == id && x.UserId == user_id).Rating;
             }
-
             Entitites.Models.Mission? mission = _db.Missions.Find(id);
             if (mission is not null)
             {
-
+                var alreaduInvite = _db.MissionInvites.Where(x => x.FromUserId == user_id && x.MissionId == mission.MissionId).Include(x => x.ToUserNavigation).ToList();
+                foreach (var i in alreaduInvite)
+                {
+                    user = user.Where(x => x.UserId != i.ToUserId).ToList();
+                }
+                
+                
                 double avg_ratings = 0;
                 bool applied_or_not = false;
                 int rating_count = 0;
@@ -322,11 +330,11 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, related_mission = related_mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications = recentvol.Take(9).ToList(), comments = com };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission,invites = alreaduInvite, related_mission = related_mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications = recentvol.Take(9).ToList(), comments = com };
             }
             else
             {
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, missionApplications = recentvol.Take(9).ToList(), comments = com };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission,users = user, Favorite_mission = fav, applyuser = application, Rating = rate, missionApplications = recentvol.Take(9).ToList(), comments = com };
             }
 
         }

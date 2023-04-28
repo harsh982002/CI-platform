@@ -18,7 +18,7 @@ namespace CI_PLATFORM.Controllers
         private readonly IConfiguration configuration;
 
 
-        public UserAccountController(ILogger<HomeController> logger,IAllRepository allRepository, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
+        public UserAccountController(ILogger<HomeController> logger, IAllRepository allRepository, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
                               IConfiguration _configuration)
         {
             _registerInterface = accountInterface;
@@ -34,7 +34,7 @@ namespace CI_PLATFORM.Controllers
             return RedirectToAction("Login", "UserAccount");
         }
 
-       
+
         [HttpGet]
         public IActionResult Login(string? returnUrl)
         {
@@ -48,7 +48,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                if(returnUrl is not null)
+                if (returnUrl is not null)
                 {
                     TempData["returnUrl"] = returnUrl;
                 }
@@ -57,7 +57,7 @@ namespace CI_PLATFORM.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
@@ -67,17 +67,17 @@ namespace CI_PLATFORM.Controllers
                 if (ModelState.IsValid)
                 {
                     User user = _registerInterface.LoginViewModel(model);
-                    
+
                     if (user == null)
                     {
                         ViewBag.Message = String.Format("User Does Not Exist, Please Register Yourself.");
                         return View();
-                       /* return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User doesn't exist please Register yourself.");*/
+                        /* return StatusCode(HttpStatusCode.NotFound.GetHashCode(), "User doesn't exist please Register yourself.");*/
                     }
-                   
+
                     else if (BCrypt.Net.BCrypt.Verify(model.Password, user.Password) == false)
                     {
-                      
+
                         ViewBag.Message = String.Format("Password is incorrect");
                         return View();
                     }
@@ -93,31 +93,30 @@ namespace CI_PLATFORM.Controllers
                                 HttpContext.Session.SetString("UserId", userId.ToString());
                                 HttpContext.Session.SetString("Country", user.CountryId.ToString());
                                 HttpContext.Session.SetString("City", user.CityId.ToString());
-                                if(user.Avatar is not null)
+                                if (user.Avatar is not null)
                                 {
                                     HttpContext.Session.SetString("Avtar", user.Avatar);
                                 }
                                 HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
 
-                                if(user.Role == "Admin")
+                                if (user.Role == "Admin")
                                 {
                                     if (TempData.ContainsKey("returnUrl"))
                                     {
                                         var url = TempData["returnUrl"] as string;
                                         return new RedirectResult(url);
                                     }
-                                    HttpContext.Session.SetString("role",user.Role);
+                                    HttpContext.Session.SetString("role", user.Role);
                                     return RedirectToAction("CMS", "Admin");
                                 }
-                                
-                                    if (TempData.ContainsKey("returnUrl"))
-                                    {
-                                        var url = TempData["returnUrl"] as string;
-                                        return new RedirectResult(url);
-                                    }
-                                    return RedirectToAction("Landingplatform", "Home");
-                                
-                               
+                                if (TempData.ContainsKey("returnUrl"))
+                                {
+                                    var url = TempData["returnUrl"] as string;
+                                    return new RedirectResult(url);
+                                }
+                                return RedirectToAction("Landingplatform", "Home");
+
+
                             }
                         }
                         else
@@ -143,6 +142,7 @@ namespace CI_PLATFORM.Controllers
         [HttpGet]
         public IActionResult registration()
         {
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             return View();
         }
 
@@ -150,6 +150,7 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Registration(RegistrationViewModel model)
         {
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             try
             {
                 if (ModelState.IsValid)
@@ -157,9 +158,9 @@ namespace CI_PLATFORM.Controllers
 
                     if (_registerInterface.IsValidUserEmail(model))
                     {
-                        
+
                         User registertion = _registerInterface.RegistrationViewModel(model);
-                        
+
                         return RedirectToAction("Login", "UserAccount");
 
                     }
@@ -167,7 +168,7 @@ namespace CI_PLATFORM.Controllers
                     {
                         ViewBag.Message = String.Format("This Mail Account Already Register !! Please Check your mail or Login your Account...");
                         return View();
-                     
+
                     }
                 }
                 return View(model);
@@ -183,7 +184,7 @@ namespace CI_PLATFORM.Controllers
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             return View();
         }
 
@@ -191,10 +192,11 @@ namespace CI_PLATFORM.Controllers
         [HttpPost]
         public IActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             if (ModelState.IsValid)
             {
 
-               
+
                 var user = _registerInterface.ForgotPasswordViewModel(model);
                 if (user == null)
                 {
@@ -213,16 +215,17 @@ namespace CI_PLATFORM.Controllers
         [HttpGet]
         public IActionResult Resetpassword()
         {
-
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             return View();
         }
 
         [HttpPost]
         public IActionResult Resetpassword(ResetPasswordViewModel model, string token)
         {
+            ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
             if (ModelState.IsValid)
             {
-               
+
                 var validToken = _registerInterface.ResetPasswordViewModel(model, token);
 
                 if (validToken != null)

@@ -44,7 +44,7 @@ namespace CI_PLATFORM.Controllers
             if(HttpContext.Session.GetString("UserId") is not null)
             {
                
-                if (HttpContext.Session.GetString("Country") is not null)
+                if (HttpContext.Session.GetString("Country") is not null )
                 {
                     long userId = long.Parse(HttpContext.Session.GetString("UserId"));
                     ViewBag.UserId = userId;
@@ -68,6 +68,8 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Landingplatform")]
         public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index, long user_id, long mission_id)
         {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            ViewBag.UserId = userId;
             if (key is not null)
             {
                 CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
@@ -102,7 +104,7 @@ namespace CI_PLATFORM.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
-                return RedirectToAction("Login", "UserAccount",new {retunUrl = $"Home/Volunteermission/{id}" });
+                return RedirectToAction("Login", "UserAccount",new {returnUrl = $"Home/Volunteermission/{id}" });
             }
 
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));

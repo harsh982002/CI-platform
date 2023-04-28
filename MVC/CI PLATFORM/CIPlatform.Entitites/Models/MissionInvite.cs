@@ -22,4 +22,6 @@ public partial class MissionInvite
     public string? FromUser { get; set; }
 
     public string? ToUser { get; set; }
+
+    public virtual User ToUserNavigation { get; set; } = null!;
 }

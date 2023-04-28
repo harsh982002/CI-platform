@@ -75,7 +75,7 @@ namespace CI_PLATFORM.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
-                return RedirectToAction("Login", "UserAccount");
+                return RedirectToAction("Login", "UserAccount", new { returnUrl = $"Story/StoryDetails/{id}" });
             }
 
 

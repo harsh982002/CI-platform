@@ -4,11 +4,11 @@
 @inject IHttpContextAccessor Accesor
 @{
     ViewData["title"] = "volunteering mission";
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     ViewData["css"] = "volunteering_mission.css";
 }
 
 <div class="container mt-5">
-
 
     <div class="main1  row">
 
@@ -60,7 +60,7 @@
                                      height="120" role="img" onclick="display(this)" alt="" />
                                                 }
                                             }
-                                            else
+left                                 else
                                             {
                                                 @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
                                                 {
@@ -76,7 +76,6 @@
 
                         }
                     </div>
-
 
                 </div>
                 <button class="carousel-control-prev w-auto ps-2 pe-2 bg-black bg-opacity-100 mt-2 mb-2"
@@ -98,9 +97,7 @@
                     @Model?.mission?.Title
                 </span>
                 <p class="light-gray mt-2" style="font-size:15px">
-                    Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit, sed do eiusmod temp bvhjgfjhb or incididunt ut labore...
+                    @Model?.mission?.Description?.Substring(0,150)....
                 </p>
                 <div class=" d-flex justify-content-center ">
                     <span class="rounded-pill border p-2  bg-white"
@@ -216,19 +213,28 @@
                                             <tr>
                                                 <th>Mark</th>
                                                 <th>Name</th>
-                                                <th>Email</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach (var item in @Model.invites)
+                                            {
+                                                <tr>
+                                                    <td><i class="bi bi-check-square-fill  text-black"></i></td>
+                                                    <td>@item.ToUserNavigation.FirstName @item.ToUserNavigation.LastName</td>
+
+                                                </tr>
+                                            }
                                             @foreach (var item in @Model.users)
                                             {
                                                 <tr>
                                                     <td><input class="form-check-input" type="checkbox" value="@item.UserId" name="email" id="@item.Email">
                                                     <td>
-                                                    <td>@item.FirstName</td>
-                                                    <td> <label class="form-check-lable" for="@item.Email">@item.Email</label></td>
+                                                    <td>@item.FirstName @item.LastName</td>
+
                                                 </tr>
                                             }
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -241,7 +247,6 @@
                     </div>
 
                 </div>
-
 
                 <div class="duration-seats-info mt-4">
                     <div style="cursor:pointer;flex-direction: row;" class="d-flex stars justify-content-center rating">
@@ -283,7 +288,6 @@
                         }
                     </div>
                 </div>
-
 
                 <div class=" d-flex flex-wrap justify-content-evenly mt-4">
                     <div class="border me-1 flex-fill">
@@ -349,9 +353,6 @@
                     </div>
                 </div>
 
-
-
-
                 <div class="d-flex justify-content-center mt-5 " id="apply-btn">
                     @{
 
@@ -408,7 +409,6 @@
     </div>
     <div class="main2 mt-4 row" style="border: none;">
 
-
         <div class="card col-lg-8" style="border: none;">
             <div class="card-body">
                 <div class="container" style="margin-top: 10px;">
@@ -450,33 +450,25 @@
                                 @{
                                     foreach (var item in Model?.mission?.MissionDocuments)
                                     {
-                                        <div class="d-flex ms-2 mt-2 align-items-center border rounded-pill p-1">
+                                        <div class="d-flex ms-2 mt-2 align-items-center border rounded-pill p-1" style="width: 18%;">
                                             <a href='~/documents/@item.DocumentPath' target='_blank' style='text-decoration:none; color:black;'>
                                                 <img class=" ms-2" src="~/images/doc.png" alt="" />
-                                                <span class="ms-1 me-2">@item.DocumentName</span>
+                                                <span class="ms-1 me-2">Document</span>
                                             </a>
                                         </div>
                                     }
                                 }
 
-
                             </div>
-
-
-
+                            <p></p>
                         </div>
 
                         <div class="tab-pane container fade border" id="pro">
-
-
-
 
                             <h5 class="py-3" style="font-size: 25px;">About Organization</h5>
                             <p class="m-2 org">
                                 @Model.mission.OrganizationDetail
                             </p>
-
-
 
                         </div>
                         <div class="tab-pane container fade border" id="set">
@@ -489,11 +481,6 @@
                                 Post comment
                             </button>
                             <p id="comment-status"></p>
-
-
-
-
-
 
                             <div class="mt-2" style="background-color: #f2f2f2">
 
@@ -608,8 +595,6 @@
                             </table>
                         </div>
 
-
-
                     </div>
                 </div>
             </div>
@@ -669,18 +654,8 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
-
-
-
-
 </div>
-
-
 <div class="d-flex justify-content-center mt-4">
     <h3>Related Mission</h3>
 </div>
@@ -859,11 +834,7 @@
 
 
     </div>
-
-
-
 </div>
-
 <script src="~/js/volunteering_mission.js"></script>
 
 

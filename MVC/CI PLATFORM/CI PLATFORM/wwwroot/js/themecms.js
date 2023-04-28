@@ -39,8 +39,9 @@ const addtheme = () => {
                 success: function (result) {
                     if (result.view) {
                         $(`#theme-${parseInt(document.getElementById("theme-id").value)}`).replaceWith(result.view.result)
-                        location.reload();
+                        
                     }
+                    location.reload();
                 },
                 error: function () {
                     console.log("Error updating variable");

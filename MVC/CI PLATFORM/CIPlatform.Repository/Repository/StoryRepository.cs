@@ -2,6 +2,7 @@
 using CIPlatform.Entitites.Models;
 using CIPlatform.Repository.Interface;
 using MailKit.Security;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using MimeKit.Text;
 using System;
@@ -36,7 +37,7 @@ namespace CIPlatform.Repository.Repository
             medias = _db.StoryMedia.ToList();
             stories = _db.Stories.ToList();
             users = _db.Users.ToList();
-            already_recommended_users = _db.StoryInvites.ToList();
+           
 
         }
         public bool AddStory(long user_id, long id, long mission_id, string title, string mystory, List<string> media, string type)
@@ -204,11 +205,17 @@ namespace CIPlatform.Repository.Repository
         {
             var viewer = _db.StoryViews.Where(x => x.StoryId.Equals(Storyid)).ToList().Count;
             List<User> users = _db.Users.ToList();
+            
             var story = _db.Stories.FirstOrDefault(c => c.StoryId == Storyid);
+            var alreaduInvite = _db.StoryInvites.Where(x => x.FromUserId == user_id && x.StoryId == story.StoryId).Include(x => x.ToUser).ToList();
+            foreach (var i in alreaduInvite)
+            {
+                users = users.Where(x => x.UserId != i.ToUserId).ToList();
+            }
             if (story is not null)
             {
                 List<User> already_recommended = new List<User>();
-                return new Entitites.ViewModel.StoryViewModel { story = story, Users = users, StoryViews = viewer };
+                return new Entitites.ViewModel.StoryViewModel { story = story, Users = users, StoryViews = viewer ,alreadyrecommend = alreaduInvite};
             }
             else
             {

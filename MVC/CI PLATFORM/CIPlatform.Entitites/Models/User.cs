@@ -59,7 +59,11 @@ public partial class User
 
     public virtual ICollection<MissionApplication> MissionApplications { get; } = new List<MissionApplication>();
 
+    public virtual ICollection<MissionInvite> MissionInvites { get; } = new List<MissionInvite>();
+
     public virtual ICollection<Story> Stories { get; } = new List<Story>();
+
+    public virtual ICollection<StoryInvite> StoryInvites { get; } = new List<StoryInvite>();
 
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 

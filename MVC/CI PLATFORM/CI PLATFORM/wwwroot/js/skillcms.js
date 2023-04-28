@@ -31,9 +31,9 @@ const addskill = () => {
                 success: function (result) {
                     if (result.view) {
                         $(`#skill-${parseInt(document.getElementById("skill-id").value)}`).replaceWith(result.view.result)
-                        location.reload();
+                        
                     }
-                   
+                    location.reload();
                 },
                 error: function () {
                     console.log("Error updating variable");
@@ -66,7 +66,7 @@ const addskill = () => {
 
 }
 const EditSkill = (id, skillname, status, typ) => {
-    console.log(id, skillname, status, typ)
+    
     type = typ;
     if (type == "edit-skill") {
         $(`#skill-${skill_id}`).attr("selected", "selected")

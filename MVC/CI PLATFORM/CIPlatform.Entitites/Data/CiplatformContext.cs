@@ -532,6 +532,11 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.ToUserNavigation).WithMany(p => p.MissionInvites)
+                .HasForeignKey(d => d.ToUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_invite_user");
         });
 
         modelBuilder.Entity<MissionMedium>(entity =>
@@ -747,7 +752,6 @@ public partial class CiplatformContext : DbContext
 
             entity.HasOne(d => d.Mission).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.MissionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__story__mission_i__4F47C5E3");
 
             entity.HasOne(d => d.User).WithMany(p => p.Stories)
@@ -776,6 +780,10 @@ public partial class CiplatformContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.ToUser).WithMany(p => p.StoryInvites)
+                .HasForeignKey(d => d.ToUserId)
+                .HasConstraintName("FK_story_invite_user");
         });
 
         modelBuilder.Entity<StoryMedium>(entity =>
@@ -806,7 +814,6 @@ public partial class CiplatformContext : DbContext
 
             entity.HasOne(d => d.Story).WithMany(p => p.StoryMedia)
                 .HasForeignKey(d => d.StoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__story_med__story__59C55456");
         });
 
@@ -822,7 +829,6 @@ public partial class CiplatformContext : DbContext
 
             entity.HasOne(d => d.Story).WithMany(p => p.StoryViews)
                 .HasForeignKey(d => d.StoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__story_vie__story__79FD19BE");
         });
 

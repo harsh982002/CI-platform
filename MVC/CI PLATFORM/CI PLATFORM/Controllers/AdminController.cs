@@ -8,12 +8,12 @@ namespace CI_PLATFORM.Controllers
     public class AdminController : Controller
     {
         private readonly IAllRepository _allRepository;
-        
+
 
         public AdminController(IAllRepository allRepository)
         {
             _allRepository = allRepository;
-            
+
         }
 
         public IActionResult Index()
@@ -92,7 +92,7 @@ namespace CI_PLATFORM.Controllers
             }
             else
             {
-                
+
                 CIPlatform.Entitites.ViewModel.UserViewModel users = _allRepository.cmsRepository.GetUser();
                 return View(users);
             }
@@ -110,28 +110,24 @@ namespace CI_PLATFORM.Controllers
             }
             else if (type == "edit-user")
             {
-
-                
-                    CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
-                    {
-                        Role = role,
-                        EmpId = empid,
-                        Department = department,
-                        status = status
-                    };
-                    User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
-                    bool success = false;
-                    if (user != null)
-                    {
-                        success = true;
-                    }
-                    return Json(new { success });
-                
-                
+                CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
+                {
+                    Role = role,
+                    EmpId = empid,
+                    Department = department,
+                    status = status
+                };
+                User user = _allRepository.cmsRepository.EditUser(user_id, model, type);
+                bool success = false;
+                if (user != null)
+                {
+                    success = true;
+                }
+                return Json(new { success });
+               
             }
             else
             {
-                
                 if (_allRepository.cmsRepository.IsValidUserEmail(model1))
                 {
                     CIPlatform.Entitites.ViewModel.UserViewModel model = new CIPlatform.Entitites.ViewModel.UserViewModel
@@ -154,7 +150,7 @@ namespace CI_PLATFORM.Controllers
                 }
                 else
                 {
-                    return Json(new {success=false});
+                    return Json(new { success = false });
                 }
             }
         }

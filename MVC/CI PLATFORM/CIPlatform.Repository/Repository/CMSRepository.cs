@@ -69,6 +69,7 @@ namespace CIPlatform.Repository.Repository
             List<CIPlatform.Entitites.Models.MissionApplication> missionApplications = _db.MissionApplications.ToList();
 
             List<CIPlatform.Entitites.ViewModel.MissionAppViewModel> allapplications = (from ma in missionApplications
+                                                                                        orderby ma.AppliedAt ascending
                                                                                         select new MissionAppViewModel
                                                                                         {
                                                                                             id = ma.MissionApplicationId,
@@ -227,28 +228,23 @@ namespace CIPlatform.Repository.Repository
 
         public MissionTheme EditTheme(long theme_id, MissionThemeViewModel model, string type)
         {
-            MissionTheme themename = _db.MissionThemes.FirstOrDefault(x => x.Title.ToLower() == model.theme_name.ToLower());
+
             MissionTheme missionTheme = _db.MissionThemes.FirstOrDefault(x => x.MissionThemeId == theme_id);
             if (type == "edit-theme")
             {
-                if (themename is null)
+
+                if (missionTheme != null)
                 {
-                    if (missionTheme != null)
-                    {
-                        missionTheme.Title = model.theme_name;
-                        missionTheme.Status = model.status;
-                        _db.SaveChanges();
-                        return missionTheme;
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    missionTheme.Title = model.theme_name;
+                    missionTheme.Status = model.status;
+                    _db.SaveChanges();
+                    return missionTheme;
                 }
                 else
                 {
                     return null;
                 }
+
 
             }
             else
@@ -317,34 +313,29 @@ namespace CIPlatform.Repository.Repository
 
         public Skill EditSkill(int skill_id, SkillViewModel model, string type)
         {
-            Skill skillname = _db.Skills.Where(x => x.SkillName.ToLower() == model.SkillName).FirstOrDefault();
+
             Skill skill = _db.Skills.FirstOrDefault(x => x.SkillId == skill_id);
             if (skill is not null)
             {
-                if (skillname is null)
+
+                if (type == "edit-skill")
                 {
-                    if (type == "edit-skill")
-                    {
-                        skill.Status = model.Status;
-                        skill.SkillName = model.SkillName;
-                        _db.SaveChanges();
-                        return skill;
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    skill.Status = model.Status;
+                    skill.SkillName = model.SkillName;
+                    _db.SaveChanges();
+                    return skill;
                 }
                 else
                 {
                     return null;
                 }
-
             }
             else
             {
                 return null;
             }
+
+
         }
 
         public bool DeleteSkills(int skill_id)
@@ -457,12 +448,10 @@ namespace CIPlatform.Repository.Repository
 
         public CmsPage EditCms(long cms_id, CmsViewModel model, string type)
         {
-            CmsPage cms = _db.CmsPages.FirstOrDefault(x => x.Title.ToLower() == model.Title.ToLower() || x.Slug.ToLower() == model.Slug.ToLower());
+            
             CmsPage cmsPage = _db.CmsPages.FirstOrDefault(x => x.CmsPageId == cms_id);
             if (cmsPage != null)
             {
-                if (cms is null)
-                {
                     if (type == "edit-cms")
                     {
                         cmsPage.Title = model.Title;
@@ -473,11 +462,8 @@ namespace CIPlatform.Repository.Repository
                         return cmsPage;
                     }
                     else { return null; }
-                }
-                else
-                {
-                    return null;
-                }
+                
+                
 
             }
             else
@@ -831,7 +817,7 @@ namespace CIPlatform.Repository.Repository
             }
             _db.Banners.Add(banner);
             _db.SaveChanges();
-            
+
             FileInfo fileInfo = new FileInfo(model.BannerImage.FileName);
             string filename = $"banner{banner.BannerId}-image" + fileInfo.Extension;
             string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);

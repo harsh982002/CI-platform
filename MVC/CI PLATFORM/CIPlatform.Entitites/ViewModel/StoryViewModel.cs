@@ -15,6 +15,7 @@ namespace CIPlatform.Entitites.ViewModel
 
         public int StoryViews { get; set; }
 
+        public List<StoryInvite>? alreadyrecommend { get; set; }
 
     }
 }
