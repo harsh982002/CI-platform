@@ -20,6 +20,7 @@ namespace CIPlatform.Repository.Repository
 
         private readonly CiplatformContext _db;
 
+
         List<CIPlatform.Entitites.Models.Mission> missions = new List<Entitites.Models.Mission>();
         List<CIPlatform.Entitites.Models.MissionMedium> image = new List<Entitites.Models.MissionMedium>();
         List<MissionTheme> theme = new List<MissionTheme>();
@@ -39,6 +40,7 @@ namespace CIPlatform.Repository.Repository
         public MissionRepository(CiplatformContext db) : base(db)
         {
             _db = db;
+
             getAllDetails();
         }
         /*MissionPage*/
@@ -341,35 +343,7 @@ namespace CIPlatform.Repository.Repository
 
 
 
-        public bool add_to_favourite(long user_id, long mission_id)
-        {
-            if (user_id != 0 && mission_id != 0)
-            {
-                var favouritemission = (from fm in favoriteMissions
-                                        where fm.UserId.Equals(user_id) && fm.MissionId.Equals(mission_id)
-                                        select fm).ToList();
-                if (favouritemission.Count == 0)
-                {
-                    _db.FavoriteMissions.Add(new FavoriteMission
-                    {
-                        UserId = user_id,
-                        MissionId = mission_id
-                    });
-                    Save();
-                    return true;
-                }
-                else
-                {
-                    _db.Remove(favouritemission.ElementAt(0));
-                    Save();
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+
 
 
 

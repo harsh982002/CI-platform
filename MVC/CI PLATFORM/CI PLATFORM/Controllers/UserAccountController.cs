@@ -7,6 +7,7 @@ using CIPlatform.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace CI_PLATFORM.Controllers
 {
@@ -16,15 +17,16 @@ namespace CI_PLATFORM.Controllers
         private readonly IAllRepository _allRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration configuration;
-
+        private readonly INotyfService _notyf;
 
         public UserAccountController(ILogger<HomeController> logger, IAllRepository allRepository, IAccountRepository accountInterface, IHttpContextAccessor httpContextAccessor,
-                              IConfiguration _configuration)
+                              IConfiguration _configuration, INotyfService notyf)
         {
             _registerInterface = accountInterface;
             _httpContextAccessor = httpContextAccessor;
             configuration = _configuration;
             _allRepository = allRepository;
+            _notyf = notyf;
         }
 
         [Route("/logout")]
@@ -43,6 +45,12 @@ namespace CI_PLATFORM.Controllers
                 if (returnUrl is not null)
                 {
                     return new RedirectResult(returnUrl);
+                }
+                else if(HttpContext.Session.GetString("Status") is not null)
+                {
+                    ViewBag.Message = String.Format("You are restricted by admin to access the website.");
+                    ViewBag.bannerlist = _allRepository.cmsRepository.GetBanner().Bans;
+                    return View();
                 }
                 return RedirectToAction("Landingplatform", "Home");
             }
@@ -109,11 +117,17 @@ namespace CI_PLATFORM.Controllers
                                     HttpContext.Session.SetString("role", user.Role);
                                     return RedirectToAction("CMS", "Admin");
                                 }
+                                if(user.Status == "0")
+                                {
+                                    HttpContext.Session.SetString("Status", user.Status);
+                                    return RedirectToAction("Login", "UserAccount");
+                                }
                                 if (TempData.ContainsKey("returnUrl"))
                                 {
                                     var url = TempData["returnUrl"] as string;
                                     return new RedirectResult(url);
                                 }
+                                _notyf.Success("Login Successfully...", 3);
                                 return RedirectToAction("Landingplatform", "Home");
 
 
@@ -125,6 +139,7 @@ namespace CI_PLATFORM.Controllers
                             var userId = _registerInterface.GetUserID(user.Email);
                             HttpContext.Session.SetString("UserId", userId.ToString());
                             HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
+                            _notyf.Warning("Fill Country And City Details To Access The Website..", 3);
                             return RedirectToAction("ProfilePage", "Home");
                         }
 
@@ -160,7 +175,7 @@ namespace CI_PLATFORM.Controllers
                     {
 
                         User registertion = _registerInterface.RegistrationViewModel(model);
-
+                        _notyf.Success("You Have Successfully Registered YourSelf...", 3);
                         return RedirectToAction("Login", "UserAccount");
 
                     }
@@ -200,12 +215,10 @@ namespace CI_PLATFORM.Controllers
                 var user = _registerInterface.ForgotPasswordViewModel(model);
                 if (user == null)
                 {
-                    TempData["success"] = "Invalid Email";
+                    ViewBag.Message = String.Format("Email Doesn't Exist!.");
                     return View();
                 }
-
-
-                TempData["success"] = "Check your email to reset password";
+                
                 return RedirectToAction("Resetpassword");
             }
             return View(model);
@@ -230,7 +243,7 @@ namespace CI_PLATFORM.Controllers
 
                 if (validToken != null)
                 {
-                    TempData["success"] = "Your Password is changed";
+                    _notyf.Success("Password Changed Successfully...", 3);
                     return RedirectToAction("Login");
                 }
                 TempData["success"] = "Token not Found";

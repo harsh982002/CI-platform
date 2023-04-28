@@ -118,7 +118,7 @@ const validate = (type) => {
             $(".action-empty").addClass("d-none").removeClass("d-block")
             $(".action-notvalid").addClass("d-none").removeClass("d-block")
         }
-        if (date == "") {
+        if (date == "" || date ) {
             $(".date-empty").addClass("d-block").removeClass("d-none")
         }
         else {
@@ -213,6 +213,7 @@ const deletetimesheet = () => {
         type: 'POST',
         data: { timesheet_id: parseInt(timesheet_id), type: "time-delete" },
         success: function (result) {
+           
         },
         error: function () {
             console.log("Error updating variable");

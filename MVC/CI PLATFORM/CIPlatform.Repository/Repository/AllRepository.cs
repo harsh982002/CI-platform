@@ -13,10 +13,12 @@ namespace CIPlatform.Repository.Repository
     public class AllRepository : IAllRepository
     {
         private readonly CiplatformContext _db;
+     
 
         public AllRepository(CiplatformContext db)
         {
             _db = db;
+
             missionRepository = new MissionRepository(_db);
 
             storyRepository = new StoryRepository(_db);

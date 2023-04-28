@@ -377,36 +377,25 @@ const clear_all = () => {
 
 
 //add to favourite
-function Add(MissionId, UserId) {
-
+const Add = (user_id, mission_id) => {
     $.ajax({
-
-        url: "/Home/Landingplatform",
-        method: "POST",
-
-        data:
-        {
-            MissionId: MissionId,
-            UserId: UserId
-
-        },
-        success: function (data) {
-
-            if (data == true) {
-                $(`#addToFav-${MissionId}`).removeAttr('src').attr('src', '/images/red-heart.png')
-                $(`#addToFav-${MissionId}`).css('height', 24)
-              /*  $('#addToFav').css("color", "red");
-                $('#addToFav').html("Remove From Favourites");*/
+        url: `/Home/Add`,
+        type: 'POST',
+        data: { mission_id: mission_id, user_id: user_id },
+        success: function (result) {
+            console.log(result)
+            if (result.success) {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '~/images/red-heart.png')
+                $(`.heart-${mission_id}`).css('height', 24)
+                
             }
             else {
-               /* $('#addToFav').css("color", "black");*/
-                //$('#addToFav').removeClass();
-                /*  $('#addToFav').addClass("bi-heart");*/
-                /*   $('#addToFav').html("Add to Favourites");*/
-                $(`#addToFav-${MissionId}`).removeAttr('src').attr('src', '/images/heart.png')
-                $(`#addToFav-${MissionId}`).css('height', 20)
-
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '~/images/heart.png')
+                $(`.heart-${mission_id}`).css('height', 20)
             }
+        },
+        error: function () {
+            console.log("Error updating variable");
         }
     })
 }

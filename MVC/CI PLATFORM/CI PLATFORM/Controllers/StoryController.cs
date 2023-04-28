@@ -1,4 +1,5 @@
 ﻿
+using AspNetCoreHero.ToastNotification.Abstractions;
 using CI_platform.Areas.User.Controllers;
 using CIPlatform.Entitites.ViewModel;
 using CIPlatform.Repository.Interface;
@@ -10,11 +11,12 @@ namespace CI_PLATFORM.Controllers
     public class StoryController : Controller
     {
         private readonly IAllRepository _allRepository;
+        private readonly INotyfService _notyf;
 
-
-        public StoryController(IAllRepository allRepository)
+        public StoryController(IAllRepository allRepository, INotyfService notyf)
         {
-                _allRepository = allRepository;
+            _allRepository = allRepository;
+            _notyf = notyf;
         }
 
         public IActionResult Story()
@@ -104,6 +106,7 @@ namespace CI_PLATFORM.Controllers
             if (emailList != null)
             {
                 var mail = _allRepository.storyRepository.Recommend(emailList, Storyid, userId);
+                _notyf.Success("Recommended Successfully...", 3);
                 return Json(mail);
             }
             return Json(null);

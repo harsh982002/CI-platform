@@ -60,13 +60,13 @@
                                      height="120" role="img" onclick="display(this)" alt="" />
                                                 }
                                             }
-left                                 else
+                                            !importantmportant                           else
                                             {
-                                                @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
-                                                {
-                                                    <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
+                                            @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
+                                            {
+                                                <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="175"
                                      height="120" role="img" onclick="display(this)" alt="" />
-                                                }
+                                            }
                                             }
                                         </div>
                                     </div>
@@ -208,35 +208,43 @@ left                                 else
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <table class=table>
-                                        <thead>
-                                            <tr>
-                                                <th>Mark</th>
-                                                <th>Name</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in @Model.invites)
+
+                                    @foreach (var item in @Model.invites)
+                                    {
+                                        <div class="d-flex mt-3 bg-white align-items-center">
+                                            <i class="bi bi-check-square-fill  text-black"></i>
+                                            @if (item.ToUserNavigation.Avatar is not null)
                                             {
-                                                <tr>
-                                                    <td><i class="bi bi-check-square-fill  text-black"></i></td>
-                                                    <td>@item.ToUserNavigation.FirstName @item.ToUserNavigation.LastName</td>
-
-                                                </tr>
+                                                <img class="rounded-circle usercomment-image ms-5" style="margin-left:30% !important" src=@item.ToUserNavigation.Avatar alt="" />
                                             }
-                                            @foreach (var item in @Model.users)
+                                            else
                                             {
-                                                <tr>
-                                                    <td><input class="form-check-input" type="checkbox" value="@item.UserId" name="email" id="@item.Email">
-                                                    <td>
-                                                    <td>@item.FirstName @item.LastName</td>
-
-                                                </tr>
+                                                <img class="rounded-circle usercomment-image ms-5" style="margin-left:30% !important" src="~/images/volunteer1.png" alt="" />
                                             }
+                                            <span class="ms-2" >@item.ToUserNavigation.FirstName @item.ToUserNavigation.LastName</span>
+                                        </div>
 
-                                        </tbody>
-                                    </table>
+                                    }
+                                    @foreach (var item in @Model.users)
+                                    {
+                                        <div class="d-flex mt-3 bg-white align-items-center">
+                                            <input class="form-check-input" type="checkbox" value="@item.UserId" name="email" id="@item.Email">
+                                            @if (item.Avatar is not null)
+                                            {
+                                                <img class="rounded-circle usercomment-image ms-5" style="margin-left:30% !important" src=@item.Avatar alt="" />
+                                            }
+                                            else
+                                            {
+                                                <img class="rounded-circle usercomment-image ms-5" style="margin-left:30% !important" src="~/images/volunteer1.png" alt="" />
+                                            }
+                                            <span class="ms-2">@item.FirstName @item.LastName</span>
+                                        </div>
+
+                                    }
+
+
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

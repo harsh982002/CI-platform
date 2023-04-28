@@ -20,6 +20,10 @@
 .user-comments {
     overflow-x: auto;
 }
+rec-user{
+    width:9%;
+
+}
 .user-comments::-webkit-scrollbar {
         width: 2px;
         background-color: white;

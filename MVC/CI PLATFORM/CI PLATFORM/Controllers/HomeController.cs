@@ -1,4 +1,5 @@
-﻿using CI_platform.Areas.User.Controllers;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using CI_platform.Areas.User.Controllers;
 using CI_PLATFORM.Models;
 using CIPlatform.Entitites.Data;
 using CIPlatform.Entitites.Models;
@@ -13,10 +14,12 @@ namespace CI_PLATFORM.Controllers
     public class HomeController : Controller
     {
         private readonly IAllRepository _allRepository;
-
-        public HomeController(IAllRepository allRepository)
+        private readonly INotyfService _notyf;
+        
+        public HomeController(IAllRepository allRepository, INotyfService notyf)
         {
             _allRepository = allRepository;
+            _notyf = notyf;
         }
         public IActionResult Index()
         {
@@ -43,7 +46,6 @@ namespace CI_PLATFORM.Controllers
             
             if(HttpContext.Session.GetString("UserId") is not null)
             {
-               
                 if (HttpContext.Session.GetString("Country") is not null )
                 {
                     long userId = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -62,6 +64,26 @@ namespace CI_PLATFORM.Controllers
             }
           
 
+        }
+
+        [HttpPost]
+        [Route("/Home/Add")]
+        public JsonResult Add(long mission_id)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+
+            bool mission = _allRepository.missionRepository.AddFavouriteMission(mission_id, userId);
+            if (mission == true)
+            {
+                _notyf.Success("Added to Favourite...", 3);
+                return Json(mission);
+               
+            }
+            else
+            {
+                _notyf.Error("Removed from Favourite...", 3);
+                return Json(null);
+            }
         }
 
         [HttpPost]
@@ -139,6 +161,7 @@ namespace CI_PLATFORM.Controllers
             if (emailList != null)
             {
                 var mail = _allRepository.missionRepository.sendMail(emailList, MissionId, userId);
+                _notyf.Success("Recommended Successfully...", 3);
                 return Json(mail);
             }
             return Json(null);
@@ -172,8 +195,6 @@ namespace CI_PLATFORM.Controllers
             var Rating = _allRepository.missionRepository.addRatings(rating, mission_id, userId);
             return Json(Rating);
         }
-
-        
 
         [Route("/Home/Profile")]
         public IActionResult ProfilePage()
