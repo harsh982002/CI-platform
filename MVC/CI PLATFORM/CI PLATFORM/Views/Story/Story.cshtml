@@ -40,7 +40,7 @@
             <span class="page-link" onclick="prev_page()"><img src="~/images/left.png" alt="not load" /></span>
         </li>
         @{
-            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 9);
+            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 1);
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)
@@ -106,13 +106,18 @@
                                         int count = 1;
                                         foreach (var image in item.StoryMedia)
                                         {
-                                            <div class="main-image-div" id='story-@item.StoryId-user-image-@count'>
+                                            if(image.Type != "video")
+                                            {
+                                                <div class="main-image-div" id='story-@item.StoryId-user-image-@count'>
                                                 <img src=@image.Path class="main-image" />
                                                 <div onclick="remove('story-@item.StoryId-user-image-@count')" class="bg-black close d-flex justify-content-center align-items-center">
                                                     <img src=~/images/cancel.png />
                                                 </div>
                                             </div>
                                             count = count + 1;
+                                            }
+                                            
+                                            
                                         }
                                     }
                                 </div>

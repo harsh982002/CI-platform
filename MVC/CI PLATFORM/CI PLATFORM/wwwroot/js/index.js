@@ -352,7 +352,6 @@ const sort_by = (user_id) => {
     }
 }
 
-
 //clear all
 const clear_all = () => {
     var selected = $('#sort').find(':selected').text();
@@ -375,7 +374,6 @@ const clear_all = () => {
     $('#clear-all').empty()
 }
 
-
 //add to favourite
 const Add = (user_id, mission_id) => {
     $.ajax({
@@ -384,13 +382,13 @@ const Add = (user_id, mission_id) => {
         data: { mission_id: mission_id, user_id: user_id },
         success: function (result) {
             console.log(result)
-            if (result.success) {
-                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '~/images/red-heart.png')
+            if (result) {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/red-heart.png')
                 $(`.heart-${mission_id}`).css('height', 24)
                 
             }
             else {
-                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '~/images/heart.png')
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/heart.png')
                 $(`.heart-${mission_id}`).css('height', 20)
             }
         },
@@ -514,7 +512,6 @@ const next = (max_page) => {
         })
     }
 }
-
 const first_page = () => {
     var selected = $('#sort').find(':selected').text();
     var current_page;

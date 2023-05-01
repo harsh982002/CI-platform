@@ -102,7 +102,6 @@ namespace CIPlatform.Repository.Repository
                     story.Title = title;
                     story.StatusUserwant = type;
                     story.Description = mystory;
-
                     story.Status = "PENDING";
                     _db.Stories.Add(story);
                     _db.SaveChanges();
@@ -155,14 +154,37 @@ namespace CIPlatform.Repository.Repository
                 _db.Stories.Add(story);
                 _db.SaveChanges();
                 long story_id = story.StoryId;
-                foreach (var item in media)
+                if (media.ElementAt(0).Length > 300)
                 {
+                    foreach (var item in media)
+                    {
+                        _db.StoryMedia.Add(new StoryMedium
+                        {
+                            StoryId = story_id,
+                            Type = "images",
+                            Path = item
+                        });
+                    }
+                }
+                else
+                {
+
                     _db.StoryMedia.Add(new StoryMedium
                     {
                         StoryId = story_id,
-                        Type = "images",
-                        Path = item
+                        Type = "video",
+                        Path = media.ElementAt(0)
                     });
+                    media.RemoveAt(0);
+                    foreach (var item in media)
+                    {
+                        _db.StoryMedia.Add(new StoryMedium
+                        {
+                            StoryId = story_id,
+                            Type = "images",
+                            Path = item
+                        });
+                    }
                 }
 
             }
@@ -177,7 +199,7 @@ namespace CIPlatform.Repository.Repository
                        where s.Status == "PUBLISHED" || (s.UserId == user_id && s.Status == "DRAFT")
                        orderby s.Status ascending
                        select s).ToList();
-            return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Take(9).ToList(), total_missions = stories.Count };
+            return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Take(1).ToList(), total_missions = stories.Count };
         }
 
         public Entitites.ViewModel.Mission GetFileredStories(int page_index, long user_id)
@@ -187,7 +209,7 @@ namespace CIPlatform.Repository.Repository
                        where s.Status == "PUBLISHED" || s.UserId == user_id
                        orderby s.Status ascending
                        select s).ToList();
-            return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Skip(9 * page_index).Take(9).ToList() };
+            return new CIPlatform.Entitites.ViewModel.Mission { Stories = stories.Skip(1 * page_index).Take(1).ToList() };
         }
 
         public List<Mission> mission_of_user(long user_id)

@@ -36,7 +36,7 @@ namespace CIPlatform.Repository.Repository
         List<MissionRating> ratings = new List<MissionRating>();
         List<MissionInvite> already_recommended_users = new List<MissionInvite>();
         List<Timesheet> timesheets = new List<Timesheet>();
-        int page_size = 9;
+        int page_size = 3;
         public MissionRepository(CiplatformContext db) : base(db)
         {
             _db = db;
@@ -67,12 +67,12 @@ namespace CIPlatform.Repository.Repository
 
         public Entitites.ViewModel.Mission GetAllMission()
         {
-           /* missions = _db.Missions.Where(m=>m.CityId == city_id).ToList();*/
+           /* missions = _db.Missions.Where(m => m.CityId == city_id).ToList();*/
             /*var application = _db.MissionApplications.FirstOrDefault(x => x.MissionId ==  && x.UserId == user_id)?.ApprovalStatus;*/
             int total_missions = missions.Count;
             if (missions.Count > 0)
             {
-                missions = missions.Take(9).ToList();
+                missions = missions.Take(5).ToList();
             }
             
             var Missions = new CIPlatform.Entitites.ViewModel.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions};
@@ -87,20 +87,13 @@ namespace CIPlatform.Repository.Repository
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
             List<CIPlatform.Entitites.Models.FavoriteMission> favoriteMissions = new List<FavoriteMission>();
             //get missions as per page
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
+           
 
             //get cities as per country
             if (Countries.Count > 0)
             {
                 city = (from c in cities
-                        where Countries.Contains(c.Country.Name)
+                        where Countries.Contains(c.Country.Name) 
                         select c).ToList();
             }
             else
@@ -125,7 +118,6 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
             }
-
             //filter as per country,theme and skills if city not selected
             else if (Countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
             {
@@ -146,8 +138,17 @@ namespace CIPlatform.Repository.Repository
                 }
 
             }
+
             else
             {
+                if (page_index != 0)
+                {
+                    missions = missions.Skip(5 * page_index).Take(9).ToList();
+                }
+                else
+                {
+                    missions = missions.Take(5).ToList();
+                }
                 mission = missions;
             }
 
@@ -203,31 +204,34 @@ namespace CIPlatform.Repository.Repository
 
                 Missions = new Entitites.ViewModel.Mission
                 {
+
                     Missions = mission,
                     Country = countries,
                     Cities = city
                 };
             }
+          
             return Missions;
         }
 
         public Entitites.ViewModel.Mission GetSearchMissions(string key, int page_index)
         {
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
             var mission = (from m in missions
-                           where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)
+                           where (m.Title.ToLower().Contains(key.ToLower()) || m.Description.ToLower().Contains(key.ToLower()))
                            select m).ToList();
             var Missions = new Entitites.ViewModel.Mission
             {
                 Missions = mission,
             };
+
+            if (page_index != 0)
+            {
+                missions = missions.Skip(5 * page_index).Take(9).ToList();
+            }
+            else
+            {
+                missions = missions.Take(5).ToList();
+            }
             return Missions;
         }
         public void Save()
@@ -340,11 +344,6 @@ namespace CIPlatform.Repository.Repository
             }
 
         }
-
-
-
-
-
 
 
         public void AddComment(string userComment, long MissionId, long userId)

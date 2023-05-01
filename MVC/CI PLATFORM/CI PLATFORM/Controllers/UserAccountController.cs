@@ -135,10 +135,16 @@ namespace CI_PLATFORM.Controllers
                         }
                         else
                         {
+                           
                             HttpContext.Session.SetString("Email", user.Email);
                             var userId = _registerInterface.GetUserID(user.Email);
                             HttpContext.Session.SetString("UserId", userId.ToString());
                             HttpContext.Session.SetString("Name", user.FirstName + " " + user.LastName);
+                            if (user.Status == "0")
+                            {
+                                HttpContext.Session.SetString("Status", user.Status);
+                                return RedirectToAction("Login", "UserAccount");
+                            }
                             _notyf.Warning("Fill Country And City Details To Access The Website..", 3);
                             return RedirectToAction("ProfilePage", "Home");
                         }

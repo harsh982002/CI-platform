@@ -44,8 +44,9 @@ namespace CI_PLATFORM.Controllers
         public IActionResult Landingplatform()
         {
             
-            if(HttpContext.Session.GetString("UserId") is not null)
+            if (HttpContext.Session.GetString("UserId") is not null)
             {
+                
                 if (HttpContext.Session.GetString("Country") is not null )
                 {
                     long userId = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -92,6 +93,7 @@ namespace CI_PLATFORM.Controllers
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             ViewBag.UserId = userId;
+           
             if (key is not null)
             {
                 CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
