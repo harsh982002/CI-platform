@@ -213,7 +213,7 @@ const deletetimesheet = () => {
         type: 'POST',
         data: { timesheet_id: parseInt(timesheet_id), type: "time-delete" },
         success: function (result) {
-           
+            location.reload();
         },
         error: function () {
             console.log("Error updating variable");

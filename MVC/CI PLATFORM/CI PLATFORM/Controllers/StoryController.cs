@@ -21,17 +21,26 @@ namespace CI_PLATFORM.Controllers
 
         public IActionResult Story()
         {
-            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+            
            
-            if (HttpContext.Session.GetString("Country") is not null)
+            if(HttpContext.Session.GetString("UserId") is not null)
             {
-                CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetStories(user_id);
-                return View(stories);
+                long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+                if (HttpContext.Session.GetString("Country") is not null)
+                {
+                    CIPlatform.Entitites.ViewModel.Mission stories = _allRepository.storyRepository.GetStories(user_id);
+                    return View(stories);
+                }
+                else
+                {
+                    return RedirectToAction("ProfilePage", "Home");
+                }
             }
             else
             {
-                return RedirectToAction("ProfilePage", "Home");
+                return RedirectToAction("Login", "UserAccount");
             }
+           
                
         }
 
@@ -49,9 +58,16 @@ namespace CI_PLATFORM.Controllers
         [Route("/Story/ShareStory")]
         public IActionResult ShareStory()
         {
-            long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
-            List<CIPlatform.Entitites.Models.Mission> missions = _allRepository.storyRepository.mission_of_user(user_id);
-            return View(missions);
+            if (HttpContext.Session.GetString("UserId") is not null)
+            {
+                long user_id = long.Parse(HttpContext.Session.GetString("UserId"));
+                List<CIPlatform.Entitites.Models.Mission> missions = _allRepository.storyRepository.mission_of_user(user_id);
+                return View(missions);
+            }
+            else
+            {
+                return RedirectToAction("Login", "UserAccount");
+            }
 
         }
 

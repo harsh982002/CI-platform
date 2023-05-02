@@ -36,9 +36,9 @@
                             </button>
                         }
                     }
-                    <button class="stop-img border-0">
+                    <a href="/Home/Volunteermission/@item.MissionId" class="stop-img border-0">
                         <img class="text-light" src="/images/user.png" alt="">
-                    </button>
+                    </a>
                     @{
                         if (@item.Theme is not null)
                         {
@@ -59,7 +59,7 @@
                         @item.Title
                     </h4>
                     <p class="group inner list-group-item-text">
-                        @item.Description?.Substring(0,155).....
+                        @item.Description?.Substring(0,175).....
                     </p>
                     <div class="d-flex list-view justify-content-between">
                         <span class="organization">@item.OrganizationName</span>

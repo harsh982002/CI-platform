@@ -94,7 +94,7 @@
                                     <option disabled selected>Select Mission Skill</option>
                                     @{
 
-                                        foreach (var item in Model.Skills)
+                                        foreach (var item in Model?.Skills)
                                         {
                                             if (item.SkillId == Model.skillid)
                                             {

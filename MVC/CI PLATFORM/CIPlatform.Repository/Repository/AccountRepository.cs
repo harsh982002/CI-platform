@@ -65,7 +65,6 @@ namespace CIPlatform.Repository.Repository
 
             var user = _context.Users.FirstOrDefault(u => u.Email == model.Email && u.DeletedAt == null);
 
-
             #region Genrate Token
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var stringChars = new char[16];
@@ -108,8 +107,6 @@ namespace CIPlatform.Repository.Repository
 
             return user;
         }
-
-
 
         public Boolean IsValidUserEmail(RegistrationViewModel model)
         {
@@ -156,27 +153,7 @@ namespace CIPlatform.Repository.Repository
                 return -1;
             }
         }
-        public User GetUser(int userID)
-        {
-            try
-            {
-                User? user = _context.Users.Where(x => x.UserId == userID).FirstOrDefault();
-                if (user != null)
-                {
-                    return user;
-                }
-                else
-                {
-                    _Message += " Enter valid Email ";
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                _Message += ex.Message;
-                return null;
-            }
-        }
+
 
         public PasswordReset ResetPasswordViewModel(ResetPasswordViewModel model, string token)
         {

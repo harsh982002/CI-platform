@@ -68,6 +68,7 @@ namespace CIPlatform.Entitites.ViewModel
         [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
+        public List<MissionMedium> MissionMedia { get; set; }
         public List<MissionSelectViewModel>? Missions { get; set; }
         public List<Country>? countries { get; set; }
 

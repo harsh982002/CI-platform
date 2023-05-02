@@ -15,7 +15,7 @@ namespace CI_PLATFORM.Controllers
     {
         private readonly IAllRepository _allRepository;
         private readonly INotyfService _notyf;
-        
+
         public HomeController(IAllRepository allRepository, INotyfService notyf)
         {
             _allRepository = allRepository;
@@ -43,11 +43,11 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Landingplatform")]
         public IActionResult Landingplatform()
         {
-            
+
             if (HttpContext.Session.GetString("UserId") is not null)
             {
-                
-                if (HttpContext.Session.GetString("Country") is not null )
+
+                if (HttpContext.Session.GetString("Country") is not null)
                 {
                     long userId = long.Parse(HttpContext.Session.GetString("UserId"));
                     ViewBag.UserId = userId;
@@ -63,7 +63,7 @@ namespace CI_PLATFORM.Controllers
             {
                 return RedirectToAction("Login", "UserAccount");
             }
-          
+
 
         }
 
@@ -78,7 +78,7 @@ namespace CI_PLATFORM.Controllers
             {
                 _notyf.Success("Added to Favourite...", 3);
                 return Json(mission);
-               
+
             }
             else
             {
@@ -93,7 +93,7 @@ namespace CI_PLATFORM.Controllers
         {
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             ViewBag.UserId = userId;
-           
+
             if (key is not null)
             {
                 CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
@@ -128,7 +128,7 @@ namespace CI_PLATFORM.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
-                return RedirectToAction("Login", "UserAccount",new {returnUrl = $"Home/Volunteermission/{id}" });
+                return RedirectToAction("Login", "UserAccount", new { returnUrl = $"Home/Volunteermission/{id}" });
             }
 
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
@@ -201,8 +201,10 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Profile")]
         public IActionResult ProfilePage()
         {
-            var userId = long.Parse(HttpContext.Session.GetString("UserId"));
-            if(HttpContext.Session.GetString("UserId") is not null) {
+
+            if (HttpContext.Session.GetString("UserId") is not null)
+            {
+                var userId = long.Parse(HttpContext.Session.GetString("UserId"));
                 if (ModelState.IsValid)
                 {
 
@@ -219,7 +221,7 @@ namespace CI_PLATFORM.Controllers
                     {
                         HttpContext.Session.SetString("Name", details?.FirstName + " " + details?.LastName);
                     }
-                    if(details?.CityId is not null)
+                    if (details?.CityId is not null)
                     {
                         HttpContext.Session.SetString("City", details?.CityId.ToString());
                     }
@@ -234,7 +236,7 @@ namespace CI_PLATFORM.Controllers
             {
                 return RedirectToAction("Login", "UserAccount");
             }
-            
+
         }
 
         [HttpPost]
@@ -293,10 +295,16 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Timesheet")]
         public IActionResult Volunteertimesheet()
         {
-
-            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
-            CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = _allRepository.missionRepository.user_mission(userId);
-            return View(model);
+            if (HttpContext.Session.GetString("UserId") is not null)
+            {
+                long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+                CIPlatform.Entitites.ViewModel.TimeSheetViewModel model = _allRepository.missionRepository.user_mission(userId);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "UserAccount");
+            }
         }
 
         [HttpPost]

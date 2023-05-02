@@ -33,13 +33,13 @@
                     @{
                         foreach (var item in @ViewBag.bannerlist)
                         {
-                                            <div class="carousel-item active">
-                                        <img src="~/images/@item.Image" class="d-block" alt="...">
-                                        <div class="carousel-caption d-md-block">
+                            <div class="carousel-item active">
+                                <img src="~/images/@item.Image" class="d-block" alt="...">
+                                <div class="carousel-caption d-md-block">
 
-                                            <p>@item.Text </p>
-                                        </div>
-                                    </div>
+                                    <p>@item.Text </p>
+                                </div>
+                            </div>
                         }
                     }
                 </div>
@@ -60,12 +60,12 @@
 
                 @if (ViewBag.Message != null)
                 {
-                            <script type="text/javascript">
+                    <script type="text/javascript">
 
-                                window.onload = function () {
-                                    alert("@ViewBag.Message");
-                                };
-                            </script>
+                        window.onload = function () {
+                            alert("@ViewBag.Message");
+                        };
+                    </script>
                 }
                 <div class="toregister text-center mt-3">
                     <a class="l-password" asp-action="Forgotpassword">Lost Your Password?</a>
@@ -76,13 +76,13 @@
                 </div>
             </div>
             <div class="privacy text-center">
-                <a href="#" class="privacy">Privacy Policy</a>
+                <a href="/Home/Privacy" class="privacy">Privacy Policy</a>
             </div>
         </div>
     </div>
     @section scripts{
     @{
-                <partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial" />
     }
     }
 </body>

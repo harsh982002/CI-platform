@@ -667,9 +667,9 @@ namespace CIPlatform.Repository.Repository
             MissionSelectViewModel model = new MissionSelectViewModel();
             model.mission = new MissionSelectViewModel();
             model.mission.mission_id = id;
-            model.mission.Achieved = mission.Achieved;
-            model.mission.Availability = mission.Availability;
-            model.mission.AvbSeat = mission.AvbSeat;
+            model.mission.Achieved = mission?.Achieved;
+            model.mission.Availability = mission?.Availability;
+            model.mission.AvbSeat = mission?.AvbSeat;
             model.mission.CityId = mission.CityId;
             model.mission.CountryId = mission.CountryId;
             model.mission.Deadline = mission.Deadline;
@@ -711,6 +711,16 @@ namespace CIPlatform.Repository.Repository
                 updatemission.MissionType = model.missiontype;
                 updatemission.OrganizationName = model.OrganizationName;
                 updatemission.OrganizationDetail = model.OrganizationDetail;
+                _db.SaveChanges();
+                string[]? getskills = model.skillname?.Split(",");
+                foreach (var skill in getskills)
+                {
+                    _db.MissionSkills.Add(new MissionSkill
+                    {
+                        MissionId = updatemission.MissionId,
+                        SkillId = int.Parse(skill)
+                    });
+                }
                 _db.SaveChanges();
                 foreach (var image in updatemission.MissionMedia)
                 {
