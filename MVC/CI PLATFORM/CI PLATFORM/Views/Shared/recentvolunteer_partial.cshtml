@@ -1,70 +1,49 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 @model CIPlatform.Entitites.ViewModel.VolunteerViewModel
 @{
-    <div class="container">
-   
-              <div class="border mt-4 ">
-                <div class="card">
+    <div class="tab-pane container active ">
 
-                    <div class="card-body">
-                        <ul class="nav nav-tabs card-title ">
-                            <li class="nav-item">
-                                <div class="nav-link active text-decoration-none border-0 ps-0 recents">
-                                    Recent
-                                    Volunteer
-                                </div>
-                            </li>
-                        </ul>
+        <div class="card-body row justify-content-center">
+            @{
+                int page_count = (int)Math.Ceiling((double)@Model?.Total_volunteers / 3);
+                @foreach (var item in @Model?.Recent_volunteers)
+                {
+
+                    <div class="d-flex col-3 flex-column m-1 justify-content-center">
+                        @if (@item.Avatar is not null)
+                        {
+                            <img src="@item.Avatar" alt="" class="rounded-circle">
+                        }
+                        else
+                        {
+                            <img src="~/images/volunteer1.png" alt="" class="rounded-circle">
+
+                        }
+
+                        <div class="text-center size">@item.FirstName @item.LastName</div>
                     </div>
+                }
+            }
+        </div>
+        @{
+            @if (@Model?.Total_volunteers > 3)
 
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane container active " id="previous">
-
-                            <div class="card-body row justify-content-center">
-
-                                @if (@Model.mission.MissionApplications != null)
-                                {
-
-                                    @foreach (var item in @Model?.missionApplications)
-                                    {
-                                        <div class="d-flex col-3 flex-column m-1 justify-content-center">
-                                            @if (@item.User.Avatar is not null)
-                                            {
-                                                <img src="@item.User.Avatar" alt="" class="rounded-circle">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/images/volunteer1.png" alt="" class="rounded-circle">
-
-                                            }
-
-                                            <div class="text-center">@item.User.FirstName @item.User.LastName</div>
-                                        </div>
-                                    }
-                                }
-                            </div>
-
-                        </div>
-
+            {
+                <div class="d-flex">
+                    <div class="border-end d-flex justify-content-center align-items-center" onclick="prev_volunteers(@Accesor.HttpContext.Session.GetString("UserId"),@Model.MissionId)" style="width:10%; cursor:pointer">
+                        <img class="h-50" src="~/images/left.png" alt="" />
                     </div>
-
+                    <div class="d-flex justify-content-center align-items-center" style="width:80%;"><span class="text-muted current_volunteers">1-9 of recent @Model.Total_volunteers volunteers</span></div>
+                    <div class="border-start d-flex justify-content-center align-items-center" onclick="next_volunteers(@page_count,@Accesor.HttpContext.Session.GetString("UserId"),@Model.MissionId)" style="width:10%;cursor:pointer">
+                        <img class="h-50" src="~/images/right-arrow1.png" alt="" />
+                    </div>
                 </div>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item border">
-                        <a class="nav-link active border-0 " data-bs-toggle="tab" href="#previous"> 
-                        </a>
-                    </li>
-                    <li class="border flex-fill d-flex justify-content-center align-items-center">
-                        <div>1-9 of 25 recent volunteers</div>
-                    </li>
-                    <li class="nav-item border">
-                        <a class="nav-link border-0" data-bs-toggle="tab" href="#next">>></a>
-                    </li>
-                </ul>
-            </div>
-             </div>
+            }
+        }
+
+    </div>
 }

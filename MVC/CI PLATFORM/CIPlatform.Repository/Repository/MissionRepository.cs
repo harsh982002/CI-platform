@@ -298,8 +298,16 @@ namespace CIPlatform.Repository.Repository
                 }
 
                 List<User> myusers = (from ma in missionApplications
-                                      where ma.MissionId.Equals(mission?.MissionId) 
+                                      where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
                                       select ma.User).ToList();
+                List<CIPlatform.Entitites.ViewModel.UserViewModel> Recent_volunteers = (from m in myusers
+                                                                                        select new CIPlatform.Entitites.ViewModel.UserViewModel
+                                                                                        {
+                                                                                            Avatar = m.Avatar,
+                                                                                            FirstName = m.FirstName,
+                                                                                            LastName = m.LastName,
+                                                                                            user_id = m.UserId
+                                                                                        }).ToList();
                 //get related missions
                 List<Entitites.Models.Mission> related_mission = (from m in missions
                                                                   where m.City.Name.Equals(mission?.City.Name) && !m.MissionId.Equals(mission.MissionId)
@@ -322,7 +330,7 @@ namespace CIPlatform.Repository.Repository
                     }
                 }
 
-                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission,invites = alreaduInvite, related_mission = related_mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications = recentvol.Take(9).ToList(), comments = com, Total_volunteers = myusers.Count };
+                return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { mission = mission,invites = alreaduInvite, related_mission = related_mission, users = user, Favorite_mission = fav, applyuser = application, Rating = rate, Avg_ratings = avg_ratings, Rating_count = rating_count, missionApplications = recentvol.Take(9).ToList(), Recent_volunteers = Recent_volunteers.Take(page_size).ToList(), comments = com, Total_volunteers = myusers.Count, MissionId = mission.MissionId };
             }
             else
             {
@@ -559,6 +567,20 @@ namespace CIPlatform.Repository.Repository
                 return false;
             }
         }
- 
+
+        public VolunteerViewModel Next_Volunteers(int count, long user_id, long mission_id)
+        {
+            List<CIPlatform.Entitites.ViewModel.UserViewModel> users = (from ma in missionApplications
+                                                                        where ma.MissionId.Equals(mission_id) && !ma.UserId.Equals(user_id)
+                                                                        select new CIPlatform.Entitites.ViewModel.UserViewModel
+                                                                        {
+                                                                            Avatar = ma.User.Avatar,
+                                                                            FirstName = ma.User.FirstName,
+                                                                            LastName = ma.User.LastName,
+                                                                            user_id = ma.UserId
+                                                                        }).ToList();
+            return new CIPlatform.Entitites.ViewModel.VolunteerViewModel { MissionId = mission_id, Recent_volunteers = users.Skip(page_size * count).Take(page_size).ToList(), Total_volunteers = users.Count };
+        }
+
     }
 }

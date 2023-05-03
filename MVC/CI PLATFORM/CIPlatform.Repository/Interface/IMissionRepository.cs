@@ -31,5 +31,7 @@ namespace CIPlatform.Repository.Interface
 
         CIPlatform.Entitites.ViewModel.TimeSheetViewModel user_mission(long user_id);
 
+        VolunteerViewModel Next_Volunteers(int count, long user_id, long mission_id);
+
     }
 }

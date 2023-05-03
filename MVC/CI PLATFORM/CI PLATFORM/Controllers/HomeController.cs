@@ -49,6 +49,7 @@ namespace CI_PLATFORM.Controllers
 
                 if (HttpContext.Session.GetString("Country") is not null)
                 {
+                    
                     long userId = long.Parse(HttpContext.Session.GetString("UserId"));
                     ViewBag.UserId = userId;
                     CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetAllMission();
@@ -91,11 +92,13 @@ namespace CI_PLATFORM.Controllers
         [Route("/Home/Landingplatform")]
         public JsonResult Landingplatform(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index, long user_id, long mission_id)
         {
+           
             long userId = long.Parse(HttpContext.Session.GetString("UserId"));
             ViewBag.UserId = userId;
 
             if (key is not null)
             {
+                
                 CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
                 var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
                 return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
@@ -167,6 +170,13 @@ namespace CI_PLATFORM.Controllers
                 return Json(mail);
             }
             return Json(null);
+        }
+
+        public IActionResult RecentVolunteer(int count, long MissionId)
+        {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId"));
+            var rec = _allRepository.missionRepository.Next_Volunteers(count, userId, MissionId);
+            return PartialView("recentvolunteer_partial", rec);
         }
 
         public JsonResult ApplyMission(long MissionId, long UserId)
