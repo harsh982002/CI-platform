@@ -322,8 +322,6 @@ namespace CIPlatform.Repository.Repository
             }
 
         }
-
-
         public void AddComment(string userComment, long MissionId, long userId)
         {
             Comment comment = new Comment();
@@ -333,7 +331,6 @@ namespace CIPlatform.Repository.Repository
             _db.Comments.Add(comment);
             _db.SaveChanges();
         }
-
         public bool ApplyMission(long mission_id, long user_id)
         {
             MissionApplication missionapplication = new MissionApplication();
@@ -352,8 +349,6 @@ namespace CIPlatform.Repository.Repository
 
             return false;
         }
-
-
         public bool sendMail(string[] emailList, long mission_id, long user_id)
         {
 
@@ -392,7 +387,6 @@ namespace CIPlatform.Repository.Repository
             }
             return true;
         }
-
         public bool AddFavouriteMission(long MissionId, long UserId)
         {
 
@@ -414,7 +408,6 @@ namespace CIPlatform.Repository.Repository
                 return false;
             }
         }
-
         public bool addRatings(int rating, long mission_id, long userId)
         {
             var missionRating = new MissionRating();
@@ -439,7 +432,6 @@ namespace CIPlatform.Repository.Repository
 
             return true;
         }
-
         /*Timesheet*/
 
         public CIPlatform.Entitites.ViewModel.TimeSheetViewModel user_mission(long user_id)

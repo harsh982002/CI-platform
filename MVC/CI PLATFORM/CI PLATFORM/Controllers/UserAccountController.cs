@@ -115,6 +115,7 @@ namespace CI_PLATFORM.Controllers
                                         return new RedirectResult(url);
                                     }
                                     HttpContext.Session.SetString("role", user.Role);
+                                    _notyf.Success("Login Successfully As Admin...", 3);
                                     return RedirectToAction("CMS", "Admin");
                                 }
                                 if(user.Status == "0")

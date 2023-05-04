@@ -25,10 +25,27 @@
         <div class="col-md-8 col-sm-7">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-interval="false">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                @{
+                    
+                    int count = 0;
+                    foreach (var item in @ViewBag.bannerlist)
+                    {
+                        
+                            @if (count == 0)
+                            {
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to=@count class="active" aria-current="true" aria-label="Slide 0"></button>
+                                count++;
+                            }
+                            else
+                            {
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to=@count aria-label="Slide @count"></button>
+                                 count++;
+                            }
+                        
+                               
+                    }
 
+                }
                 </div>
                 <div class="carousel-inner">
                     @{
