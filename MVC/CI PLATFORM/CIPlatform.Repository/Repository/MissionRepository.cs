@@ -84,12 +84,11 @@ namespace CIPlatform.Repository.Repository
             List<City> city = new List<City>();
             List<CIPlatform.Entitites.Models.Mission> mission = new List<CIPlatform.Entitites.Models.Mission>();
             List<CIPlatform.Entitites.Models.FavoriteMission> favoriteMissions = new List<FavoriteMission>();
-           
-            //get cities as per country
-            if (Countries.Count > 0)
+
+            if(Countries.Count > 0)
             {
                 city = (from c in cities
-                        where Countries.Contains(c.Country.Name) 
+                        where Countries.Contains(c.Country.Name)
                         select c).ToList();
             }
             else
@@ -97,55 +96,36 @@ namespace CIPlatform.Repository.Repository
                 city = cities;
             }
             //filter as per city,theme and skill, if country selected it doesn't matter because filter work as per city first
-            if (Cities.Count > 0)
+            if (Countries.Count > 0)
             {
-
-                mission = (from m in missions
-                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title)
-                           select m).ToList();
-                var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName) && missions.Contains(s.Mission)
-                                      select s.Mission).ToList();
-                foreach (var skill_mission in skill_missions)
+                List<string> Selected_country = (from c in cities
+                                                 where Cities.Contains(c.Name)
+                                                 select c.Country.Name).ToList();
+                foreach (var country in Selected_country)
                 {
-                    if (!mission.Contains(skill_mission))
+                    if (Countries.Contains(country))
                     {
-                        mission.Add(skill_mission);
+                        Countries.Remove(country);
                     }
                 }
             }
-            //filter as per country,theme and skills if city not selected
-            else if (Countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
+            if (Countries.Count > 0 || Cities.Count > 0)
             {
-
                 mission = (from m in missions
-                           where Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title)
+                           where (Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name))
                            select m).ToList();
-                var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName) && missions.Contains(s.Mission)
-                                      select s.Mission).ToList();
-
-                foreach (var skill_mission in skill_missions)
-                {
-                    if (!mission.Contains(skill_mission))
-                    {
-                        mission.Add(skill_mission);
-                    }
-                }
-
             }
-
             else
             {
-                if (page_index != 0)
-                {
-                    missions = missions.Skip(9 * page_index).Take(9).ToList();
-                }
-                else
-                {
-                    missions = missions.Take(9).ToList();
-                }
                 mission = missions;
+            }
+            //filter as per country,theme and skills if city not selected
+            if (Skills.Count > 0 || Themes.Count > 0)
+            {
+                mission = (from m in mission
+                           where (Themes.Count == 0 || Themes.Contains(m.Theme?.Title))
+                           && (Skills.Count == 0 || missionskills.Any(s => s.MissionId == m.MissionId && Skills.Contains(s.Skill.SkillName)))
+                           select m).ToList();
             }
 
             //sort all mission as per user need
@@ -206,6 +186,15 @@ namespace CIPlatform.Repository.Repository
                     Country = countries,
                     Cities = city
                 };
+            }
+            Missions.total_missions = Missions.Missions.Count;
+            if (page_index != 0)
+            {
+                Missions.Missions = Missions.Missions.Skip(9 * page_index).Take(9).ToList();
+            }
+            else
+            {
+                Missions.Missions = Missions.Missions.Take(9).ToList();
             }
             return Missions;
         }

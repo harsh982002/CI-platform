@@ -108,14 +108,16 @@ namespace CI_PLATFORM.Controllers
             {
                 CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
                 var page_missions = this.RenderViewAsync("mission_partial", missions, true);
-                return Json(new { mission = page_missions, length = missions.Missions.Count });
+                var pages = this.RenderViewAsync("Pagination_partial",missions,true);
+                return Json(new { mission = page_missions, length = missions.Missions.Count,pages = pages });
             }
             else
             {
                 CIPlatform.Entitites.ViewModel.Mission missions = _allRepository.missionRepository.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
                 var Cities = this.RenderViewAsync("City_partial", missions, true);
                 var filtered_missions = this.RenderViewAsync("mission_partial", missions, true);
-                return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
+                var pages = this.RenderViewAsync("Pagination_partial", missions, true);
+                return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count,pages=pages });
             }
         }
 

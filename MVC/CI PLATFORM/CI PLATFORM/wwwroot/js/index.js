@@ -109,6 +109,7 @@ function addcities(name, type) {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
+            $("#pages").empty().append(result.pages.result)
         },
         error: function () {
             console.log("Error updating variable");
@@ -162,6 +163,7 @@ const addcountries = (name, type) => {
         success: function (result) {
             loadmissions(result.mission.result, result.length)
             loadcities(result.city.result);
+            $("#pages").empty().append(result.pages.result)
         },
         error: function () {
             console.log("Error updating variable");
@@ -213,6 +215,7 @@ const addthemes = (name, type) => {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
+            $("#pages").empty().append(result.pages.result)
         },
         error: function () {
             console.log("Error updating variable");
@@ -264,6 +267,7 @@ const addskills = (name, type) => {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
+            $("#pages").empty().append(result.pages.result)
         },
         error: function () {
             console.log("Error updating variable");
