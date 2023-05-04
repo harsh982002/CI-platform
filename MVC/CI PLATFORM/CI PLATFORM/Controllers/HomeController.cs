@@ -101,7 +101,8 @@ namespace CI_PLATFORM.Controllers
                 
                 CIPlatform.Entitites.ViewModel.Mission search_missions = _allRepository.missionRepository.GetSearchMissions(key, page_index);
                 var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
-                return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
+                var pages = this.RenderViewAsync("Pagination_partial", search_missions, true);
+                return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count, pages = pages });
             }
 
             else if (page_index != 0)

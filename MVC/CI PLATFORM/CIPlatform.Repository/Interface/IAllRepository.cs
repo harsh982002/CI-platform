@@ -10,14 +10,9 @@ namespace CIPlatform.Repository.Interface
     public interface IAllRepository
     {
         void save();
-
         public IMissionRepository missionRepository { get; set; }
-
-
         public IProfileRepository profileRepository { get; set; }
         public IStoryRepository storyRepository { get; set; }
-
         public ICMSRepository cmsRepository { get; set; }
-        
     }
 }

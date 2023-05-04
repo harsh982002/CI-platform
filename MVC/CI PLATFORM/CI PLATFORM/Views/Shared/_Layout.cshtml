@@ -156,7 +156,7 @@
         <nav class="container justify-content-between">
             @if (Context.Request.Path.Equals("/Home/Profile"))
             {
-                <a data-bs-toggle="modal" data-bs-target="#ContactUs" class="text-muted text-decoration-none">Contact Us</a>
+                <a data-bs-toggle="modal" data-bs-target="#ContactUs" style="cursor:pointer;" class="text-muted text-decoration-none">Contact Us</a>
             }
             @{
                 @if (Context.Request.Path.Equals("/Home/Privacy"))

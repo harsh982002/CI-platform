@@ -19,7 +19,6 @@ namespace CIPlatform.Repository.Repository
         {
             _db = db;
         }
-
         public bool Change_Password(string oldpassword, string newpassword, long user_id)
         {
             User? user = _db.Users.FirstOrDefault(c => c.UserId == user_id);
@@ -44,7 +43,6 @@ namespace CIPlatform.Repository.Repository
             }
 
         }
-
         public bool contact_us(long user_id, string name, string email, string subject, string message)
         {
             _db.ContactUs.Add(new ContactU { UserId = user_id, Name = name, Email = email, Subject = subject, Message = message });
@@ -52,7 +50,6 @@ namespace CIPlatform.Repository.Repository
             _db.SaveChanges();
             return true;
         }
-
         public ProfileViewModel Get_details(int country, long user_Id)
         {
 
@@ -88,7 +85,6 @@ namespace CIPlatform.Repository.Repository
 
             }
         }
-
         public bool profile_update(ProfileViewModel userdetail, long user_id)
         {
             User? user = _db.Users.FirstOrDefault(x => x.UserId == user_id);
@@ -151,6 +147,5 @@ namespace CIPlatform.Repository.Repository
             }
 
         }
-
     }
 }

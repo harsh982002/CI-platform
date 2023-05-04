@@ -312,6 +312,7 @@ const search_missions = () => {
             data: { key: key, page_index: pageindex },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
+                $("#pages").empty().append(result.pages.result)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -325,6 +326,7 @@ const search_missions = () => {
             data: { countries: countries, cities: cities, themes: themes, skills: skills, page_index: pageindex },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
+                $("#pages").empty().append(result.pages.result)
             },
             error: function () {
                 console.log("Error updating variable");

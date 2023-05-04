@@ -34,17 +34,11 @@ namespace CIPlatform.Repository.Repository
         {
             return _Message;
         }
-
-
-
         public User LoginViewModel(LoginViewModel model)
         {
             User user = _context.Users.FirstOrDefault(c => c.Email.Equals(model.Email.ToLower()));
             return user;
         }
-
-
-
         public User RegistrationViewModel(RegistrationViewModel model)
         {
             string secpass = BCrypt.Net.BCrypt.HashPassword(model.Password);
@@ -59,7 +53,6 @@ namespace CIPlatform.Repository.Repository
             return entry.Entity;
 
         }
-
         public User ForgotPasswordViewModel(ForgotPasswordViewModel model)
         {
 
@@ -107,7 +100,6 @@ namespace CIPlatform.Repository.Repository
 
             return user;
         }
-
         public Boolean IsValidUserEmail(RegistrationViewModel model)
         {
             try
@@ -131,7 +123,6 @@ namespace CIPlatform.Repository.Repository
                 return false;
             }
         }
-
         public int GetUserID(string Email)
         {
             try
@@ -153,8 +144,6 @@ namespace CIPlatform.Repository.Repository
                 return -1;
             }
         }
-
-
         public PasswordReset ResetPasswordViewModel(ResetPasswordViewModel model, string token)
         {
             string passtoken = BCrypt.Net.BCrypt.HashPassword(model.Password);
@@ -169,7 +158,5 @@ namespace CIPlatform.Repository.Repository
             }
             return validToken;
         }
-
-
     }
 }

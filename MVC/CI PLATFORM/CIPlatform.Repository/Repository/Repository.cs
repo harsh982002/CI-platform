@@ -24,19 +24,14 @@ namespace CIPlatform.Repository.Repository
         {
             dbset.Add(entity);
         }
-
         public T Get(int id)
         {
             throw new NotImplementedException();
         }
-
         public IEnumerable<T> GetAll()
         {
             return dbset;
         }
-
-
-
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbset;

@@ -174,7 +174,6 @@ namespace CIPlatform.Repository.Repository
                     Cities = city
                 };
             }
-
             //if no filter apply
             else
             {
@@ -208,15 +207,11 @@ namespace CIPlatform.Repository.Repository
             {
                 Missions = mission,
             };
-
-            if (page_index != 0)
+            if (Missions.Missions.Count > page_index)
             {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
+                Missions.Missions = mission.Skip(page_index * page_size).Take(page_size).ToList();
             }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
+            Missions.total_missions = Missions.Missions.Count;
             return Missions;
         }
         public void Save()

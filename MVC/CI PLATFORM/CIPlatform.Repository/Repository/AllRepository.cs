@@ -13,8 +13,6 @@ namespace CIPlatform.Repository.Repository
     public class AllRepository : IAllRepository
     {
         private readonly CiplatformContext _db;
-     
-
         public AllRepository(CiplatformContext db)
         {
             _db = db;
@@ -28,13 +26,9 @@ namespace CIPlatform.Repository.Repository
             cmsRepository = new CMSRepository(db);
         }
         public IMissionRepository missionRepository { get; set; }
-
         public IStoryRepository storyRepository { get; set; }
         public IProfileRepository profileRepository { get; set; }
         public ICMSRepository cmsRepository { get ; set ; }
-
-       
-
         public void save()
         {
             _db.SaveChanges();
