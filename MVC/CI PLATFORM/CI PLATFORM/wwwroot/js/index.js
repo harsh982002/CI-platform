@@ -63,8 +63,6 @@ function gridview() {
     list.style.marginLeft = 0 + "px";
     view = "grid"
 }
-
-
 //filters by cities
 function addcities(name, type) {
     var selected = $('#sort').find(':selected').text();
@@ -285,6 +283,7 @@ const loadcities = (cities) => {
 //load filtered missions
 const loadmissions = (missions, length) => {
     if (length === 0) {
+        $('.explore').find('b').empty().append(`${length} Missions`)
         $('.no-mission-found').removeClass("d-none").addClass("d-flex flex-column");
         $('.missions').empty();
     }

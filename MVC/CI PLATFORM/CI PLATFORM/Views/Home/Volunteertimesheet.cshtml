@@ -32,7 +32,7 @@
                                     <td>@item?.Time?.ToString().Substring(3,5)</td>
                                     <td>
                                         <img data-bs-toggle="modal" data-bs-target="#time" onclick="edittimesheet(@item.TimesheetId,@item.MissionId,'@item.Time.ToString().Substring(0,2)','@item.Time.ToString().Substring(3,5)','@item.Notes','time')" src="~/images/edit.png" class="edbutton" alt="" />
-                                        <img src="~/images/bin.png" onclick="deletetimesheet(@item.TimesheetId)" class="ms-2 edbutton" alt="" />
+                                        <img src="~/images/bin.png" data-bs-toggle="modal" data-bs-target="#delete" onclick="getsheet('@item.TimesheetId')" class="ms-2 edbutton" alt="" />
                                     </td>
                                 </tr>
                             }

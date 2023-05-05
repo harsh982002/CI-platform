@@ -37,7 +37,7 @@
                     <div class="border-end d-flex justify-content-center align-items-center" onclick="prev_volunteers(@Accesor.HttpContext.Session.GetString("UserId"),@Model.MissionId)" style="width:10%; cursor:pointer">
                         <img class="h-50" src="~/images/left.png" alt="" />
                     </div>
-                    <div class="d-flex justify-content-center align-items-center" style="width:80%;"><span class="text-muted current_volunteers">1-9 of recent @Model.Total_volunteers volunteers</span></div>
+                    <div class="d-flex justify-content-center align-items-center" style="width:80%;"><span class="text-muted current_volunteers">1-3 of recent @Model.Total_volunteers volunteers</span></div>
                     <div class="border-start d-flex justify-content-center align-items-center" onclick="next_volunteers(@page_count,@Accesor.HttpContext.Session.GetString("UserId"),@Model.MissionId)" style="width:10%;cursor:pointer">
                         <img class="h-50" src="~/images/right-arrow1.png" alt="" />
                     </div>

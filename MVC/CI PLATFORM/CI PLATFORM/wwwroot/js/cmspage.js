@@ -69,7 +69,7 @@ const addcms = () => {
     }
 
     else {
-        if (Talert != "" && Salert != "") {
+        if (Talert != "" && Salert != "" ) {
             $.ajax({
                 url: '/Admin/CMS',
                 type: 'POST',
@@ -113,6 +113,7 @@ function clearModal() {
 const validate = () => {
     Talert = document.getElementById(`title`).value
     Salert = document.getElementById(`slug`).value
+    
     if (Talert== "") {
         $("#titleAlert").addClass('d-block').removeClass('d-none')
     }

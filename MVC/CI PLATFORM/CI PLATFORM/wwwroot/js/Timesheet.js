@@ -176,11 +176,20 @@ const clear_modal = (type) => {
         document.getElementsByClassName('time-hours')[0].value = ""
         document.getElementsByClassName('time-min')[0].value = ""
         document.getElementsByClassName('time-message')[0].value = ""
+        $(".time-mission-empty").addClass("d-none").removeClass("d-block")
+        $(".time-date-empty").addClass("d-none").removeClass("d-block")
+        $(".time-hours-valid").addClass("d-none").removeClass("d-block")
+        $(".time-min-valid").addClass("d-none").removeClass("d-block")
+        $(".time-message-empty").addClass("d-none").removeClass("d-block")
     }
     else {
         $(`#mission_goal`).removeAttr("disabled", "disabled")
         document.getElementById('action').value = ""
         document.getElementById('goal-message').value = ""
+        $(".goal-mission").addClass("d-none").removeClass("d-block")
+        $(".action-empty").addClass("d-none").removeClass("d-block")
+        $(".date-empty").addClass("d-none").removeClass("d-block")
+        $(".message-empty").addClass("d-none").removeClass("d-block")
     }
 }
 

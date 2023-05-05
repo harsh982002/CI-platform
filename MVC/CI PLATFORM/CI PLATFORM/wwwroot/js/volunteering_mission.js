@@ -226,7 +226,7 @@ const prev_volunteers = (UserId, MissionId) => {
             data: { count: count - 1, UserId: UserId, MissionId: MissionId },
             success: function (result) {
                 $('.volunteers').empty().append(result)
-                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.Total_volunteers} volunteers`)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent 7 volunteers`)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -245,7 +245,7 @@ const next_volunteers = (max_page, UserId, MissionId) => {
             data: { count: count - 1, UserId: UserId, MissionId: MissionId },
             success: function (result) {
                 $('.volunteers').empty().append(result)
-                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.Total_volunteers ? result.Total_volunteers : one_page_volunteers * count} of recent ${result.Total_volunteers} volunteers`)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.Total_volunteers ? result.Total_volunteers : one_page_volunteers * count} of recent 7 volunteers`)
             },
             error: function () {
                 console.log("Error updating variable");

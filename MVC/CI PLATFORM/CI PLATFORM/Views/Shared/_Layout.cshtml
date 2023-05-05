@@ -150,26 +150,31 @@
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
-      <hr width="100%" />
-    <footer class=" footer text-muted">
-          
-        <nav class="container justify-content-between">
-            @if (Context.Request.Path.Equals("/Home/Profile"))
-            {
-                <a data-bs-toggle="modal" data-bs-target="#ContactUs" style="cursor:pointer;" class="text-muted text-decoration-none">Contact Us</a>
-            }
-            @{
-                @if (Context.Request.Path.Equals("/Home/Privacy"))
-                {
-                    <a asp-area="" style="pointer-events: none;" asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none ms-4">Privacy Policy</a>
-                }
-                else
-                {
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none ms-4">Privacy Policy</a>
-                }
-            }
-        </nav>
+    @{
+        @if (Context.Request.Path != ("/Admin/Addmission"))
+        {
+            <hr width="100%" />
+            <footer class=" footer text-muted">
+
+                <nav class="container justify-content-between">
+                    @if (Context.Request.Path.Equals("/Home/Profile"))
+                    {
+                        <a data-bs-toggle="modal" data-bs-target="#ContactUs" style="cursor:pointer;" class="text-muted text-decoration-none">Contact Us</a>
+                    }
+                    @{
+                        @if (Context.Request.Path.Equals("/Home/Privacy"))
+                        {
+                            <a asp-area="" style="pointer-events: none;" asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none ms-4">Privacy Policy</a>
+                        }
+                        else
+                        {
+                            <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none ms-4">Privacy Policy</a>
+                        }
+                    }
+                </nav>
     </footer>
+    }
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
